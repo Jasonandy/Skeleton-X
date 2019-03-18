@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- 项目描述 -->
+    <groupId>cn.ucaner</groupId>
+    <artifactId>skeleton</artifactId>
+    <version>tuna-1.0</version>
+    <packaging>pom</packaging>
+
+
+    <modules>
+        <module>skeleton-common</module>
+    </modules>
+
+    <!-- 项目 -->
+    <name>skeleton-x</name>
+    <description>This is a fast developing scaffolding.</description>
+
+    <!-- 归属组织 -->
+    <organization>
+        <name>Skeleton-X</name>
+        <url>http://www.ucaner.com</url>
+    </organization>
+
+    <!-- sprigboot -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.1.2.RELEASE</version>
+        <relativePath/>
+    </parent>
+
+    <!--版本维护-->
+    <properties>
+        <mybatis-spring-boot-starter.version>2.0.0</mybatis-spring-boot-starter.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <fastjson.version>1.2.56</fastjson.version>
+        <druid.version>1.1.13</druid.version>
+
+        <org.apache.shiro.version>1.4.0</org.apache.shiro.version>
+
+        <slf4j-api.version>1.8.0-beta2</slf4j-api.version>
+        <slf4j-log4j12.version>1.8.0-beta2</slf4j-log4j12.version>
+        <log4j.version>1.2.17</log4j.version>
+
+        <commons-lang.version>2.6</commons-lang.version>
+        <commons-httpclient.version>3.1</commons-httpclient.version>
+        <dom4j.version>1.6.1</dom4j.version>
+        <jdom.version>2.0.2</jdom.version>
+        <javax.json-api.version>1.1.4</javax.json-api.version>
+        <commons-io.version>2.6</commons-io.version>
+        <httpclient.version>4.5.7</httpclient.version>
+        <java.version>1.8</java.version>
+
+        <page.helper.github.version>5.1.2</page.helper.github.version>
+
+
+        <java.version>1.8</java.version>
+        <maven.test.skip>true</maven.test.skip>
+
+        <mysql.connector.java.version>5.1.46</mysql.connector.java.version>
+        <jackson.datatype.version>2.9.5</jackson.datatype.version>
+        <mybatis.springboot.starter.version>1.3.2</mybatis.springboot.starter.version>
+        <pagehelper-spring-boot-starter>1.2.5</pagehelper-spring-boot-starter>
+        <druid-spring-boot-starter>1.1.9</druid-spring-boot-starter>
+        <springboot-version>2.0.0.RELEASE</springboot-version>
+
+        <!-- mapper生成器 -->
+        <mybatis-generator.version>1.3.5</mybatis-generator.version>
+        <fastjson.version>1.2.47</fastjson.version>
+
+        <commons.codec.version>1.11</commons.codec.version>
+    </properties>
+
+
+    <!--版本管理-->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis-spring-boot-starter.version}</version>
+            </dependency>
+
+            <!-- Spring Boot Mybatis 依赖 -->
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis.springboot.starter.version}</version>
+            </dependency>
+
+            <!-- Spring Boot pagehelper 依赖 -->
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>${pagehelper-spring-boot-starter}</version>
+            </dependency>
+
+            <!-- mybatis-generator-core  -->
+            <dependency>
+                <groupId>org.mybatis.generator</groupId>
+                <artifactId>mybatis-generator-core</artifactId>
+                <version>${mybatis-generator.version}</version>
+            </dependency>
+
+
+            <!-- MySQL 连接驱动依赖 -->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.connector.java.version}</version>
+            </dependency>
+
+            <!-- druid-spring  -->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid-spring-boot-starter}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-codec</groupId>
+                <artifactId>commons-codec</artifactId>
+                <version>${commons.codec.version}</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+    <!-- developer -->
+    <developers>
+        <developer>
+            <name>Jason</name>
+            <id>Jason.Wu</id>
+            <email>jasonandy@hotmail.com</email>
+            <roles>
+                <role>Developer</role>
+            </roles>
+            <timezone>+8</timezone>
+        </developer>
+    </developers>
+
+
+    <!-- 构建 -->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <fork>true</fork>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

@@ -1,0 +1,6 @@
+###############ignored by JASON ##################
+/skeleton.iml
+/skeleton-common/skeleton-common.iml
+/.idea/
+##################################################
+/skeleton-common/target
