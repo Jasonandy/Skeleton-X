@@ -28,7 +28,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @ModifyTime： 2019/3/19
  * @Modify marker：
  */
-@SpringBootApplication(scanBasePackages={"mapper.*"})
+@SpringBootApplication
 public class ServiceApplication {
 
     public static void main(String[] args) {

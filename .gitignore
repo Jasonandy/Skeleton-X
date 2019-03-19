@@ -6,5 +6,6 @@
 /skeleton-common/target
 /skeleton-service/skeleton-service.iml
 
-
+/logs/
 ##################################################
+

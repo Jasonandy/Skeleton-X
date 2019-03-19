@@ -18,6 +18,9 @@ package cn.ucaner.skeleton.service.common.config;
 import com.github.pagehelper.PageHelper;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
+import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -32,19 +35,15 @@ import java.util.Properties;
  * @ModifyTime： 2019/3/19
  * @Modify marker：
  */
-//@Component
-//指定扫描的mapper接口所在的包
-//@MapperScan("cn.ucaner.skeleton.service.*.dao")
+@Component
+@MapperScan("cn.ucaner.skeleton.service.**.dao")
 public class MybatisConfig {
 
-    // private static final String TYPE_ALIASES_PACKAGE = "cn.ucaner.wx.app.service";
-    //private static final String MAPPER_LOCATION = "classpath:cn.ucaner.wx.app.service";
-
-    //@Bean
-    // @Autowired
+    @Autowired
     public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
         final SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(dataSource);
+
         // 分页插件
         PageHelper pageHelper = new PageHelper();
         Properties properties = new Properties();
@@ -53,6 +52,8 @@ public class MybatisConfig {
         properties.setProperty("returnPageInfo", "check");
         properties.setProperty("params", "count=countSql");
         pageHelper.setProperties(properties);
+
+
         // 添加插件
         // PageHelper是Interceptor接口的实现类
         // 基于接口实现的多态
