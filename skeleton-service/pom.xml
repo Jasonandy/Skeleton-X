@@ -85,7 +85,7 @@
                 <version>1.3.6</version>
                 <configuration>
                     <configurationFile>
-                        mybatis-generator/generatorConfig.xml
+                            ${basedir}/src/main/resources/mybatis-generator/generatorConfig.xml
                     </configurationFile>
                     <overwrite>true</overwrite>
                     <verbose>true</verbose>
