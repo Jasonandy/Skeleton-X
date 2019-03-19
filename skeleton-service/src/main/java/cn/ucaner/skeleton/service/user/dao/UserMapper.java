@@ -21,6 +21,6 @@ public interface UserMapper extends BaseDao<User, String> {
      * 获取用户列表
      * @return
      */
-    public List<User> getAllUserList();
+    List<User> getAllUserList();
 
 }

@@ -1,5 +1,21 @@
+/******************************************************************************
+ * ~ Copyright (c) 2018 [jasonandy@hotmail.com | https://github.com/Jasonandy] *
+ * ~                                                                           *
+ * ~ Licensed under the Apache License, Version 2.0 (the "License”);           *
+ * ~ you may not use this file except in compliance with the License.          *
+ * ~ You may obtain a copy of the License at                                   *
+ * ~                                                                           *
+ * ~    http://www.apache.org/licenses/LICENSE-2.0                             *
+ * ~                                                                           *
+ * ~ Unless required by applicable law or agreed to in writing, software       *
+ * ~ distributed under the License is distributed on an "AS IS" BASIS,         *
+ * ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  *
+ * ~ See the License for the specific language governing permissions and       *
+ * ~ limitations under the License.                                            *
+ ******************************************************************************/
 package cn.ucaner.skeleton.service.controller;
 
+import cn.ucaner.skeleton.common.utils.pk.PKGenerator;
 import cn.ucaner.skeleton.common.vo.RespBody;
 import cn.ucaner.skeleton.service.user.entity.User;
 import cn.ucaner.skeleton.service.user.service.UserService;
@@ -33,13 +49,36 @@ public class UserController {
     @Autowired
     UserService userService;
 
+
     @ResponseBody
     @RequestMapping(value = "/test",method= RequestMethod.GET)
     public RespBody findAllUser() {
         RespBody respBody = new RespBody();
-        List<User> allUser =  userService.getAllUserList();
-        respBody.addOK(allUser,"查询成功！");
-        logger.info("查询成功！");
+        try {
+            List<User> allUser =  userService.getAllUserList();
+            respBody.addOK(allUser,"查询成功！");
+            logger.info("查询所有用户-findAllUser:{}",allUser);
+        } catch (Exception e) {
+            respBody.addError(e.getMessage());
+        }
         return respBody;
     }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/insert",method= RequestMethod.GET)
+    public RespBody randomInsert() {
+        RespBody respBody = new RespBody();
+        User user = new User();
+        user.setId(PKGenerator.uuid32());
+        user.setAge(20);
+        user.setName("Skeleton.");
+        user.setDesc("Skeleton..");
+        userService.insert(user);
+        logger.info("新增用户-randomInsert:{}",user);
+        respBody.addOK(user,"插入成功!");
+        return respBody;
+    }
+
+
 }

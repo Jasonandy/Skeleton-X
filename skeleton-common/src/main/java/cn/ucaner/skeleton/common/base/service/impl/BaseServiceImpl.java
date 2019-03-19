@@ -90,8 +90,8 @@ public  abstract class BaseServiceImpl<T extends BaseEntity, PK extends Serializ
     }
 
     @Override
-    public PK insert(T entity) {
-        return getDao().insert(entity);
+    public void insert(T entity) {
+        getDao().insert(entity);
     }
 
     @Override

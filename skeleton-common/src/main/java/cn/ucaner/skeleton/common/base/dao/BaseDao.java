@@ -109,7 +109,7 @@ public interface BaseDao<T extends BaseEntity, PK extends Serializable> {
      *
      * @param entity
      */
-    public PK insert(T entity);
+     void insert(T entity);
 
     /**
      * 删除

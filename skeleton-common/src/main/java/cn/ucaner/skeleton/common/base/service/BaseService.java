@@ -112,7 +112,7 @@ public interface BaseService <T extends BaseEntity, PK extends Serializable>{
      * @return PK
      * @Autor: Jason
      */
-    public PK insert(T entity);
+    public void insert(T entity);
 
     /**
      * @Description: 删除

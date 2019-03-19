@@ -281,14 +281,13 @@ public class BaseDaoImpl <T extends BaseEntity, PK extends Serializable> impleme
     }
 
     @Override
-    public PK insert(T entity) {
+    public void insert(T entity) {
         try {
             Assert.notNull(entity);
             if (StringUtils.isBlank(entity.getId())) {
                 entity.setId(PKGenerator.uuid32());
             }
             sqlSession.insert(getSqlName(SQLNAME_INSERT), entity);
-            return (PK) entity.getId();
         } catch (Exception e) {
             logger.error(String.format("保存对象出错！语句：%s", getSqlName(SQLNAME_INSERT)), e);
             throw new SystemException(String.format("保存对象出错！语句：%s", getSqlName(SQLNAME_INSERT)), e);

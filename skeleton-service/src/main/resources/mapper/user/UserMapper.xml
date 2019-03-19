@@ -18,11 +18,10 @@
         SELECT  *  FROM USER  ;
     </select>
 
-  <insert id="insert" parameterType="cn.ucaner.skeleton.service.user.entity.User">
-    insert into user (id, name, age, 
-      desc)
-    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, 
-      #{desc,jdbcType=VARCHAR})
-  </insert>
+    <!-- 新增用户 -->
+    <insert id="insert" parameterType="cn.ucaner.skeleton.service.user.entity.User">
+    INSERT INTO USER (`ID`, `NAME`, AGE, `DESC`)
+    VALUES (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER},#{desc,jdbcType=VARCHAR})
+    </insert>
 
 </mapper>
