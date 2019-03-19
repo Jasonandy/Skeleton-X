@@ -83,10 +83,12 @@
                 </includes>
                 <filtering>false</filtering>
             </resource>
+            <resource>
+                <directory>src/main/webapp</directory>
+            </resource>
         </resources>
         <!-- MYBATIS-GENERATOR  plugin -->
         <plugins>
-
             <!-- springboot 打包exec.jar -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
