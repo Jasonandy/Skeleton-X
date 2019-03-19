@@ -21,10 +21,23 @@
     introspectedColumnImpl：类全限定名，用于扩展MBGc -->
 
     <!--   targetRuntime:MyBatis3Simple MyBatis3 -->
-    <context id="DB2Tables" targetRuntime="${targetRuntime}">
+    <context id="skeleton" targetRuntime="${targetRuntime}">
         <!--
             自定义的代码注释插件
         <commentGenerator type="XXXXX.plugin.NoSeatBeltCommentGenerator" >-->
+
+        <!-- 此处是将UserMapper.xml改名为UserDao.xml 当然 想改成什么都行~ -->
+        <plugin type="org.mybatis.generator.plugins.rename.RenameSqlMapperPlugin">
+            <property name="searchString" value="Mapper" />
+            <property name="replaceString" value="Dao" />
+        </plugin>
+
+        <!-- 此处是将UserMapper改名为UserDao 接口 当然 想改成什么都行~  -->
+        <plugin type="org.mybatis.generator.plugins.rename.RenameJavaMapperPlugin">
+            <property name="searchString" value="Mapper$" />
+            <property name="replaceString" value="Dao" />
+        </plugin>
+
 
         <commentGenerator>
             <!-- 自动识别数据库关键字，默认false，如果设置为true，根据SqlReservedWords中定义的关键字列表;

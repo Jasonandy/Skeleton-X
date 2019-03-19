@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ucaner.skeleton.service.user.dao.UserMapper">
+  <resultMap id="BaseResultMap" type="cn.ucaner.skeleton.service.user.entity.User">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="age" jdbcType="INTEGER" property="age" />
+    <result column="desc" jdbcType="VARCHAR" property="desc" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, name, age, desc
+  </sql>
+
+
+    <!-- 获取所有的用户列表 -->
+    <select id="getAllUserList" resultType="cn.ucaner.skeleton.service.user.entity.User">
+        SELECT  *  FROM USER  ;
+    </select>
+
+  <insert id="insert" parameterType="cn.ucaner.skeleton.service.user.entity.User">
+    insert into user (id, name, age, 
+      desc)
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}, 
+      #{desc,jdbcType=VARCHAR})
+  </insert>
+
+</mapper>
