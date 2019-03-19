@@ -2,5 +2,9 @@
 /skeleton.iml
 /skeleton-common/skeleton-common.iml
 /.idea/
-##################################################
+
 /skeleton-common/target
+/skeleton-service/skeleton-service.iml
+
+
+##################################################

@@ -10,8 +10,10 @@
     <packaging>pom</packaging>
 
 
+    <!--  模块之间的依赖 -->
     <modules>
         <module>skeleton-common</module>
+        <module>skeleton-service</module>
     </modules>
 
     <!-- 项目 -->
@@ -144,7 +146,7 @@
     </developers>
 
 
-    <!-- 构建 -->
+    <!-- 构建
     <build>
         <plugins>
             <plugin>
@@ -155,6 +157,6 @@
                 </configuration>
             </plugin>
         </plugins>
-    </build>
+    </build> -->
 
 </project>
