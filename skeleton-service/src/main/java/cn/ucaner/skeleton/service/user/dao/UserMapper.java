@@ -2,6 +2,7 @@ package cn.ucaner.skeleton.service.user.dao;
 
 import cn.ucaner.skeleton.common.base.dao.BaseDao;
 import cn.ucaner.skeleton.service.user.entity.User;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ import java.util.List;
  * @Modify marker：
  * @version V1.0
 */
+@Mapper
 public interface UserMapper extends BaseDao<User, String> {
 
     /**

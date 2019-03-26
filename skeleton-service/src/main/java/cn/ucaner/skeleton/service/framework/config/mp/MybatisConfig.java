@@ -13,7 +13,7 @@
  * ~ See the License for the specific language governing permissions and       *
  * ~ limitations under the License.                                            *
  ******************************************************************************/
-package cn.ucaner.skeleton.service.common.config;
+package cn.ucaner.skeleton.service.framework.config.mp;
 
 import com.github.pagehelper.PageHelper;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -35,8 +35,8 @@ import java.util.Properties;
  * @ModifyTime： 2019/3/19
  * @Modify marker：
  */
-@Component
-@MapperScan("cn.ucaner.skeleton.service.**.dao")
+//@Component
+//@MapperScan("cn.ucaner.skeleton.service.**.dao")
 public class MybatisConfig {
 
     @Autowired

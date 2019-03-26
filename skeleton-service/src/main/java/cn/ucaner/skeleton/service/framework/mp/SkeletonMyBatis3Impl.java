@@ -13,7 +13,7 @@
  * ~ See the License for the specific language governing permissions and       *
  * ~ limitations under the License.                                            *
  ******************************************************************************/
-package cn.ucaner.skeleton.service.common.mp;
+package cn.ucaner.skeleton.service.framework.mp;
 
 import org.mybatis.generator.codegen.mybatis3.IntrospectedTableMyBatis3Impl;
 
