@@ -16,23 +16,19 @@
 package cn.ucaner.skeleton.service.framework.config.es;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.http.HttpHost;
-import org.apache.http.impl.nio.client.HttpAsyncClientBuilder;
-import org.elasticsearch.client.RestClient;
-import org.elasticsearch.client.RestClientBuilder;
-import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.client.transport.TransportClient;
+import org.elasticsearch.common.settings.Settings;
+import org.elasticsearch.common.transport.TransportAddress;
+import org.elasticsearch.transport.client.PreBuiltTransportClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.DisposableBean;
-import org.springframework.beans.factory.FactoryBean;
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
 
-import java.util.Arrays;
-import java.util.Objects;
+import java.net.InetAddress;
 
 /**
  * @projectName：Skeleton-X
@@ -46,119 +42,70 @@ import java.util.Objects;
  * @Modify marker：
  */
 @Configuration
-public class ElasticsearchConfig implements FactoryBean<RestHighLevelClient>, InitializingBean, DisposableBean{
+@PropertySources(value = {@PropertySource("classpath:/es/es.properties")})
+public class ElasticsearchConfig {
 
     private static final Logger logger = LoggerFactory.getLogger(ElasticsearchConfig.class);
 
-    @Value("${elasticsearch.cluster-nodes}")
-    String esNodes="127.0.0.1:9200";
+    private static final String CLUSTER_NODES_SPLIT_SYMBOL = ",";
+
+    private static final String HOST_PORT_SPLIT_SYMBOL = ":";
 
     /**
-     * 地址长度
+     * cluster.name
      */
-    private static final int ADDRESS_LENGTH = 2;
-
-    private static final String HTTP_SCHEME = "http";
-
-    private static final String SPLIT_SCHEME = ":";
+    private static final String ES_CLUSTER_NAME = "cluster.name";
 
     /**
-     * 最大超时重连
+     * client.transport.sniff
      */
-    private static final int MAX_RETRY_TIME_OUT_MILLIS = 60000;
+    private static final String ES_TRANSPORT_SNIFF = "client.transport.sniff";
 
-//    @Bean
-//    public RestClientBuilder restClientBuilder() {
-//        HttpHost[] hosts = Arrays.stream(esNodes)
-//                .map(this::makeHttpHost)
-//                .filter(Objects::nonNull)
-//                .toArray(HttpHost[]::new);
-//        logger.debug("hosts:{}", Arrays.toString(hosts));
-//        return RestClient.builder(hosts);
-//    }
-//
-//
-//    @Bean(name = "highLevelClient")
-//    public RestHighLevelClient highLevelClient(@Autowired RestClientBuilder restClientBuilder) {
-//        restClientBuilder.setMaxRetryTimeoutMillis(MAX_RETRY_TIME_OUT_MILLIS);
-//        return new RestHighLevelClient(restClientBuilder);
-//    }
-//
-//
-//    /**
-//     * makeHttpHost
-//     * @param s 需要处理的字符串
-//     * @return  处理后的httpHost
-//     */
-//    private HttpHost makeHttpHost(String s) {
-//        assert StringUtils.isNotEmpty(s);
-//        String[] address = s.split(SPLIT_SCHEME);
-//        //如果是数组多个集群的话
-//        if (address.length == ADDRESS_LENGTH) {
-//            String ip = address[0];
-//            int port = Integer.parseInt(address[1]);
-//            return new HttpHost(ip, port, HTTP_SCHEME);
-//        } else {
-//            return null;
-//        }
-//    }
+    @Value("${elasticsearch.clusterNodes}")
+    private String clusterNodes;
 
-    private RestHighLevelClient restHighLevelClient;
 
     /**
-     * 控制Bean的实例化过程
-     *
-     * @return
-     * @throws Exception
+     * 集群名称
      */
-    @Override
-    public RestHighLevelClient getObject() throws Exception {
-        return restHighLevelClient;
-    }
+    @Value("${elasticsearch.clusterName}")
+    private String clusterName;
 
     /**
-     * 获取接口返回的实例的class
-     *
-     * @return
+     * 连接池
      */
-    @Override
-    public Class<?> getObjectType() {
-        return RestHighLevelClient.class;
-    }
+    @Value("${elasticsearch.poolsize:5}")
+    private String poolSize;
 
-    @Override
-    public void destroy() throws Exception {
+
+    @Bean
+    public TransportClient getTransportClient() {
+        logger.info("--- elasticsearch init. 初始化开始 ----");
+        if (StringUtils.isEmpty(clusterName)) {
+            throw new RuntimeException("请检查配置文件：elasticsearch.clusterName is empty.");
+        }
+        if (StringUtils.isEmpty(clusterNodes)) {
+            throw new RuntimeException("请检查配置文件：elasticsearch.clusterNodes is empty.");
+        }
         try {
-            if (restHighLevelClient != null) {
-                restHighLevelClient.close();
+            Settings settings = Settings.builder()
+                    .put(ES_CLUSTER_NAME, clusterName.trim())
+                    .put(ES_TRANSPORT_SNIFF, true).build();
+
+            TransportClient transportClient = new PreBuiltTransportClient(settings);
+            String[] clusterNodeArray = clusterNodes.trim().split(CLUSTER_NODES_SPLIT_SYMBOL);
+
+            for (String clusterNode : clusterNodeArray) {
+                String[] clusterNodeInfoArray = clusterNode.trim().split(HOST_PORT_SPLIT_SYMBOL);
+                TransportAddress transportAddress = new TransportAddress(InetAddress.getByName(clusterNodeInfoArray[0]),
+                        Integer.parseInt(clusterNodeInfoArray[1]));
+                transportClient.addTransportAddress(transportAddress);
             }
-        } catch (final Exception e) {
-            logger.error("Error closing ElasticSearch client:{} ", e);
-        }
-    }
-
-    @Override
-    public boolean isSingleton() {
-        return false;
-    }
-
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        restHighLevelClient = buildClient();
-    }
-
-    private RestHighLevelClient buildClient() {
-        try {
-            restHighLevelClient = new RestHighLevelClient(
-                    RestClient.builder(
-                            new HttpHost(
-                                    esNodes.split(SPLIT_SCHEME)[0],
-                                    Integer.parseInt(esNodes.split(SPLIT_SCHEME)[1]),
-                                    HTTP_SCHEME)));
+            logger.info("--- elasticsearch init success. 初始化成功 ---{}",transportClient.listedNodes());
+            return transportClient;
         } catch (Exception e) {
-            logger.error(e.getMessage());
+            throw new RuntimeException("elasticsearch init fail.");
         }
-        return restHighLevelClient;
     }
 
 }

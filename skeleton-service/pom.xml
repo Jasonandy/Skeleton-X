@@ -68,45 +68,37 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
         </dependency>
-
-        <!-- Java Low Level REST Client -->
+        <!--    elasticSearch -->
         <dependency>
             <groupId>org.elasticsearch.client</groupId>
-            <artifactId>elasticsearch-rest-client</artifactId>
-            <!--<version>6.3.2</version>-->
-            <!--<version>6.0.1</version>-->
-            <version>7.0.0-beta1</version>
+            <artifactId>transport</artifactId>
+            <version>6.2.3</version>
         </dependency>
-
-        <!-- Java High Level REST Client  官方推荐 -->
         <dependency>
             <groupId>org.elasticsearch.client</groupId>
             <artifactId>elasticsearch-rest-high-level-client</artifactId>
-            <!--<version>6.4.0</version>-->
-            <!--<version>6.0.1</version>-->
-            <exclusions>
-                <exclusion>
-                    <groupId>org.elasticsearch</groupId>
-                    <artifactId>elasticsearch</artifactId>
-                </exclusion>
-            </exclusions>
-            <version>7.0.0-beta1</version>
+            <version>6.2.3</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.elasticsearch.plugin</groupId>
+            <artifactId>transport-netty4-client</artifactId>
+            <version>6.2.3</version>
+        </dependency>
         <dependency>
             <groupId>org.elasticsearch</groupId>
             <artifactId>elasticsearch</artifactId>
-            <!--<version>6.4.0</version>-->
-            <!--<version>6.0.1</version>-->
-            <version>7.0.0-beta1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.elasticsearch.client</groupId>
-            <artifactId>elasticsearch-rest-client-sniffer</artifactId>
-            <!--<version>6.4.0</version>-->
             <version>6.2.3</version>
+        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.springframework.boot</groupId>-->
+            <!--<artifactId>spring-boot-starter-data-elasticsearch</artifactId>-->
+        <!--</dependency>-->
 
+        <!-- https://mvnrepository.com/artifact/com.xuxueli/xxl-job-core -->
+        <dependency>
+            <groupId>com.xuxueli</groupId>
+            <artifactId>xxl-job-core</artifactId>
+            <version>2.0.1</version>
         </dependency>
 
     </dependencies>

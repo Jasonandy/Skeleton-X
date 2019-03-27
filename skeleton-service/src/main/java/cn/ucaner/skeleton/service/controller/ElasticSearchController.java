@@ -1,12 +1,26 @@
+/******************************************************************************
+ * ~ Copyright (c) 2018 [jasonandy@hotmail.com | https://github.com/Jasonandy] *
+ * ~                                                                           *
+ * ~ Licensed under the Apache License, Version 2.0 (the "License”);           *
+ * ~ you may not use this file except in compliance with the License.          *
+ * ~ You may obtain a copy of the License at                                   *
+ * ~                                                                           *
+ * ~    http://www.apache.org/licenses/LICENSE-2.0                             *
+ * ~                                                                           *
+ * ~ Unless required by applicable law or agreed to in writing, software       *
+ * ~ distributed under the License is distributed on an "AS IS" BASIS,         *
+ * ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  *
+ * ~ See the License for the specific language governing permissions and       *
+ * ~ limitations under the License.                                            *
+ ******************************************************************************/
 package cn.ucaner.skeleton.service.controller;
 
+import cn.ucaner.skeleton.common.utils.pk.PKGenerator;
 import cn.ucaner.skeleton.common.vo.RespBody;
-import cn.ucaner.skeleton.service.user.entity.User;
-import com.fasterxml.jackson.core.json.UTF8JsonGenerator;
-import org.elasticsearch.action.index.IndexRequest;
 import org.elasticsearch.action.index.IndexResponse;
-import org.elasticsearch.client.Node;
-import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.client.transport.TransportClient;
+import org.elasticsearch.common.xcontent.XContentBuilder;
+import org.elasticsearch.common.xcontent.XContentFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +29,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.annotation.Resource;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @projectName：Skeleton-X
@@ -37,23 +46,27 @@ public class ElasticSearchController {
 
     private static Logger logger = LoggerFactory.getLogger(ElasticSearchController.class);
 
-    @Resource
-    RestHighLevelClient restHighLevelClient;
+    @Autowired
+    private TransportClient transportClient;
 
     @ResponseBody
-    @RequestMapping(value = "/test",method= RequestMethod.GET)
+    @RequestMapping(value = "/add",method= RequestMethod.GET)
     public RespBody testElasticSearch() {
         RespBody respBody = new RespBody();
         try {
-            Map<String, Object> jsonMap = new HashMap<>();
-            jsonMap.put("user", "Jason");
-            jsonMap.put("postDate", new Date());
-            jsonMap.put("message", "trying out Elasticsearch");
-            IndexRequest indexRequest = new IndexRequest("index", "type", "1").source(jsonMap);
-            IndexResponse indexResponse = restHighLevelClient.index(indexRequest,null);
-            logger.info("测试-testElasticSearch:{}",indexResponse);
+            String id = PKGenerator.uuid32();
+            XContentBuilder xContentBuilder = XContentFactory.jsonBuilder().startObject()
+                    .field("name", "Jason")
+                    .field("age", 24)
+                    .field("address", "长沙市")
+                    .endObject();
+            IndexResponse indexResponse = transportClient.prepareIndex("MY_TEST",
+                "MY_TYPE", id).setSource(xContentBuilder).execute().get();
+            respBody.addOK(indexResponse,"插入到es成功!");
+            logger.info("插入到es成功!数据为:{}",indexResponse);
         } catch (Exception e) {
             respBody.addError(e.getMessage());
+            logger.error("插入异常！{}",e);
         }
         return respBody;
     }
