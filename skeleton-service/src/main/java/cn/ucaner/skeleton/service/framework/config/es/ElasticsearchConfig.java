@@ -41,8 +41,8 @@ import java.net.InetAddress;
  * @ModifyTime： 2019/3/26
  * @Modify marker：
  */
-@Configuration
-@PropertySources(value = {@PropertySource("classpath:/es/es.properties")})
+//@Configuration
+//@PropertySources(value = {@PropertySource("classpath:/es/es.properties")})
 public class ElasticsearchConfig {
 
     private static final Logger logger = LoggerFactory.getLogger(ElasticsearchConfig.class);
