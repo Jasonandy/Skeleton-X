@@ -107,26 +107,26 @@
     <!-- maven 构建 -->
     <build>
         <finalName>${project.name}</finalName>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-            </resource>
-            <!-- xml properties 文件打包进去 -->
-            <resource>
-                <directory>src/main/java</directory>
-                <includes>
-                    <include>**/*.txt</include>
-                    <include>**/*.yaml</include>
-                    <include>**/*.properties</include>
-                    <include>**/*.xml</include>
-                    <include>**/*.java</include>
-                </includes>
-                <filtering>true</filtering>
-            </resource>
-            <resource>
-                <directory>src/main/webapp</directory>
-            </resource>
-        </resources>
+        <!--<resources>-->
+            <!--<resource>-->
+                <!--<directory>src/main/resources</directory>-->
+            <!--</resource>-->
+            <!--&lt;!&ndash; xml properties 文件打包进去 &ndash;&gt;-->
+            <!--<resource>-->
+                <!--<directory>src/main/java</directory>-->
+                <!--<includes>-->
+                    <!--<include>**/*.txt</include>-->
+                    <!--<include>**/*.yaml</include>-->
+                    <!--<include>**/*.properties</include>-->
+                    <!--<include>**/*.xml</include>-->
+                    <!--<include>**/*.java</include>-->
+                <!--</includes>-->
+                <!--<filtering>true</filtering>-->
+            <!--</resource>-->
+            <!--<resource>-->
+                <!--<directory>src/main/webapp</directory>-->
+            <!--</resource>-->
+        <!--</resources>-->
         <!-- MYBATIS-GENERATOR  plugin -->
         <plugins>
             <!-- springboot 打包exec.jar -->
