@@ -7,7 +7,7 @@
  *</body>
  *</html>
  */
-package cn.ucaner.wx.app.core.utils.date;
+package cn.ucaner.skeleton.common.utils.date;
 
 import java.sql.Timestamp;
 import java.text.ParseException;

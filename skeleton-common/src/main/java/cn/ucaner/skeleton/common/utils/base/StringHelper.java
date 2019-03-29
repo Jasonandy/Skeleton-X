@@ -1477,6 +1477,22 @@ public class StringHelper {
 		}
 		return value;
 	}
+
+
+    /**
+     * 获取去重的string key
+     * @param str
+     * @return
+     */
+    public static String getDelRepeStrKey(String... str) {
+        // 单线程用StringBuilder，确保速度；多线程用StringBuffer,确保安全
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i <str.length-1; i++) {
+            sb.append(str[i]).append("_");
+        }
+        sb.append(str[str.length]);
+        return sb.toString();
+    }
 	
 	/**
 	 * @Description: Just for test
