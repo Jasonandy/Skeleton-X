@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Configuration;
  * @ModifyTime： 2019/3/27
  * @Modify marker：
  */
-@Configuration
+//@Configuration
 public class XxlJobConfig {
 
     private Logger logger = LoggerFactory.getLogger(XxlJobConfig.class);

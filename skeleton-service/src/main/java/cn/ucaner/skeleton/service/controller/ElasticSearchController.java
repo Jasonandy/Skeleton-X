@@ -46,30 +46,30 @@ public class ElasticSearchController {
 
     private static Logger logger = LoggerFactory.getLogger(ElasticSearchController.class);
 
-    @Autowired
-    private TransportClient transportClient;
-
-    @ResponseBody
-    @RequestMapping(value = "/add",method= RequestMethod.GET)
-    public RespBody testElasticSearch() {
-        RespBody respBody = new RespBody();
-        try {
-            String id = PKGenerator.uuid32();
-            XContentBuilder xContentBuilder = XContentFactory.jsonBuilder().startObject()
-                    .field("name", "Jason")
-                    .field("age", 24)
-                    .field("address", "长沙市")
-                    .endObject();
-            IndexResponse indexResponse = transportClient.prepareIndex("MY_TEST",
-                "MY_TYPE", id).setSource(xContentBuilder).execute().get();
-            respBody.addOK(indexResponse,"插入到es成功!");
-            logger.info("插入到es成功!数据为:{}",indexResponse);
-        } catch (Exception e) {
-            respBody.addError(e.getMessage());
-            logger.error("插入异常！{}",e);
-        }
-        return respBody;
-    }
+//    @Autowired
+//    private TransportClient transportClient;
+//
+//    @ResponseBody
+//    @RequestMapping(value = "/add",method= RequestMethod.GET)
+//    public RespBody testElasticSearch() {
+//        RespBody respBody = new RespBody();
+//        try {
+//            String id = PKGenerator.uuid32();
+//            XContentBuilder xContentBuilder = XContentFactory.jsonBuilder().startObject()
+//                    .field("name", "Jason")
+//                    .field("age", 24)
+//                    .field("address", "长沙市")
+//                    .endObject();
+//            IndexResponse indexResponse = transportClient.prepareIndex("MY_TEST",
+//                "MY_TYPE", id).setSource(xContentBuilder).execute().get();
+//            respBody.addOK(indexResponse,"插入到es成功!");
+//            logger.info("插入到es成功!数据为:{}",indexResponse);
+//        } catch (Exception e) {
+//            respBody.addError(e.getMessage());
+//            logger.error("插入异常！{}",e);
+//        }
+//        return respBody;
+//    }
 
 
 }

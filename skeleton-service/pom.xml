@@ -16,6 +16,15 @@
     <name>skeleton-service</name>
     <description>Java后台的 Service业务层抽取</description>
 
+    <!-- 包配置 -->
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- easy.poi version -->
+        <easy.poi.version>3.2.0</easy.poi.version>
+    </properties>
+
+
     <!--PROJECT DEPENDENCIES-->
     <dependencies>
 
@@ -100,6 +109,24 @@
             <artifactId>xxl-job-core</artifactId>
             <version>2.0.1</version>
         </dependency>
+
+        <!-- spriingboot 整合easypoi Start-->
+        <dependency>
+            <groupId>cn.afterturn</groupId>
+            <artifactId>easypoi-base</artifactId>
+            <version>${easy.poi.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.afterturn</groupId>
+            <artifactId>easypoi-web</artifactId>
+            <version>${easy.poi.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.afterturn</groupId>
+            <artifactId>easypoi-annotation</artifactId>
+            <version>${easy.poi.version}</version>
+        </dependency>
+        <!-- spriingboot 整合easypoi End -->
 
     </dependencies>
 
