@@ -13,42 +13,23 @@
  * ~ See the License for the specific language governing permissions and       *
  * ~ limitations under the License.                                            *
  ******************************************************************************/
-package cn.ucaner.skeleton.service.user.dao.impl;
+package cn.ucaner.skeleton.service.user.repository;
 
-import cn.ucaner.skeleton.common.base.dao.impl.BaseDaoImpl;
-import cn.ucaner.skeleton.common.exception.SystemException;
-import cn.ucaner.skeleton.service.user.dao.UserMapper;
 import cn.ucaner.skeleton.service.user.entity.User;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.annotation.Resource;
-import java.util.List;
+import org.springframework.data.elasticsearch.repository.ElasticsearchRepository;
+import org.springframework.stereotype.Service;
 
 /**
  * @projectName：Skeleton-X
- * @Package：cn.ucaner.skeleton.service.user.dao.impl
- * @Description： <p> TODO </p>
+ * @Package：cn.ucaner.skeleton.service.user.repository
+ * @Description： <p> UserEsRepository  </p>
  * @Author： - Jason
- * @CreatTime：2019/3/19 - 11:42
+ * @CreatTime：2019/4/25 - 11:01
  * @Modify By：
- * @ModifyTime： 2019/3/19
+ * @ModifyTime： 2019/4/25
  * @Modify marker：
  */
-@Resource
-public class UserMapperImpl extends BaseDaoImpl<User,String> implements UserMapper {
+@Service(value = "userEsRepository")
+public interface  UserEsRepository extends ElasticsearchRepository<User, String> {
 
-    private static Logger logger = LoggerFactory.getLogger(UserMapperImpl.class);
-
-    private final static String GET_ALL_USER_LIST = "getAllUserList";
-
-    @Override
-    public List<User> getAllUserList() {
-        try {
-            return sqlSession.selectList(getSqlName(GET_ALL_USER_LIST));
-        } catch (Exception e) {
-            logger.error(String.format("查询对象出错！语句：%s", getSqlName(GET_ALL_USER_LIST)), e);
-            throw new SystemException(String.format("查询对象出错！语句：%s", getSqlName(GET_ALL_USER_LIST)), e);
-        }
-    }
 }

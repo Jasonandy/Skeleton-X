@@ -18,6 +18,7 @@ package cn.ucaner.skeleton.service.user.entity;
 import cn.afterturn.easypoi.excel.annotation.Excel;
 import cn.afterturn.easypoi.handler.inter.IExcelModel;
 import cn.ucaner.skeleton.common.base.entity.BaseEntity;
+import org.springframework.data.elasticsearch.annotations.Document;
 
 import javax.validation.constraints.Pattern;
 import java.io.Serializable;
@@ -32,15 +33,13 @@ import java.io.Serializable;
  * @Modify marker：
  * @version V1.0
 */
+@Document(indexName = "user", type = "user", shards = 1, replicas = 0, refreshInterval = "-1")
 public class User extends BaseEntity implements IExcelModel,Serializable  {
 
     /**
      * 自定义errorMsg接收IExcelModel.setErrorMsg传过来的errorMsg
      */
     private String errorMsg;
-
-    @Excel(name = "id",needMerge = true)
-    private String id;
 
     @Excel(name = "姓名" ,orderNum = "1")
     @Pattern(regexp = "[\u4E00-\u9FA5]*", message = "不是中文")

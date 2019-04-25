@@ -16,7 +16,6 @@
 package cn.ucaner.skeleton.service.user.service;
 
 import cn.ucaner.skeleton.common.base.service.BaseService;
-import cn.ucaner.skeleton.service.user.entity.User;
 
 import java.util.List;
 
@@ -37,4 +36,24 @@ public interface UserService<User,String> extends BaseService {
      * @return 用户列表
      */
     List<User> getAllUserList();
+
+    /**
+     *findEsById
+     * @param id
+     * @return
+     */
+    User findEsById(String id);
+
+    /**
+     * saveByEs
+     * @param user
+     * @return
+     */
+    User saveByEs(User user);
+
+    /**
+     * findAllByEs
+     * @return
+     */
+    List<User> findAllByEs();
 }

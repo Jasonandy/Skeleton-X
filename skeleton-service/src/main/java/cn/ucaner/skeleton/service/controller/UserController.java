@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
+import java.util.Random;
 
 
 /**
@@ -77,6 +78,35 @@ public class UserController {
         userService.insert(user);
         logger.info("新增用户-randomInsert:{}",user);
         respBody.addOK(user,"插入成功!");
+        return respBody;
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/es",method= RequestMethod.GET)
+    public RespBody esTest() {
+        RespBody respBody = new RespBody();
+        User user = new User();
+        user.setId(PKGenerator.uuid32());
+        user.setAge(new Random().nextInt(30));
+        user.setName("Skeleton.ES..");
+        user.setDesc("Skeleton..ES..");
+        userService.saveByEs(user);
+        logger.info("-ES新增用户-randomInsert:{}",user);
+        respBody.addOK(user,"插入成功!");
+        return respBody;
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/esList",method= RequestMethod.GET)
+    public RespBody esTestGet() {
+        RespBody respBody = new RespBody();
+        long startTime = System.currentTimeMillis();
+        List allUserList = userService.getAllUserList();
+        logger.info("当前load出来的数据Szie:{}",allUserList.size());
+        long endTime = System.currentTimeMillis();
+        respBody.addOK((endTime-startTime)+":ms ","总耗时时间.");
         return respBody;
     }
 
