@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <!-- parent 父工程 -->
+    <parent>
+        <artifactId>skeleton</artifactId>
+        <groupId>cn.ucaner</groupId>
+        <version>tuna-1.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- web 项目 -->
+    <artifactId>skeleton-webapp</artifactId>
+    <name>skeleton-webapp</name>
+    <description>Skeleton webapp .... </description>
+
+    <!-- 配置 -->
+    <properties>
+        <!-- sourceEncoding -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <!--PROJECT DEPENDENCIES-->
+    <dependencies>
+        <!-- skeleton-service -->
+        <dependency>
+            <groupId>cn.ucaner</groupId>
+            <artifactId>skeleton-service</artifactId>
+            <version>tuna-1.0</version>
+        </dependency>
+
+        <!-- mybatis-spring-boot-starter  -->
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+        </dependency>
+
+    </dependencies>
+
+    <!-- maven 构建 -->
+    <build>
+        <finalName>${project.name}</finalName>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+            <!-- xml properties 文件打包进去 -->
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.properties</include>
+                    <include>**/*.xml</include>
+                </includes>
+                <filtering>false</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/webapp</directory>
+            </resource>
+        </resources>
+
+        <!-- MYBATIS-GENERATOR  plugin -->
+        <plugins>
+            <!-- springboot 打包exec.jar -->
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <executable>true</executable>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                        <configuration>
+                            <classifier>exec</classifier>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+
+
+</project>

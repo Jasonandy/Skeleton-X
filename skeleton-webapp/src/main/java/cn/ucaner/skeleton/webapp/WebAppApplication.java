@@ -13,25 +13,26 @@
  * ~ See the License for the specific language governing permissions and       *
  * ~ limitations under the License.                                            *
  ******************************************************************************/
-package cn.ucaner.skeleton.service;
+package cn.ucaner.skeleton.webapp;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
  * @projectName：Skeleton-X
- * @Package：cn.ucaner.skeleton.service
- * @Description： <p> ServiceApplication  </p>
+ * @Package：cn.ucaner.skeleton.webapp
+ * @Description： <p> WebAppApplication  </p>
  * @Author： - Jason
- * @CreatTime：2019/3/19 - 9:23
+ * @CreatTime：2019/4/26 - 15:14
  * @Modify By：
- * @ModifyTime： 2019/3/19
+ * @ModifyTime： 2019/4/26
  * @Modify marker：
  */
-@SpringBootApplication
-public class ServiceApplication {
+@ComponentScan("cn.ucaner.skeleton")
+public class WebAppApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ServiceApplication.class, args);
+        SpringApplication.run(WebAppApplication.class, args);
     }
+
 }

@@ -1,11 +1,18 @@
 ###############ignored by JASON ##################
 /skeleton.iml
-/skeleton-common/skeleton-common.iml
 /.idea/
 
 /skeleton-common/target
+/skeleton-common/skeleton-common.iml
+
+/skeleton-service/target
 /skeleton-service/skeleton-service.iml
+
+/skeleton-webapp/target
+/skeleton-webapp/*.iml
+
 
 /logs/
 /cache/
 ##################################################
+

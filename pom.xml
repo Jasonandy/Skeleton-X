@@ -14,6 +14,7 @@
     <modules>
         <module>skeleton-common</module>
         <module>skeleton-service</module>
+        <module>skeleton-webapp</module>
     </modules>
 
     <!-- 项目 -->
@@ -36,6 +37,7 @@
 
     <!--版本维护-->
     <properties>
+        <global.version>tuna-1.0</global.version>
         <mybatis-spring-boot-starter.version>2.0.0</mybatis-spring-boot-starter.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
