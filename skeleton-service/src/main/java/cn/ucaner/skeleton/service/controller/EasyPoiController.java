@@ -27,17 +27,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
- * @projectName：Skeleton-X
- * @Description： <p> EasyPoiController </p>
+ * @ClassName：EasyPoiController
+ * @Description： <p>  EasyPoiController </p>
  * @Author： - Jason
- * @CreatTime：2019/3/26 - 9:43
+ * @CreatTime：2019/4/26 - 9:28
  * @Modify By：
- * @ModifyTime： 2019/3/26
+ * @ModifyTime： 2019/4/26
  * @Modify marker：
- */
+ * @version V1.0
+*/
 @Controller
 @RequestMapping("/excel")
 public class EasyPoiController {
