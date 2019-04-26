@@ -26,11 +26,14 @@ import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsRespon
 import org.elasticsearch.action.admin.indices.exists.types.TypesExistsRequest;
 import org.elasticsearch.action.admin.indices.exists.types.TypesExistsResponse;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
+import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.delete.DeleteResponse;
+import org.elasticsearch.action.index.IndexRequestBuilder;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.transport.TransportClient;
+import org.elasticsearch.common.xcontent.XContentType;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
@@ -76,7 +79,7 @@ public class ElasticSearchBaseDaoImpl  implements ElasticSearchBaseDao {
     @Override
     public IndexResponse createIndexByJson(String indexName, String indexType, String indexId, String jsonStr) {
         IndexResponse response = transportClient.prepareIndex(indexName, indexType,indexId)
-                .setSource(jsonStr).execute().actionGet();
+                .setSource(jsonStr,XContentType.JSON).execute().actionGet();
         return response;
     }
 
@@ -88,13 +91,24 @@ public class ElasticSearchBaseDaoImpl  implements ElasticSearchBaseDao {
      */
     @Override
     public void createIndexsByBeans(String indexName, String indexType, List<BaseEntity> entry) {
-        BulkRequestBuilder builder = transportClient.prepareBulk();
+        BulkRequestBuilder bulkRequest = transportClient.prepareBulk();
+
         for (BaseEntity entity : entry) {
-            String jsonStr = JSON.toJSONString(entity);
             String id = entity.getId();
-            builder.add(transportClient.prepareIndex(indexName, indexType, id).setSource(jsonStr).request());
+            String jsonStr = JSON.toJSONString(entity);
+            IndexRequestBuilder indexRequest = transportClient.prepareIndex(indexName, indexType)
+                    .setId(id).setSource(jsonStr,XContentType.JSON);
+            bulkRequest.add(indexRequest);
         }
-        builder.execute().actionGet();
+        long beginTime = System.currentTimeMillis();
+        BulkResponse bulkItemResponses = bulkRequest.execute().actionGet();
+
+        if (bulkItemResponses.hasFailures()) {
+            logger.error("======= bulkItemResponses.hasFailures:{} ==== ",bulkItemResponses.buildFailureMessage());
+        }
+        long endTime = System.currentTimeMillis();
+        logger.info("=== createIndexsByBeans:took:{} S ===",bulkItemResponses.getIngestTookInMillis());
+        logger.info("=== createIndexsByBeans:took:{} S ===",(endTime-beginTime)/1000f);
     }
 
     /**
@@ -411,7 +425,7 @@ public class ElasticSearchBaseDaoImpl  implements ElasticSearchBaseDao {
     }
 
     /**
-     * getDataByMuchIllegible - wildcardQuery
+     * getDataByMuchIllegible - wildcardQuery 通配符查询
      * @param index    索引
      * @param type     类型
      * @param queryMap queryMap K-V 查询条件
@@ -427,6 +441,40 @@ public class ElasticSearchBaseDaoImpl  implements ElasticSearchBaseDao {
                 .setQuery(boolQueryBuilder).setFrom(0).setSize(10000).setExplain(true)
                 .execute().actionGet();
         return responseToList(transportClient,response);
+    }
+
+    /**
+     * getIndexDataJsonStr
+     * @param indexName
+     * @param typeName
+     * @return
+     */
+    @Override
+    public String getIndexDataJsonStr(String indexName, String typeName) {
+        QueryBuilder query = QueryBuilders.matchAllQuery();
+        SearchResponse response = transportClient.prepareSearch(indexName).setTypes(typeName).setQuery(query).execute().actionGet();
+        SearchHits hits = response.getHits();
+        StringBuilder stringBuilder = new StringBuilder();
+        for (SearchHit searchHit : hits) {
+            stringBuilder.append(searchHit.getSourceAsString());
+        }
+        return stringBuilder.toString();
+    }
+
+    /**
+     * getIndexDataJsonStr
+     * @param indexName 索引name
+     * @return
+     */
+    @Override
+    public String getIndexDataJsonStr(String indexName) {
+        QueryBuilder query = QueryBuilders.matchAllQuery();
+        SearchResponse response = transportClient.prepareSearch(indexName).setQuery(query).execute().actionGet();
+        StringBuilder stringBuilder = new StringBuilder();
+        for (SearchHit searchHit : response.getHits()) {
+            stringBuilder.append(searchHit.getSourceAsString());
+        }
+        return stringBuilder.toString();
     }
 
 

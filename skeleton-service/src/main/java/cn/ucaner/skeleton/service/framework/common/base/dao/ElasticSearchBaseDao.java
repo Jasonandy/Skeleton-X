@@ -197,4 +197,19 @@ public interface ElasticSearchBaseDao {
      * @return
      */
     List getDataByMuchIllegible(String index,String type, Map<String,String> queryMap);
+
+    /**
+     * 根据index 和 type 查询数据
+     * @param indexName
+     * @param typeName
+     * @return
+     */
+    String getIndexDataJsonStr(String indexName,String typeName);
+
+    /**
+     * getIndexDataJsonStr 根据index查询数据
+     * @param indexName
+     * @return
+     */
+    String getIndexDataJsonStr(String indexName);
 }

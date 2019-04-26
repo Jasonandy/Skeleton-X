@@ -15,12 +15,17 @@
  ******************************************************************************/
 package cn.ucaner.skeleton.service.controller;
 
+import cn.ucaner.skeleton.common.base.entity.BaseEntity;
+import cn.ucaner.skeleton.common.utils.encrypt.MD5Utils;
 import cn.ucaner.skeleton.common.utils.pk.PKGenerator;
 import cn.ucaner.skeleton.common.vo.RespBody;
 import cn.ucaner.skeleton.service.framework.common.base.dao.impl.ElasticSearchBaseDaoImpl;
+import cn.ucaner.skeleton.service.user.entity.User;
+import com.alibaba.fastjson.JSON;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
+import org.elasticsearch.action.admin.indices.create.CreateIndexRequestBuilder;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.xcontent.XContentBuilder;
@@ -38,8 +43,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 
 /**
@@ -73,32 +77,92 @@ public class ElasticSearchController {
      */
     @ResponseBody
     @GetMapping(value="/add/{indexName}/{type}/{id}")
-    public RespBody testElasticSearch(@PathVariable String indexName, @PathVariable String type, @RequestParam(required=false) String id){
+    public RespBody add2ElasticSearch(@PathVariable String indexName, @PathVariable String type, @RequestParam(required=false) String id){
         logger.info("---indexName:{},type:{},id:{}---",indexName,type,id);
         RespBody respBody = new RespBody();
         try {
             if (StringUtils.isBlank(id)){
                 id = PKGenerator.uuid32();
             }
+
             XContentBuilder xContentBuilder = XContentFactory.jsonBuilder().startObject()
-                    .field("name", "Jason")
-                    .field("age", 24)
-                    .field("address", "长沙市")
+                    .field("name", PKGenerator.randomBase62(8))
+                    .field("age", new Random().nextInt(24))
+                    .field("address", MD5Utils.getMD5(PKGenerator.uuid()))
                     .endObject();
 
             IndexResponse indexResponse = transportClient.
                     prepareIndex(indexName,type, id)
                     .setSource(xContentBuilder).execute().get();
 
-
-            respBody.addOK(indexResponse,"插入到es成功!");
-            logger.info("插入到es成功!数据为:{}",indexResponse);
+            respBody.addOK(indexResponse," -- add2ElasticSearchSuccess  ---");
+            logger.info("add2ElasticSearchSuccess:{}",indexResponse);
         } catch (Exception e) {
             respBody.addError(e.getMessage());
-            logger.error("插入异常！{}",e);
+            logger.error(" --- add2ElasticSearch:{} ----",e.getMessage());
         }
         return respBody;
     }
+
+
+    @ResponseBody
+    @GetMapping(value="/addUser/{indexName}/{typeName}/{count}/{id}")
+    public RespBody addUser(@PathVariable String indexName, @PathVariable String typeName,@PathVariable Integer count, @RequestParam(required=false) String id){
+        logger.info("---indexName:{},type:{},count:{},id:{}---",indexName,typeName,count,id);
+        RespBody respBody = new RespBody();
+        try {
+            if (StringUtils.isBlank(id)){
+                id = PKGenerator.uuid32();
+            }
+            for (int i = 0; i < count; i++) {
+                User user = new User();
+                user.setId(id);
+                user.setAge(new Random().nextInt(24));
+                user.setName(PKGenerator.randomBase62(8));
+                user.setDesc(MD5Utils.getMD5(PKGenerator.uuid()));
+
+                String jsonStr = JSON.toJSONString(user);
+                IndexResponse indexByJson = elasticSearchBaseDaoImpl.createIndexByJson(indexName, typeName, id, jsonStr);
+                logger.info("addUser:{}",indexByJson);
+            }
+            respBody.addOK(id," -- addUser  ---");
+        } catch (Exception e) {
+            respBody.addError(e.getMessage());
+            logger.error(" --- addUser:{} ----",e.getMessage());
+        }
+        return respBody;
+    }
+
+    @ResponseBody
+    @GetMapping(value="/addBatchUser/{indexName}/{typeName}/{count}/{id}")
+    public RespBody addBatchUser(@PathVariable String indexName, @PathVariable String typeName,@PathVariable Integer count, @RequestParam(required=false) String id){
+        logger.info("---indexName:{},type:{},count:{},id:{}---",indexName,typeName,count,id);
+        RespBody respBody = new RespBody();
+        List<BaseEntity> lists  = new LinkedList<>();
+        try {
+            if (StringUtils.isBlank(id)){
+                id = PKGenerator.uuid32();
+            }
+            for (int i = 0; i < count; i++) {
+                User user = new User();
+                user.setId(id);
+                user.setAge(new Random().nextInt(24));
+                user.setName(PKGenerator.randomBase62(8));
+                user.setDesc(MD5Utils.getMD5(PKGenerator.uuid()));
+                lists.add(user);
+                logger.info("addBatchUser:{}",JSON.toJSONString(user));
+            }
+            logger.info("--- batch add Size:{} ---",lists.size());
+            elasticSearchBaseDaoImpl.createIndexsByBeans(indexName,typeName,lists);
+            lists.clear();
+            respBody.addOK(id," -- addUser  ---");
+        } catch (Exception e) {
+            respBody.addError(e.getMessage());
+            logger.error(" --- addBatchUser:{} ----",e.getMessage());
+        }
+        return respBody;
+    }
+
 
 
     @ResponseBody
@@ -109,7 +173,7 @@ public class ElasticSearchController {
             elasticSearchBaseDaoImpl.cleanAllIndex();
             respBody.addOK("yes","--cleanAll success --- ");
         } catch (Exception e) {
-            logger.error("---- cleanAll error:{} ---");
+            logger.error("---- cleanAll error:{} ---",e.getMessage());
             respBody.addError("---- cleanAll error ---");
         }
         return respBody;
@@ -126,7 +190,7 @@ public class ElasticSearchController {
             logger.info("==== indexName:{} getCount:{} ====",indexName,indexDataCount);
             respBody.addOK(indexDataCount,"--getCount success --- ");
         } catch (Exception e) {
-            logger.error("---- getCount error:{} ---");
+            logger.error("---- getCount error:{} ---",e.getMessage());
             respBody.addError("---- getCount error ---");
         }
         return respBody;
@@ -162,12 +226,51 @@ public class ElasticSearchController {
             logger.info("---- hitsStringList:{} ---",hitsStringList);
             respBody.addOK(hitsStringList,"--getHits success --- ");
         } catch (Exception e) {
-            logger.error("---- getHits error:{} ---");
+            logger.error("---- getHits error:{} ---",e.getMessage());
             respBody.addError("---- getHits error ---");
         }
         return respBody;
     }
 
+
+    @ApiOperation("getWildcardQuery")
+    @ResponseBody
+    @GetMapping(value="/wild/{indexName}/{indexType}/{queryMap}")
+    public RespBody getWildcardQuery(@PathVariable String indexName,@PathVariable String indexType,
+                                     @RequestParam Map<String, String> queryMap){
+        RespBody respBody = new RespBody();
+        try {
+            List lists = elasticSearchBaseDaoImpl.getDataByMuchIllegible(indexName, indexType, queryMap);
+            logger.info("---- getWildcardQueryList:{} ---",lists);
+            respBody.addOK(lists,"-- getWildcardQuery success --- ");
+        } catch (Exception e) {
+            logger.error("---- getWildcardQuery error:{} ---",e.getMessage());
+            respBody.addError("---- getWildcardQuery error ---");
+        }
+        return respBody;
+    }
+
+
+    @ApiOperation("getIndex")
+    @ResponseBody
+    @GetMapping(value="/getIndex/{indexName}/{typeName}")
+    public RespBody getIndexDataString(@PathVariable String indexName,@RequestParam(required=false)String typeName){
+        RespBody respBody = new RespBody();
+        try {
+            String indexDataJsonStr;
+            if (StringUtils.isEmpty(typeName)){
+                 indexDataJsonStr = elasticSearchBaseDaoImpl.getIndexDataJsonStr(indexName);
+            }else{
+                indexDataJsonStr = elasticSearchBaseDaoImpl.getIndexDataJsonStr(indexName, typeName);
+            }
+            logger.info("---- getIndexDataString:{} ---",indexDataJsonStr);
+            respBody.addOK(indexDataJsonStr,"-- getIndexDataString success --- ");
+        } catch (Exception e) {
+            logger.error("---- getIndexDataString error:{} ---",e.getMessage());
+            respBody.addError("---- getIndexDataString error ---");
+        }
+        return respBody;
+    }
 
 
 
