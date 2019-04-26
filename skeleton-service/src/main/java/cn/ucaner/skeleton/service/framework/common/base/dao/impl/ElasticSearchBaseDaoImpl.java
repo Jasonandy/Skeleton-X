@@ -43,7 +43,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @projectName：Skeleton-X
@@ -406,6 +408,43 @@ public class ElasticSearchBaseDaoImpl  implements ElasticSearchBaseDao {
         SearchRequestBuilder responsebuilder = transportClient.prepareSearch(index);
         SearchResponse myresponse = responsebuilder.get();
         return myresponse.getHits().getTotalHits();
+    }
+
+    /**
+     * getDataByMuchIllegible - wildcardQuery
+     * @param index    索引
+     * @param type     类型
+     * @param queryMap queryMap K-V 查询条件
+     * @return
+     */
+    @Override
+    public List getDataByMuchIllegible(String index, String type, Map<String, String> queryMap) {
+        BoolQueryBuilder boolQueryBuilder = QueryBuilders.boolQuery();
+        for (String key : queryMap.keySet()) {
+            boolQueryBuilder.must(QueryBuilders.wildcardQuery(key,queryMap.get(key)));
+        }
+        SearchResponse response = transportClient.prepareSearch(index).setTypes(type)
+                .setQuery(boolQueryBuilder).setFrom(0).setSize(10000).setExplain(true)
+                .execute().actionGet();
+        return responseToList(transportClient,response);
+    }
+
+
+    /**
+     * 将查询后获得的response转成list
+     * @param client   transportClient
+     * @param response SearchResponse
+     * @return
+     */
+    public List responseToList(TransportClient client,SearchResponse response){
+        SearchHits hits = response.getHits();
+        List<Map<String, Object>> list = new ArrayList<>();
+        for (int i = 0; i < hits.getHits().length; i++) {
+            Map<String, Object> map = hits.getAt(i).getSourceAsMap();
+            list.add(map);
+        }
+        client.close();
+        return list;
     }
 
 }

@@ -23,6 +23,7 @@ import org.elasticsearch.search.SearchHits;
 import org.elasticsearch.index.query.QueryBuilder;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @projectName：Skeleton-X
@@ -187,4 +188,13 @@ public interface ElasticSearchBaseDao {
      * @return 数据量[条数]
      */
     long getIndexDataCount(String index);
+
+    /**
+     * type 类型 多条件 模糊查询
+     * @param index    索引
+     * @param type     类型
+     * @param queryMap queryMap K-V 查询条件
+     * @return
+     */
+    List getDataByMuchIllegible(String index,String type, Map<String,String> queryMap);
 }
