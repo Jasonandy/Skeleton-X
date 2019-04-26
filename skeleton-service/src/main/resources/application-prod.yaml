@@ -29,5 +29,5 @@ spring:
 
 ################################################################################
 logging:
-  config: classpath:logback/logback-prod.xml
+  config: classpath:config/logback/logback-prod.xml
 ################################################################################

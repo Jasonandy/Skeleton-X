@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--  ehcache https://blog.csdn.net/vbirdbest/article/details/72763048 -->
-<ehcache name="sys">
+<ehcache updateCheck="false" name="skeleton">
 
     <!-- 指定一个文件目录，当EhCache把数据写到硬盘上时，将把数据写到这个文件目录下  -->
-    <diskStore path="java.io.tmpdir/ehcache"/>
+    <!--<diskStore path="java.io.tmpdir/ehcache"/>-->
+    <!--
+        user.home  用户的主目录
+        user.dir  用户的当前工作目录
+        java.io.tmpdir 默认的临时文件路径
+    -->
 
-    <!-- 登录记录缓存 锁定10分钟  5次  -->
+    <diskStore path="user.dir/cache"/>
+
     <!-- name 缓存名称,cache的唯一标识(ehcache会把这个cache放到HashMap里)。 -->
     <!-- maxEntriesLocalHeap 磁盘缓存中最多可以存放的元素数量,0表示无穷大。  -->
     <!-- eternal 缓存中对象是否永久有效,即是否永驻内存,true时将忽略timeToIdleSeconds和timeToLiveSeconds -->
@@ -15,6 +21,12 @@
     	  即Cache中的某元素从创建到清楚的生存时间,也就是说从创建开始计时,当超过这个时间时,此元素将从Cache中清除。 -->
     <!-- overflowToDisk 内存不足时,是否启用磁盘缓存(即内存中对象数量达到maxElementsInMemory时,Ehcache会将对象写到磁盘中)，
        	  会根据标签中path值查找对应的属性值,写入磁盘的文件会放在path文件夹下,文件的名称是cache的名称,后缀名是data。 -->
+
+    <!--diskExpiryThreadIntervalSeconds：磁盘缓存的清理线程运行间隔-->
+    <!--memoryStoreEvictionPolicy：缓存清空策略-->
+         <!--1.FIFO：first in first out 先进先出-->
+         <!--2.LFU： Less Frequently Used 一直以来最少被使用的-->
+         <!--3.LRU：Least Recently Used  最近最少使用的-->
 
     <!-- 默认缓存 -->
     <defaultCache
@@ -28,24 +40,17 @@
         <persistence strategy="localTempSwap"/>
     </defaultCache>
 
-    <!-- 防止恶意刷访问量   访问量统计 -->
+
+    <!-- 查看人数统计 -->
     <cache name="viewCount"
            maxEntriesLocalHeap="2000"
            eternal="false"
            timeToIdleSeconds="3600"
            timeToLiveSeconds="0"
+           diskPersistent = "true"
            overflowToDisk="false"
            statistics="true">
     </cache>
 
-    <!--  当前在线人数统计 -->
-    <cache name="onlinePerson"
-           maxEntriesLocalHeap="2000"
-           eternal="false"
-           timeToIdleSeconds="3600"
-           timeToLiveSeconds="0"
-           overflowToDisk="false"
-           statistics="true">
-    </cache>
 
 </ehcache>

@@ -42,7 +42,7 @@ import java.net.InetAddress;
  * @Modify marker：
  */
 @Configuration
-@PropertySources(value = {@PropertySource("classpath:/es/es.properties")})
+@PropertySources(value = {@PropertySource("classpath:/config/es/es.properties")})
 public class ElasticsearchConfig {
 
     private static final Logger logger = LoggerFactory.getLogger(ElasticsearchConfig.class);
