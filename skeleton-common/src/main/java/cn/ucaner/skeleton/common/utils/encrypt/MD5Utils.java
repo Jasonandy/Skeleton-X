@@ -26,7 +26,7 @@ import org.apache.commons.lang3.StringUtils;
 * @Modify marker：   
 * @version    V1.0
  */
-class MD5Utils {
+public class MD5Utils {
 	
 	/**
 	 * MD5_KEY 

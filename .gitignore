@@ -11,8 +11,11 @@
 /skeleton-webapp/target
 /skeleton-webapp/*.iml
 
+/skeleton-gateway/target
+/skeleton-gateway/skeleton-gateway.iml
 
 /logs/
 /cache/
 ##################################################
+
 

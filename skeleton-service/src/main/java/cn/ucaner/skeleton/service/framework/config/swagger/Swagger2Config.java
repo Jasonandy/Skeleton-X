@@ -45,7 +45,7 @@ public class Swagger2Config {
     /**
      * 需要扫描的路径
      */
-    private static  final  String SWAGGER_PACKAGE_PATH = "cn.ucaner.skeleton.service.controller";
+    private static  final  String SWAGGER_PACKAGE_PATH = "cn.ucaner.skeleton";
 
     /**
      * 是否开启swagger
