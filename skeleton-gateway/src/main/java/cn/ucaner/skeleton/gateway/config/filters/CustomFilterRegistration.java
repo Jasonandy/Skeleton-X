@@ -36,7 +36,7 @@ public class CustomFilterRegistration {
     @Bean
     public FilterRegistrationBean testFilterRegistration() {
         FilterRegistrationBean registration = new FilterRegistrationBean(new JwtFilter());
-        registration.addUrlPatterns("/*");
+        registration.addUrlPatterns("/xxxx/xxxx/xxx/*");
         registration.setName("jwtFilter");
         return registration;
     }

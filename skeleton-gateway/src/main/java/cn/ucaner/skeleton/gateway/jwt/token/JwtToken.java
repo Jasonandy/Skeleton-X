@@ -15,6 +15,8 @@
  ******************************************************************************/
 package cn.ucaner.skeleton.gateway.jwt.token;
 
+import org.apache.shiro.authc.AuthenticationToken;
+
 import java.io.Serializable;
 
 /**
@@ -27,7 +29,7 @@ import java.io.Serializable;
  * @ModifyTime： 2019/4/27
  * @Modify marker：
  */
-public class JwtToken implements Serializable {
+public class JwtToken implements AuthenticationToken,Serializable {
 
     private static final long serialVersionUID = -1929842923741950361L;
 
@@ -40,6 +42,16 @@ public class JwtToken implements Serializable {
 
     public JwtToken(String token) {
         this.token = token;
+    }
+
+    @Override
+    public Object getPrincipal() {
+        return token;
+    }
+
+    @Override
+    public Object getCredentials() {
+        return token;
     }
 
     public String getToken() {

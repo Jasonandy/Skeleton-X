@@ -36,7 +36,7 @@ import java.util.HashMap;
  * @Modify marker：
  */
 @RestController
-@RequestMapping(value = "/api/v1")
+@RequestMapping(value = "/v1/api")
 public class ApiController {
 
     /**

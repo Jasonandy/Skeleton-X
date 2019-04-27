@@ -16,8 +16,11 @@
 package cn.ucaner.skeleton.gateway.config.webmvc;
 
 import cn.ucaner.skeleton.gateway.annotation.support.LoginUserHandlerMethodArgumentResolver;
+import cn.ucaner.skeleton.gateway.config.interceptors.JwtAuthInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.List;
@@ -44,6 +47,11 @@ public class CoustomMvcConfigurerAdapter implements WebMvcConfigurer {
         argumentResolvers.add(new LoginUserHandlerMethodArgumentResolver());
     }
 
-
-
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        InterceptorRegistration register = registry.addInterceptor(new JwtAuthInterceptor());
+        register.addPathPatterns("/v1/test/**");
+        register.addPathPatterns("/v1/api/**");
+        register.excludePathPatterns("/v1/api/getToken");
+    }
 }
