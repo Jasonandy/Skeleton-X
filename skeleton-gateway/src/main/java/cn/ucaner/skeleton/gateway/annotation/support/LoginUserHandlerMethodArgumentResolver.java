@@ -46,9 +46,7 @@ public class LoginUserHandlerMethodArgumentResolver implements HandlerMethodArgu
      */
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        /**
-         * 这里其实就是对代码进行判断 看是不是有  loginUse这么一个注解  如果有的话 就需要做处理
-         */
+
         /**
          * isAssignableFrom : 类或接口与指定的 Class 参数所表示的类或接口是否相同，或是否是其超类或超接口
          *

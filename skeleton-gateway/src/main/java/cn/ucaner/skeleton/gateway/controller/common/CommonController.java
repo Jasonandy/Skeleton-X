@@ -13,60 +13,34 @@
  * ~ See the License for the specific language governing permissions and       *
  * ~ limitations under the License.                                            *
  ******************************************************************************/
-package cn.ucaner.skeleton.gateway.controller.api;
+package cn.ucaner.skeleton.gateway.controller.common;
 
 import cn.ucaner.skeleton.common.vo.RespBody;
-import cn.ucaner.skeleton.gateway.annotation.LoginUser;
-import cn.ucaner.skeleton.gateway.jwt.utils.JwtUtil;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
+import java.util.Random;
 
 /**
  * @projectName：Skeleton-X
- * @Package：cn.ucaner.skeleton.gateway.controller.api
- * @Description： <p> ApiController  </p>
+ * @Package：cn.ucaner.skeleton.gateway.controller.common
+ * @Description： <p> CommonController  </p>
  * @Author： - Jason
- * @CreatTime：2019/4/27 - 9:48
+ * @CreatTime：2019/4/27 - 11:51
  * @Modify By：
  * @ModifyTime： 2019/4/27
  * @Modify marker：
  */
 @RestController
-@RequestMapping(value = "/v1/api")
-public class ApiController {
+@RequestMapping(value = "/common")
+public class CommonController {
 
-    private Logger logger = LoggerFactory.getLogger(ApiController.class);
 
-    /**
-     * @Description: login
-     * @param username
-     * @param password
-     * @return RespBody
-     * @Autor: Jason
-     */
-
-    @PostMapping("/getToken")
-    public RespBody login(@LoginUser String flag,@RequestParam("username") String username, @RequestParam("password") String password) {
-        HashMap<String, Object> tokenMap = new HashMap<>(1);
+    @GetMapping("/index")
+    public RespBody index() {
         RespBody respBody = new RespBody();
-        logger.info("=== flag:{} - username:{} - password:{} ===",flag,username,password);
-        if (StringUtils.isEmpty(username)) {
-            respBody.addError("username不存在!");
-        }else {
-            /**
-             * jwt生成签名
-             */
-            tokenMap.put("jwtToken", JwtUtil.sign(username, password));
-            respBody.addOK(tokenMap, "JwtToken");
-        }
+        respBody.addOK(new Random().nextInt(24),"yes ok .");
         return respBody;
     }
-
 }
