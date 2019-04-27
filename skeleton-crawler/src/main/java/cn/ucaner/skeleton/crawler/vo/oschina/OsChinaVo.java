@@ -13,32 +13,43 @@
  * ~ See the License for the specific language governing permissions and       *
  * ~ limitations under the License.                                            *
  ******************************************************************************/
-package cn.ucaner.skeleton.crawler.vo;
+package cn.ucaner.skeleton.crawler.vo.oschina;
 
-import java.io.Serializable;
+import us.codecraft.webmagic.Page;
+import us.codecraft.webmagic.Site;
+import us.codecraft.webmagic.model.AfterExtractor;
+import us.codecraft.webmagic.model.OOSpider;
+import us.codecraft.webmagic.model.annotation.ExtractBy;
+import us.codecraft.webmagic.model.annotation.HelpUrl;
+import us.codecraft.webmagic.model.annotation.TargetUrl;
 
 /**
  * @projectName：Skeleton-X
- * @Package：cn.ucaner.skeleton.crawler.vo
- * @Description： <p> BaseCrawlerVo </p>
+ * @Package：cn.ucaner.skeleton.crawler.vo.oschina
+ * @Description： <p> OsChinaVo  </p>
  * @Author： - Jason
- * @CreatTime：2019/4/27 - 14:36
+ * @CreatTime：2019/4/27 - 17:56
  * @Modify By：
  * @ModifyTime： 2019/4/27
  * @Modify marker：
  */
-public class BaseCrawlerVo implements Serializable {
+@TargetUrl("http://www.oschina.net/question/\\d+_\\d+*")
+@HelpUrl("http://www.oschina.net/question/*")
+@ExtractBy(value = "//ul[@class='list']/li[@class='Answer']", multi = true)
+public class OsChinaVo implements AfterExtractor {
 
-    /**
-     * id
-     */
-    private String id;
+    @ExtractBy("//img/@title")
+    private String user;
 
-    public String getId() {
-        return id;
+    @ExtractBy("//div[@class='detail']")
+    private String content;
+
+    public static void main(String[] args) {
+        OOSpider.create(Site.me(), OsChinaVo.class).addUrl("http://www.oschina.net/question/567527_120597").run();
     }
 
-    public void setId(String id) {
-        this.id = id;
+    @Override
+    public void afterProcess(Page page) {
+        System.out.println(page.getUrl());
     }
 }
