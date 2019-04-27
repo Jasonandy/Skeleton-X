@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <!-- PARENT -->
+    <parent>
+        <artifactId>skeleton</artifactId>
+        <groupId>cn.ucaner</groupId>
+        <version>tuna-1.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- crawler 爬虫模块-->
+    <artifactId>skeleton-crawler</artifactId>
+    <name>skeleton-crawler</name>
+    <description>Skeleton Crawler 爬虫模块 </description>
+
+    <!-- PROPERTIES  -->
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <SeimiCrawler.version>2.1.1</SeimiCrawler.version>
+        <!--PROPERTIES节点中设置docker镜像的前缀 -->
+        <docker.image.prefix>skeleton-crawler</docker.image.prefix>
+    </properties>
+
+    <!-- PROJECT DEPENDENCIES -->
+    <dependencies>
+        <!-- skeleton-service -->
+        <dependency>
+            <groupId>cn.ucaner</groupId>
+            <artifactId>skeleton-service</artifactId>
+            <version>tuna-1.0</version>
+        </dependency>
+
+        <!-- actuator -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <!-- shell -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-remote-shell</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.wanghaomiao</groupId>
+            <artifactId>SeimiCrawler</artifactId>
+            <version>${SeimiCrawler.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

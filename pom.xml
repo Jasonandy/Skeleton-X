@@ -16,6 +16,7 @@
         <module>skeleton-service</module>
         <module>skeleton-webapp</module>
         <module>skeleton-gateway</module>
+        <module>skeleton-crawler</module>
     </modules>
 
     <!-- 项目 -->

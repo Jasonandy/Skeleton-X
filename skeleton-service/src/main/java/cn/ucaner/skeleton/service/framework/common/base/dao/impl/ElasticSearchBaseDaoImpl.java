@@ -491,7 +491,7 @@ public class ElasticSearchBaseDaoImpl  implements ElasticSearchBaseDao {
             Map<String, Object> map = hits.getAt(i).getSourceAsMap();
             list.add(map);
         }
-        client.close();
+        //client.close();
         return list;
     }
 

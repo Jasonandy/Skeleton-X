@@ -11,6 +11,9 @@
 /skeleton-webapp/target
 /skeleton-webapp/*.iml
 
+/skeleton-crawler/target
+/skeleton-crawler/skeleton-crawler.iml
+
 /skeleton-gateway/target
 /skeleton-gateway/skeleton-gateway.iml
 
@@ -19,3 +22,5 @@
 ##################################################
 
 
+
+/skeleton-crawler/skeleton-crawler.iml
