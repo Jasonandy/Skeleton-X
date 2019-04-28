@@ -9,18 +9,26 @@ spring:
   tomcat:
     max-http-post-size: -1
   kafka:
+    #kafka地址
     bootstrap-servers: localhost:9092
     consumer:
+      #指定默认消费者group id
       groupId: executor
+      #指定消息被消费之后自动提交偏移量,以便下次继续消费
       enable-auto-commit: true
+      ## 指定消息key和消息体的编解码方式
       keyDeserializer: org.apache.kafka.common.serialization.StringDeserializer
       valueDserializer: org.apache.kafka.common.serialization.StringDeserializer
     producer:
       groupId: executor
+      #指定从最近地方开始消费(earliest)
+      #指定消息key和消息体的编解码方式
       keyDeserializer: org.apache.kafka.common.serialization.StringSerializer
       valueDserializer: org.apache.kafka.common.serialization.StringSerializer
+      ##每次批量发送消息的数量
       batch-size: 16384
       buffer-memory: 33554432
+
 #######################################################################################
 
 ########################MapperXml######################################################
