@@ -8,6 +8,19 @@ spring:
     active: dev
   tomcat:
     max-http-post-size: -1
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      groupId: executor
+      enable-auto-commit: true
+      keyDeserializer: org.apache.kafka.common.serialization.StringDeserializer
+      valueDserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      groupId: executor
+      keyDeserializer: org.apache.kafka.common.serialization.StringSerializer
+      valueDserializer: org.apache.kafka.common.serialization.StringSerializer
+      batch-size: 16384
+      buffer-memory: 33554432
 #######################################################################################
 
 ########################MapperXml######################################################
