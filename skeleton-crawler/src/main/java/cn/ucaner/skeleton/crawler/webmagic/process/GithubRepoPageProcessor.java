@@ -13,7 +13,7 @@
  * ~ See the License for the specific language governing permissions and       *
  * ~ limitations under the License.                                            *
  ******************************************************************************/
-package cn.ucaner.skeleton.crawler.webmagic;
+package cn.ucaner.skeleton.crawler.webmagic.process;
 
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
