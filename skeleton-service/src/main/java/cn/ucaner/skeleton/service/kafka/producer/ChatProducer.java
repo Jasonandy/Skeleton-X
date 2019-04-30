@@ -41,7 +41,19 @@ public class ChatProducer {
     private static Logger logger = LoggerFactory.getLogger(ChatProducer.class);
 
     @Resource
-    private KafkaTemplate<String, String> kafkaTemplate;
+    private KafkaTemplate kafkaTemplate;
+
+    /**
+     * 1.点对点、发布订阅
+     * {
+     *     点对点 一个发布 一个消费 一旦被消费 其它的就消费不了.
+     *     单来说就是生产者（Producer）发送消息到队列,消费者（Consumer）从队列中取出消息.
+     * }
+     *2.发布-订阅消息系统
+     * 发布订阅的模型也比较好理解，首先消费者需要订阅这个队列，生产者只要发送一条消息到队列中，
+     *  所有已订阅该队列的的消费者都能接收到该消息，未订阅的用户则无法接收。
+     *      就像我们的微信关注微信公众号一样，只有关注了的用户才会收到公众号推送的消息。
+     */
 
     /**
      * 生产者 生产数据到kafka
@@ -49,8 +61,26 @@ public class ChatProducer {
      */
     public void sendChatUser(User user){
         kafkaTemplate.send(KafkaConstant.KAFKA_CHAT_TOPIC, JSON.toJSONString(user));
-        logger.info("== sendChatUser:{} ==",JSON.toJSONString(user));
     }
 
+    /**
+     * 发送数据
+     * @param user
+     */
+    public void sendSomethings(User user){
+        kafkaTemplate.send(KafkaConstant.KAFKA_CHAT_TOPIC, JSON.toJSONString(user));
+    }
+
+
+
+    /**
+     * send2Topic
+     * @param topic 主题
+     * @param key   key
+     * @param dataStr data 数据
+     */
+    public void send2Topic(String topic, String key, String dataStr){
+        kafkaTemplate.send(topic,key,dataStr);
+    }
 
 }

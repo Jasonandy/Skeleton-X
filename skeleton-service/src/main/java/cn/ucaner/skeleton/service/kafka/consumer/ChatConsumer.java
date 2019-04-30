@@ -45,11 +45,22 @@ public class ChatConsumer {
          * 判断是否为Null
          */
         Optional<?> kafkaMessage = Optional.ofNullable(record.value());
+        logger.info("== topic:{} ,offset:{} , value:{} ==",record.topic(), record.offset(), record.value());
         if(kafkaMessage.isPresent()){
             Object message = kafkaMessage.get();
             logger.info("=== 消费信息:{} ===",message);
         }
-        logger.info("== topic:{} ,offset:{} , value:{} ==",record.topic(), record.offset(), record.value());
     }
 
+
+    @KafkaListener(topics = KafkaConstant.KAFKA_CALL_TOPIC)
+    public void listenT1(ConsumerRecord<?, ?> record) {
+        logger.info("== topic:{} ,key:{} , value:{} ==",record.topic(), record.offset(), record.value());
+    }
+
+
+    @KafkaListener(topics = {KafkaConstant.KAFKA_FACE_TOPIC,KafkaConstant.KAFKA_CALL_TOPIC})
+    public void listenT2(ConsumerRecord<?, ?> record){
+        logger.info("== topic:{} ,key:{} , value:{} ==",record.topic(), record.offset(), record.value());
+    }
 }

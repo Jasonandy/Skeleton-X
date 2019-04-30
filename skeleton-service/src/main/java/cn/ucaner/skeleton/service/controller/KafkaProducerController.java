@@ -19,6 +19,7 @@ import cn.ucaner.skeleton.common.utils.pk.PKGenerator;
 import cn.ucaner.skeleton.common.vo.RespBody;
 import cn.ucaner.skeleton.service.kafka.producer.ChatProducer;
 import cn.ucaner.skeleton.service.user.entity.User;
+import com.alibaba.fastjson.JSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,6 +70,26 @@ public class KafkaProducerController {
         endTime = System.currentTimeMillis();
         logger.info("=== send: count:{} , cost time: {}ms ===",count,((endTime-startTime)/1000));
         respBody.addOK(count,"发送成功!");
+        return respBody;
+    }
+
+    @ResponseBody
+    @GetMapping("send2Topic")
+    @RequestMapping(value="/send2Topic/{topic}/{key}",method= RequestMethod.GET)
+    public RespBody send2Topic(@PathVariable String topic, @PathVariable String key) {
+        RespBody respBody = new RespBody();
+        long startTime ,endTime;
+        startTime = System.currentTimeMillis();
+        User user = new User();
+        user.setName(PKGenerator.uuid32());
+        user.setId(PKGenerator.uuid32());
+        user.setAge(new Random().nextInt(24));
+        user.setDesc("=== A Better Man ===");
+        user.setErrorMsg(" none ");
+        chatProducer.send2Topic(topic,key, JSON.toJSONString(user));
+        endTime = System.currentTimeMillis();
+        logger.info("=== send2Topic: topic:{} key:{} , cost time: {}ms ===",topic,key,((endTime-startTime)/1000));
+        respBody.addOK(topic,"发送成功!");
         return respBody;
     }
 

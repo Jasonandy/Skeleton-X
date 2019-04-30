@@ -17,4 +17,14 @@ public class KafkaConstant {
      */
     public static final String KAFKA_CHAT_TOPIC = "chat-topic";
 
+    /**
+     * call topic
+     */
+    public static final String KAFKA_CALL_TOPIC = "call-topic";
+
+    /**
+     * face topic
+     */
+    public static final String KAFKA_FACE_TOPIC = "face-topic";
+
 }
