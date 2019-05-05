@@ -60,7 +60,11 @@ public class ChatProducer {
      * @param user
      */
     public void sendChatUser(User user){
-        kafkaTemplate.send(KafkaConstant.KAFKA_CHAT_TOPIC, JSON.toJSONString(user));
+        try {
+            kafkaTemplate.send(KafkaConstant.KAFKA_CHAT_TOPIC, JSON.toJSONString(user));
+        } catch (Exception e) {
+            logger.info("=== ChatProducer:sendChatUser:error:{} ===",e.getMessage());
+        }
     }
 
     /**
@@ -68,7 +72,11 @@ public class ChatProducer {
      * @param user
      */
     public void sendSomethings(User user){
-        kafkaTemplate.send(KafkaConstant.KAFKA_CHAT_TOPIC, JSON.toJSONString(user));
+        try {
+            kafkaTemplate.send(KafkaConstant.KAFKA_CALL_TOPIC, JSON.toJSONString(user));
+        } catch (Exception e) {
+            logger.info("=== ChatProducer:sendSomethings:error:{} ===",e.getMessage());
+        }
     }
 
 
@@ -80,7 +88,11 @@ public class ChatProducer {
      * @param dataStr data 数据
      */
     public void send2Topic(String topic, String key, String dataStr){
-        kafkaTemplate.send(topic,key,dataStr);
+        try {
+            kafkaTemplate.send(topic,key,dataStr);
+        } catch (Exception e) {
+            logger.info("=== ChatProducer:send2Topic:error:{} ===",e.getMessage());
+        }
     }
 
 }

@@ -39,8 +39,12 @@ public class ChatConsumer {
 
     private static Logger logger = LoggerFactory.getLogger(ChatConsumer.class);
 
+    /**
+     * listen
+     * @param record
+     */
     @KafkaListener(topics = KafkaConstant.KAFKA_CHAT_TOPIC)
-    public void listen (ConsumerRecord<?, ?> record){
+    public void listenChat (ConsumerRecord<?, ?> record){
         /**
          * 判断是否为Null
          */
@@ -53,14 +57,22 @@ public class ChatConsumer {
     }
 
 
+    /**
+     * listenCall
+     * @param record
+     */
     @KafkaListener(topics = KafkaConstant.KAFKA_CALL_TOPIC)
-    public void listenT1(ConsumerRecord<?, ?> record) {
+    public void listenCall(ConsumerRecord<?, ?> record) {
         logger.info("== topic:{} ,key:{} , value:{} ==",record.topic(), record.offset(), record.value());
     }
 
 
+    /**
+     * listenFaceChat
+     * @param record
+     */
     @KafkaListener(topics = {KafkaConstant.KAFKA_FACE_TOPIC,KafkaConstant.KAFKA_CALL_TOPIC})
-    public void listenT2(ConsumerRecord<?, ?> record){
+    public void listenFaceChat(ConsumerRecord<?, ?> record){
         logger.info("== topic:{} ,key:{} , value:{} ==",record.topic(), record.offset(), record.value());
     }
 }
