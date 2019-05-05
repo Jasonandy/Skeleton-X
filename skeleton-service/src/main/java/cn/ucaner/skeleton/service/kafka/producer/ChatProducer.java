@@ -28,7 +28,7 @@ import javax.annotation.Resource;
 /**
  * @projectName：Skeleton-X
  * @Package：cn.ucaner.skeleton.service.kafka.producer
- * @Description： <p> ChatProducer  </p>
+ * @Description： <p> ChatProducer  https://blog.csdn.net/liyiming2017/article/details/82805479 </p>
  * @Author： - Jason
  * @CreatTime：2019/4/28 - 15:00
  * @Modify By：

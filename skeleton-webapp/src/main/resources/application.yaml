@@ -8,6 +8,14 @@ spring:
     active: dev
   tomcat:
     max-http-post-size: -1
+  thymeleaf:
+    mode: HTML
+    cache: false
+    encoding: utf-8
+    servlet:
+      content-type: text/html
+    suffix: .html
+    prefix: classpath:/templates/
 #######################################################################################
 
 ########################MapperXml######################################################

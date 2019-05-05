@@ -58,7 +58,7 @@ public class HupuCrawlerTask {
     /**
      * 定时爬取数据
      */
-    @Scheduled(cron = "0 0 0 * * ?")
+    @Scheduled(cron = "0 0/1 * * * ?")
     public void hupuTask(){
         logger.info("=== Hupu Schedluer Starting Url:{} ==",BASE_URL);
         long startTime, endTime;

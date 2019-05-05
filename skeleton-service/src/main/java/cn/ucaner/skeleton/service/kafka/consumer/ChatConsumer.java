@@ -75,4 +75,20 @@ public class ChatConsumer {
     public void listenFaceChat(ConsumerRecord<?, ?> record){
         logger.info("== topic:{} ,key:{} , value:{} ==",record.topic(), record.offset(), record.value());
     }
+
+    /**
+     * id是消费者监听容器
+     *      配置topic和分区：监听两个topic，分别为topic1、topic2，topic1只接收分区0，3的消息，
+     *                  KAFKA_FACE_TOPIC KAFKA_CALL_TOPIC 接收分区0和分区1的消息,但是分区1的消费者初始位置为5
+     *
+     *  选着指定的服务id  消费指定的topic 指定topic指定的partition  指定offset
+     * @param record
+     */
+//    @KafkaListener(id = "kafkaId",topicPartitions ={
+//            @TopicPartition(topic = KafkaConstant.KAFKA_FACE_TOPIC,partitions = { "0"}),
+//            @TopicPartition(topic = KafkaConstant.KAFKA_CALL_TOPIC, partitions = "0",partitionOffsets =
+//            @PartitionOffset(partition = "1", initialOffset = "5"))})
+//    public void listen(ConsumerRecord<?, ?> record) {
+//        logger.info("=== topic:{} ,key:{} , value:{} ===",record.topic(),record.key(),record.value());
+//    }
 }

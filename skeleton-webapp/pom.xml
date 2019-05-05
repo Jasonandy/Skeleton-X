@@ -20,6 +20,10 @@
     <properties>
         <!-- sourceEncoding -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <bootstrap.version>3.1.1</bootstrap.version>
+        <jquery.version>3.1.1</jquery.version>
+        <echarts.version>4.1.0</echarts.version>
     </properties>
 
     <!--PROJECT DEPENDENCIES-->
@@ -36,6 +40,47 @@
             <groupId>org.mybatis.spring.boot</groupId>
             <artifactId>mybatis-spring-boot-starter</artifactId>
         </dependency>
+
+        <!-- thymeleaf -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+
+        <!-- 可以省去版本的前缀 -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>webjars-locator</artifactId>
+            <version>0.34</version>
+        </dependency>
+
+        <!-- bootstrap -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>bootstrap</artifactId>
+            <version>${bootstrap.version}</version>
+        </dependency>
+        <!--j query  -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>jquery</artifactId>
+            <version>${jquery.version}</version>
+        </dependency>
+
+        <!-- echarts -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>echarts</artifactId>
+            <version>${echarts.version}</version>
+        </dependency>
+
+        <!-- ECharts -->
+        <dependency>
+            <groupId>com.github.abel533</groupId>
+            <artifactId>ECharts</artifactId>
+            <version>3.0.0.5</version>
+        </dependency>
+
 
     </dependencies>
 

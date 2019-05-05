@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title  th:text="${name}"></title>
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/webjars/echarts/echarts.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+</head>
+<body>
+    <p1 th:text="${name}"></p1>
+    <h1 th:text="${name}">Skeleton = ${name} = HelloWorld </h1>
+    <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+    <div id="chartmain" style="width:1000px;height:800px;" align="center"></div>
+</body>
+<script type="text/javascript">
+
+    /**
+     * labelTop
+     * @type {{normal: {label: {formatter: string, show: boolean, position: string, textStyle: {baseline: string}}, labelLine: {show: boolean}}}}
+     */
+    var labelTop = {
+        normal : {
+            label : {
+                show : true,
+                position : 'center',
+                formatter : '{b}',
+                textStyle: {
+                    baseline : 'bottom'
+                }
+            },
+            labelLine : {
+                show : false
+            }
+        }
+    };
+
+    /**
+     * labelFromatter
+     * @type {{normal: {label: {formatter: (function(*): string), textStyle: {baseline: string}}}}}
+     */
+    var labelFromatter = {
+        normal : {
+            label : {
+                formatter : function (params){
+                    return 100 - params.value + '%'
+                },
+                textStyle: {
+                    baseline : 'top'
+                }
+            }
+        },
+    }
+
+    /**
+     * labelBottom
+     * @type {{normal: {color: string, label: {show: boolean, position: string}, labelLine: {show: boolean}}, emphasis: {color: string}}}
+     */
+    var labelBottom = {
+        normal : {
+            color: '#ccc',
+            label : {
+                show : true,
+                position : 'center'
+            },
+            labelLine : {
+                show : false
+            }
+        },
+        emphasis: {
+            color: 'rgba(0,0,0,0)'
+        }
+    };
+
+    /**
+     *radius
+     * @type {number[]}
+     */
+    var radius = [40, 55];
+
+    option = {
+        legend: {
+            x : 'center',
+            y : 'center',
+            data:[
+                '张三','李四','王五','赵六','田七',
+                '王八', '赵九', '朱十', '十一', '十二'
+            ]
+        },
+        /**
+         * 标题
+         */
+        title : {
+            text: '关于Jason帅不帅的若干意见',
+            subtext: '国际权威统计',
+            x: 'center'
+        },
+        toolbox: {
+            show : true,
+            feature : {
+                dataView : {show: true, readOnly: false},
+                magicType : {
+                    show: true,
+                    type: ['pie', 'funnel'],
+                    option: {
+                        funnel: {
+                            width: '20%',
+                            height: '30%',
+                            itemStyle : {
+                                normal : {
+                                    label : {
+                                        formatter : function (params){
+                                            return 'other\n' + params.value + '%\n'
+                                        },
+                                        textStyle: {
+                                            baseline : 'middle'
+                                        }
+                                    }
+                                },
+                            }
+                        }
+                    }
+                },
+                restore : {show: true},
+                saveAsImage : {show: true}
+            }
+        },
+        /**
+         * 分类
+         */
+        series : [
+            {
+                type : 'pie',
+                center : ['10%', '30%'],
+                radius : radius,
+                x: '0%', // for funnel
+                itemStyle : labelFromatter,
+                data : [
+                    {name:'other', value:46, itemStyle : labelBottom},
+                    {name:'张三', value:54,itemStyle : labelTop}
+                ]
+            },
+            {
+                type : 'pie',
+                center : ['30%', '30%'],
+                radius : radius,
+                x:'20%', // for funnel
+                itemStyle : labelFromatter,
+                data : [
+                    {name:'other', value:56, itemStyle : labelBottom},
+                    {name:'李四', value:44,itemStyle : labelTop}
+                ]
+            },
+            {
+                type : 'pie',
+                center : ['50%', '30%'],
+                radius : radius,
+                x:'40%', // for funnel
+                itemStyle : labelFromatter,
+                data : [
+                    {name:'other', value:65, itemStyle : labelBottom},
+                    {name:'王五', value:35,itemStyle : labelTop}
+                ]
+            },
+            {
+                type : 'pie',
+                center : ['70%', '30%'],
+                radius : radius,
+                x:'60%', // for funnel
+                itemStyle : labelFromatter,
+                data : [
+                    {name:'other', value:70, itemStyle : labelBottom},
+                    {name:'赵六', value:30,itemStyle : labelTop}
+                ]
+            },
+            {
+                type : 'pie',
+                center : ['90%', '30%'],
+                radius : radius,
+                x:'80%', // for funnel
+                itemStyle : labelFromatter,
+                data : [
+                    {name:'other', value:73, itemStyle : labelBottom},
+                    {name:'田七', value:27,itemStyle : labelTop}
+                ]
+            },
+            {
+                type : 'pie',
+                center : ['10%', '70%'],
+                radius : radius,
+                y: '55%',   // for funnel
+                x: '0%',    // for funnel
+                itemStyle : labelFromatter,
+                data : [
+                    {name:'other', value:78, itemStyle : labelBottom},
+                    {name:'王八', value:22,itemStyle : labelTop}
+                ]
+            },
+            {
+                type : 'pie',
+                center : ['30%', '70%'],
+                radius : radius,
+                y: '55%',   // for funnel
+                x:'20%',    // for funnel
+                itemStyle : labelFromatter,
+                data : [
+                    {name:'other', value:78, itemStyle : labelBottom},
+                    {name:'赵九', value:22,itemStyle : labelTop}
+                ]
+            },
+            {
+                type : 'pie',
+                center : ['50%', '70%'],
+                radius : radius,
+                y: '55%',   // for funnel
+                x:'40%', // for funnel
+                itemStyle : labelFromatter,
+                data : [
+                    {name:'other', value:78, itemStyle : labelBottom},
+                    {name:'朱十', value:22,itemStyle : labelTop}
+                ]
+            },
+            {
+                type : 'pie',
+                center : ['70%', '70%'],
+                radius : radius,
+                y: '55%',   // for funnel
+                x:'60%', // for funnel
+                itemStyle : labelFromatter,
+                data : [
+                    {name:'other', value:83, itemStyle : labelBottom},
+                    {name:'十一', value:17,itemStyle : labelTop}
+                ]
+            },
+            {
+                type : 'pie',
+                center : ['90%', '70%'],
+                radius : radius,
+                y: '55%',   // for funnel
+                x:'80%', // for funnel
+                itemStyle : labelFromatter,
+                data : [
+                    {name:'other', value:89, itemStyle : labelBottom},
+                    {name:'十二', value:11,itemStyle : labelTop}
+                ]
+            }
+        ]
+    };
+
+    //初始化echarts实例
+    var myChart = echarts.init(document.getElementById('chartmain'));
+    //使用制定的配置项和数据显示图表
+    myChart.setOption(option);
+</script>
+</html>

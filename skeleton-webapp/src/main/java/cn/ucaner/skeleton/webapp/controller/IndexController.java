@@ -13,26 +13,29 @@
  * ~ See the License for the specific language governing permissions and       *
  * ~ limitations under the License.                                            *
  ******************************************************************************/
-package cn.ucaner.skeleton.webapp;
+package cn.ucaner.skeleton.webapp.controller;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  * @projectName：Skeleton-X
- * @Package：cn.ucaner.skeleton.webapp
- * @Description： <p> WebAppApplication  </p>
+ * @Package：cn.ucaner.skeleton.webapp.controller
+ * @Description： <p> IndexController  </p>
  * @Author： - Jason
- * @CreatTime：2019/4/26 - 15:14
+ * @CreatTime：2019/5/5 - 16:14
  * @Modify By：
- * @ModifyTime： 2019/4/26
+ * @ModifyTime： 2019/5/5
  * @Modify marker：
  */
-@SpringBootApplication
-public class WebAppApplication {
+@Controller
+@RequestMapping(value="/web")
+public class IndexController {
 
-    public static void main(String[] args) {
-        SpringApplication.run(WebAppApplication.class, args);
+    @RequestMapping("/index")
+    public String index(ModelMap map){
+        map.addAttribute("name","Skeleton");
+        return "index/index";
     }
-
 }
