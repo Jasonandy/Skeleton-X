@@ -5,7 +5,7 @@
 
 set -e
 
-########清除安装目录里面的数据
+######## 清除安装目录里面的数据 ###############
 if [ -d "/skeleton/xxl-job/app" ]; then
 	rm -rf "/skeleton/xxl-job/app"
 fi
@@ -15,9 +15,6 @@ if [ "$1" = "purge" ] ; then
         update-rc.d skeleton-xxljob remove >/dev/null
 fi
 
-
-# In case this system is running systemd, we make systemd reload the unit files
-# to pick up changes.
 if [ -d /run/systemd/system ] ; then
         systemctl --system daemon-reload >/dev/null || true
 fi
@@ -28,6 +25,5 @@ if [ "$1" = purge ] && [ -e /usr/share/debconf/confmodule ]; then
         db_purge
 fi
 # End automatically added section
-
 
 exit 0

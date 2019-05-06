@@ -12,3 +12,5 @@ echo "dpkg --purge skeleton-${module_name}" > skeleton-${module_name}_uninstall.
 sed -i "s/Version:.*/Version: ${version}/" ${module_name}/DEBIAN/control
 
 dpkg-deb -b ${module_name} ${out_deb}
+
+echo " run.sh had execute completed ... "

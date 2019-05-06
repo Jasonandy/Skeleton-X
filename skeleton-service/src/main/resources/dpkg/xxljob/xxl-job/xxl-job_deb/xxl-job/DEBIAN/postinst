@@ -4,7 +4,7 @@
 
 set -e
 
-#=================================================================
+############### 设置开机自启动服务 #################################
 if [ "$1" = "configure" ] || [ "$1" = "abort-upgrade" ]; then
         if [ -x "/etc/init.d/skeleton-xxljob" ]; then
                 update-rc.d skeleton-xxljob defaults >/dev/null
