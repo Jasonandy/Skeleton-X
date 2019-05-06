@@ -1,0 +1,14 @@
+Package: skeleton-jdk2xxljob
+Version: 1.8.0.151
+Architecture: amd64
+Maintainer: jasonandy@hotmail.com
+Installed-Size: 
+Pre-Depends: 
+Depends: 
+Recommends: 
+Conflicts: 
+Replaces: 
+Provides: 
+Section: 
+Priority: extra
+Description: This just is a jdk for xxl-job.

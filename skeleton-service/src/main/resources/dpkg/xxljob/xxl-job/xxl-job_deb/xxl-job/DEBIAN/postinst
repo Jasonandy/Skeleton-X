@@ -1,0 +1,17 @@
+#!/bin/sh
+#
+# see: dh_installdeb(1)
+
+set -e
+
+#=================================================================
+if [ "$1" = "configure" ] || [ "$1" = "abort-upgrade" ]; then
+        if [ -x "/etc/init.d/skeleton-xxljob" ]; then
+                update-rc.d skeleton-xxljob defaults >/dev/null
+        fi
+        if [ -x "/etc/init.d/skeleton-xxljob" ]; then
+                invoke-rc.d skeleton-xxljob start || true
+        fi
+fi
+
+exit 0

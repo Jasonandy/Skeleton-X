@@ -1,0 +1,8 @@
+#!/bin/sh
+set -e
+# Automatically added by dh_installudev
+
+
+# End automatically added section
+
+exit 0

@@ -1,0 +1,10 @@
+#!/bin/sh
+set -e
+# Automatically added by dh_installudev
+if [ -f "/etc/init.d/skeleton-xxljob" ]; then
+        echo "skeleton had been installed. Please use \\033[41;30m'sudo dpkg -P skeleton-xxljob'\\033[0m command to uninstall first."
+        exit 1
+fi
+# End automatically added section
+
+exit 0

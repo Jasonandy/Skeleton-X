@@ -1,0 +1,14 @@
+Package: skeleton-xxljob
+Version: 1.1.0
+Architecture: amd64
+Maintainer: jasonandy@hotmail.com
+Installed-Size: 
+Pre-Depends: 
+Depends: 
+Recommends: 
+Conflicts: 
+Replaces: 
+Provides: 
+Section: 
+Priority: extra
+Description: This is a dpkg info .
