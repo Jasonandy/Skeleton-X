@@ -45,12 +45,10 @@ import java.util.zip.ZipOutputStream;
 @AllArgsConstructor
 public class SysGeneratorServiceImpl implements SysGeneratorService {
 
-
     private final SysGeneratorMapper sysGeneratorMapper;
 
     /**
      * 分页查询表
-     *
      * @param query 查询条件
      * @return
      */
@@ -62,7 +60,6 @@ public class SysGeneratorServiceImpl implements SysGeneratorService {
 
     /**
      * 生成代码
-     *
      * @param genConfig 生成配置
      * @return
      */
@@ -73,15 +70,24 @@ public class SysGeneratorServiceImpl implements SysGeneratorService {
 
         String tableName = genConfig.getTableName();
         if(StringUtils.isEmpty(tableName)){
+            /**
+             * 查询出所有的表名
+             */
             List<Map<String,Object>> generatorList = sysGeneratorMapper.queryList(null,null);
             if(generatorList != null && generatorList.size() > 0){
                 for(Map<String,Object> map:generatorList){
                     tableName = map.get("tableName").toString();
-                    //查询表信息
+                    /**
+                     * 查询表信息
+                     */
                     Map<String, String> table = queryTable(tableName);
-                    //查询列信息
+                    /**
+                     * 查询列信息
+                     */
                     List<Map<String, String>> columns = queryColumns(tableName);
-                    //生成代码
+                    /**
+                     * 生成代码
+                     */
                     genConfig.setTableName(tableName);
                     GenUtils.generatorCode(genConfig, table, columns, zip);
                 }
@@ -90,20 +96,37 @@ public class SysGeneratorServiceImpl implements SysGeneratorService {
             }
 
         }
-        //查询表信息
+        /**
+         * 查询表信息
+         */
         Map<String, String> table = queryTable(genConfig.getTableName());
-        //查询列信息
+        /**
+         * 查询列信息
+         */
         List<Map<String, String>> columns = queryColumns(genConfig.getTableName());
-        //生成代码
+
+        /**
+         * 生成代码
+         */
         GenUtils.generatorCode(genConfig, table, columns, zip);
         IoUtil.close(zip);
         return outputStream.toByteArray();
     }
 
+    /**
+     * 查询表信息
+     * @param tableName
+     * @return
+     */
     private Map<String, String> queryTable(String tableName) {
         return sysGeneratorMapper.queryTable(tableName);
     }
 
+    /**
+     * 查询列信息
+     * @param tableName
+     * @return
+     */
     private List<Map<String, String>> queryColumns(String tableName) {
         return sysGeneratorMapper.queryColumns(tableName);
     }

@@ -46,13 +46,14 @@ import java.util.Map;
 @AllArgsConstructor
 @RequestMapping("/generator")
 public class SysGeneratorController {
+
+
     private final SysGeneratorService sysGeneratorService;
 
     /**
      * 列表
-     *
      * @param params 参数集
-     * @return 数据库表
+     * @return  数据库表
      */
     @GetMapping("/page")
     public Page list(@RequestParam Map<String, Object> params) {
@@ -61,8 +62,12 @@ public class SysGeneratorController {
         return query;
     }
 
+
     /**
      * 生成代码
+     * @param genConfig
+     * @param response
+     * @throws IOException
      */
     @PostMapping("/code")
     public void code(@RequestBody GenConfig genConfig, HttpServletResponse response) throws IOException {

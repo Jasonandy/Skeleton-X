@@ -67,6 +67,10 @@ public class GenUtils {
     private static final String CONTROLLER_JAVA_VM = "Controller.java.vm";
     private static final String MAPPER_XML_VM = "Mapper.xml.vm";
 
+    /**
+     * 需要生成的代码的模板
+     * @return
+     */
     private static List<String> getTemplates() {
         List<String> templates = new ArrayList<>();
         templates.add("template/Entity.java.vm");
@@ -78,14 +82,23 @@ public class GenUtils {
         return templates;
     }
 
+
     /**
      * 生成代码
+     * @param genConfig 生成的cfg
+     * @param table     表名
+     * @param columns   列属性
+     * @param zip
      */
     public static void generatorCode(GenConfig genConfig, Map<String, String> table,List<Map<String, String>> columns, ZipOutputStream zip) {
-        //配置信息
+        /**
+         * 获取配置信息
+         */
         Configuration config = getConfig();
         boolean hasBigDecimal = false;
-        //表信息
+        /**
+         * 表信息
+         */
         TableEntity tableEntity = new TableEntity();
         tableEntity.setTableName(table.get("tableName"));
 
@@ -102,12 +115,16 @@ public class GenUtils {
             tablePrefix = config.getString("tablePrefix");
         }
 
-        //表名转换成Java类名
+        /**
+         * 表名转换为Java类名
+         */
         String className = tableToJava(tableEntity.getTableName(), tablePrefix);
         tableEntity.setCaseClassName(className);
         tableEntity.setLowerClassName(StringUtils.uncapitalize(className));
 
-        //列信息
+        /**
+         * 列信息
+         */
         List<ColumnEntity> columnList = new ArrayList<>();
         for (Map<String, String> column : columns) {
             ColumnEntity columnEntity = new ColumnEntity();
@@ -116,18 +133,25 @@ public class GenUtils {
             columnEntity.setComments(column.get("columnComment"));
             columnEntity.setExtra(column.get("extra"));
 
-            //列名转换成Java属性名
+            /**
+             * 列名转换成Java属性名
+             */
             String attrName = columnToJava(columnEntity.getColumnName());
             columnEntity.setCaseAttrName(attrName);
             columnEntity.setLowerAttrName(StringUtils.uncapitalize(attrName));
 
-            //列的数据类型，转换成Java类型
+            /**
+             * 列的数据类型，转换成Java类型
+             */
             String attrType = config.getString(columnEntity.getDataType(), "unknowType");
             columnEntity.setAttrType(attrType);
             if (!hasBigDecimal && "BigDecimal".equals(attrType)) {
                 hasBigDecimal = true;
             }
-            //是否主键
+
+            /**
+             * 是否主键
+             */
             if ("PRI".equalsIgnoreCase(column.get("columnKey")) && tableEntity.getPk() == null) {
                 tableEntity.setPk(columnEntity);
             }
@@ -136,16 +160,22 @@ public class GenUtils {
         }
         tableEntity.setColumns(columnList);
 
-        //没主键，则第一个字段为主键
+        /**
+         * 没主键，则第一个字段为主键
+         */
         if (tableEntity.getPk() == null) {
             tableEntity.setPk(tableEntity.getColumns().get(0));
         }
 
-        //设置velocity资源加载器
+        /**
+         * 设置velocity资源加载器
+         */
         Properties prop = new Properties();
         prop.put("file.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
         Velocity.init(prop);
-        //封装模板数据
+        /**
+         * 封装模板数据
+         */
         Map<String, Object> map = new HashMap<>(16);
         map.put("tableName", tableEntity.getTableName());
         map.put("pk", tableEntity.getPk());
@@ -183,16 +213,22 @@ public class GenUtils {
         }
         VelocityContext context = new VelocityContext(map);
 
-        //获取模板列表
+        /**
+         * 获取模板列表
+         */
         List<String> templates = getTemplates();
         for (String template : templates) {
-            //渲染模板
+            /**
+             * 渲染模板
+             */
             StringWriter sw = new StringWriter();
             Template tpl = Velocity.getTemplate(template, CharsetUtil.UTF_8);
             tpl.merge(context, sw);
 
             try {
-                //添加到zip
+                /**
+                 * 添加到zip
+                 */
                 zip.putNextEntry(new ZipEntry(Objects
                         .requireNonNull(getFileName(template, tableEntity.getCaseClassName()
                                 , map.get("package").toString(), map.get("moduleName").toString()))));
@@ -228,14 +264,19 @@ public class GenUtils {
      */
     private static Configuration getConfig(){
         try {
-            return new PropertiesConfiguration("generator.properties");
+            return new PropertiesConfiguration("config/mp/generator.properties");
         } catch (ConfigurationException e) {
-            throw new CodegenException("获取配置文件失败，", e);
+            throw new CodegenException("获取配置文件失败,", e);
         }
     }
 
     /**
      * 获取文件名
+     * @param template template
+     * @param className  className
+     * @param packageName  packageName
+     * @param moduleName     moduleName
+     * @return
      */
     private static String getFileName(String template, String className, String packageName, String moduleName) {
         String packagePath = GlobalConfig.PROJECT_NAME + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator;

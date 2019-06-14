@@ -33,9 +33,9 @@ import java.util.Map;
 */
 public interface SysGeneratorMapper {
 
+
     /**
      * 分页查询表格
-     *
      * @param params
      * @param tableName
      * @return
@@ -44,7 +44,6 @@ public interface SysGeneratorMapper {
 
     /**
      * 查询表信息
-     *
      * @param tableName 表名称
      * @return
      */
@@ -52,7 +51,6 @@ public interface SysGeneratorMapper {
 
     /**
      * 查询表列信息
-     *
      * @param tableName 表名称
      * @return
      */

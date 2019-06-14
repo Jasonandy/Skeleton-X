@@ -32,9 +32,10 @@ import java.util.Map;
  * @version V1.0
 */
 public interface SysGeneratorService {
+
+
     /**
      * 生成代码
-     *
      * @param tableNames 表名称
      * @return
      */

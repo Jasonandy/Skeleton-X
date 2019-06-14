@@ -32,12 +32,24 @@ import java.util.Map;
 */
 public class Query<T> extends Page<T> {
 
+    /**
+     * PAGE
+     */
     private static final String PAGE = "page";
 
+    /**
+     * LIMIT
+     */
     private static final String LIMIT = "limit";
 
+    /**
+     * ORDER_BY_FIELD
+     */
     private static final String ORDER_BY_FIELD = "orderByField";
 
+    /**
+     * IS_ASC
+     */
     private static final String IS_ASC = "isAsc";
 
     /**
@@ -45,8 +57,8 @@ public class Query<T> extends Page<T> {
      * @param params
      */
     public Query(Map<String, Object> params) {
-        super(Integer.parseInt(params.getOrDefault(PAGE, 1).toString())
-                , Integer.parseInt(params.getOrDefault(LIMIT, 10).toString()));
+        super(Integer.parseInt(params.getOrDefault(PAGE, 1).toString()),
+                Integer.parseInt(params.getOrDefault(LIMIT, 10).toString()));
 
         String orderByField = params.getOrDefault(ORDER_BY_FIELD, "").toString();
         if (StringUtils.isNotEmpty(orderByField)) {

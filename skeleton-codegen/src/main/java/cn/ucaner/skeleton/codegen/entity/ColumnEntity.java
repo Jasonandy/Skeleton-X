@@ -17,6 +17,8 @@ package cn.ucaner.skeleton.codegen.entity;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 
 /**
  * @ClassName：ColumnEntity
@@ -29,7 +31,8 @@ import lombok.Data;
  * @version V1.0
 */
 @Data
-public class ColumnEntity {
+public class ColumnEntity implements Serializable {
+
     /**
      * 列表
      */
@@ -56,7 +59,7 @@ public class ColumnEntity {
      */
     private String attrType;
     /**
-     * 其他信息。
+     * 其他信息
      */
     private String extra;
 }

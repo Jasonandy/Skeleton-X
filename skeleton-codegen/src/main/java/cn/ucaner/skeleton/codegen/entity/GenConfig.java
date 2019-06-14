@@ -17,6 +17,8 @@ package cn.ucaner.skeleton.codegen.entity;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * @ClassName：GenConfig
  * @Description： <p> 生成配置 </p>
@@ -28,7 +30,8 @@ import lombok.Data;
  * @version V1.0
 */
 @Data
-public class GenConfig {
+public class GenConfig implements Serializable {
+
     /**
      * 包名
      */

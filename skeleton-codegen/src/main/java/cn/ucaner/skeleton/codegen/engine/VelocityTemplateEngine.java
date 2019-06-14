@@ -44,6 +44,7 @@ import java.util.Properties;
 public class VelocityTemplateEngine extends AbstractTemplateEngine {
 
     private static final String DOT_VM = ".vm";
+
     private VelocityEngine velocityEngine;
 
     @Override

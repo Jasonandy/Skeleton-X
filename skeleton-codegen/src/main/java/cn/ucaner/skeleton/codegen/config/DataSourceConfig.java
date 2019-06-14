@@ -52,10 +52,12 @@ public class DataSourceConfig {
      * 数据库信息查询
      */
     private IDbQuery dbQuery;
+
     /**
      * 数据库类型
      */
     private DbType dbType;
+
     /**
      * PostgreSQL schemaName
      */

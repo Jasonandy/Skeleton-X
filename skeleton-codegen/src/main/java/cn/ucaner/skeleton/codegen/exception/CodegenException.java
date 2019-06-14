@@ -29,6 +29,9 @@ public class CodegenException extends RuntimeException{
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * status
+     */
     private int status = 500;
 
     private String message;
@@ -49,8 +52,6 @@ public class CodegenException extends RuntimeException{
         this.status = status;
         this.message = message;
     }
-
-
 
     public CodegenException(int status,String message, Throwable cause) {
         super(message, cause);
