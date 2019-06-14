@@ -19,11 +19,11 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.IoUtil;
 import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.ucaner.skeleton.codegen.config.GlobalConfig;
 import cn.ucaner.skeleton.codegen.entity.ColumnEntity;
 import cn.ucaner.skeleton.codegen.entity.GenConfig;
 import cn.ucaner.skeleton.codegen.entity.TableEntity;
 import cn.ucaner.skeleton.codegen.exception.CodegenException;
+import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.configuration.Configuration;
@@ -59,6 +59,8 @@ import java.util.zip.ZipOutputStream;
 */
 @Slf4j
 public class GenUtils {
+
+    private static final String PROJECT_NAME = "skeleton-codegen";
 
     private static final String ENTITY_JAVA_VM = "Entity.java.vm";
     private static final String MAPPER_JAVA_VM = "Mapper.java.vm";
@@ -112,6 +114,9 @@ public class GenUtils {
         if (StrUtil.isNotBlank(genConfig.getTablePrefix())) {
             tablePrefix = genConfig.getTablePrefix();
         } else {
+            /**
+             * tablePrefix
+             */
             tablePrefix = config.getString("tablePrefix");
         }
 
@@ -173,6 +178,7 @@ public class GenUtils {
         Properties prop = new Properties();
         prop.put("file.resource.loader.class", "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
         Velocity.init(prop);
+
         /**
          * 封装模板数据
          */
@@ -211,12 +217,15 @@ public class GenUtils {
             map.put("package", config.getString("package"));
             map.put("mainPath", config.getString("mainPath"));
         }
+
+
         VelocityContext context = new VelocityContext(map);
 
         /**
          * 获取模板列表
          */
         List<String> templates = getTemplates();
+        log.info("=== gen map : === \n{}", JSON.toJSONString(map));
         for (String template : templates) {
             /**
              * 渲染模板
@@ -279,7 +288,7 @@ public class GenUtils {
      * @return
      */
     private static String getFileName(String template, String className, String packageName, String moduleName) {
-        String packagePath = GlobalConfig.PROJECT_NAME + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator;
+        String packagePath = PROJECT_NAME + File.separator + "src" + File.separator + "main" + File.separator + "java" + File.separator;
         if (StringUtils.isNotBlank(packageName)) {
             packagePath += packageName.replace(".", File.separator) + File.separator + moduleName + File.separator;
         }
@@ -305,7 +314,7 @@ public class GenUtils {
         }
 
         if (template.contains(MAPPER_XML_VM)) {
-            return GlobalConfig.PROJECT_NAME + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "mapper" + File.separator + className + "Mapper.xml";
+            return PROJECT_NAME + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "mapper" + File.separator + className + "Mapper.xml";
         }
         return null;
     }

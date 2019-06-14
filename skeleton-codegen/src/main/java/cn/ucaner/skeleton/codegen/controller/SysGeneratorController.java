@@ -20,6 +20,7 @@ import cn.ucaner.skeleton.codegen.entity.GenConfig;
 import cn.ucaner.skeleton.codegen.service.SysGeneratorService;
 import cn.ucaner.skeleton.codegen.util.Query;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,6 +29,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Map;
@@ -47,8 +49,8 @@ import java.util.Map;
 @RequestMapping("/generator")
 public class SysGeneratorController {
 
-
-    private final SysGeneratorService sysGeneratorService;
+    @Resource
+    private SysGeneratorService sysGeneratorService;
 
     /**
      * 列表
@@ -70,6 +72,7 @@ public class SysGeneratorController {
      * @throws IOException
      */
     @PostMapping("/code")
+    @ApiOperation(value = "代码自动生成")
     public void code(@RequestBody GenConfig genConfig, HttpServletResponse response) throws IOException {
         byte[] data = sysGeneratorService.generatorCode(genConfig);
         response.reset();

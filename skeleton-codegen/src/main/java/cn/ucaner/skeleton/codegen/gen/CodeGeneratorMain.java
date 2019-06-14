@@ -1,3 +1,18 @@
+/*******************************************************************************
+ * ~ Copyright (c) 2018 [jasonandy@hotmail.com | https://github.com/Jasonandy] *
+ * ~                                                                           *
+ * ~ Licensed under the Apache License, Version 2.0 (the "License”);           *
+ * ~ you may not use this file except in compliance with the License.          *
+ * ~ You may obtain a copy of the License at                                   *
+ * ~                                                                           *
+ * ~    http://www.apache.org/licenses/LICENSE-2.0                             *
+ * ~                                                                           *
+ * ~ Unless required by applicable law or agreed to in writing, software       *
+ * ~ distributed under the License is distributed on an "AS IS" BASIS,         *
+ * ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  *
+ * ~ See the License for the specific language governing permissions and       *
+ * ~ limitations under the License.                                            *
+ ******************************************************************************/
 package cn.ucaner.skeleton.codegen.gen;
 
 import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
@@ -16,10 +31,12 @@ import com.baomidou.mybatisplus.generator.config.builder.ConfigBuilder;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.FileType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
-import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
+import com.baomidou.mybatisplus.generator.engine.VelocityTemplateEngine;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -104,8 +121,8 @@ public class CodeGeneratorMain {
          * 全局配置
          */
         GlobalConfig gc = new GlobalConfig();
-        String projectPath = System.getProperty("user.dir");
-        gc.setOutputDir(projectPath + "/src/main/java");
+        String projectPath = System.getProperty("user.dir")+PORJECT_NAME;
+        gc.setOutputDir(projectPath + "/src/test/java");
         gc.setAuthor("Jason");
         gc.setOpen(false);
         // gc.setSwagger2(true); 实体属性 Swagger2 注解
@@ -116,31 +133,37 @@ public class CodeGeneratorMain {
          */
         DataSourceConfig dsc = new DataSourceConfig();
         dsc.setUrl(DB_URL);
-        // dsc.setSchemaName("public");
+        dsc.setSchemaName("public");
         dsc.setDriverName(DB_DIVER);
         dsc.setUsername(DB_USER_NAME);
         dsc.setPassword(DB_PASS_WORD);
         mpg.setDataSource(dsc);
 
-        // 包配置
+        /**
+         * 包配置
+         */
         PackageConfig pc = new PackageConfig();
         pc.setModuleName(scanner("模块名"));
         pc.setParent(PARENT_PACKAGE);
         mpg.setPackageInfo(pc);
 
-        // 自定义配置
+        /**
+         * 自定义配置
+         */
         InjectionConfig cfg = new InjectionConfig() {
             @Override
             public void initMap() {
-
+                Map<String, Object> map = new HashMap<>();
+                map.put("abc", this.getConfig().getGlobalConfig().getAuthor() + "-mp");
+                this.setMap(map);
             }
         };
 
 
-
-        // 自定义输出配置
+        /**
+         * 自定义配置会被优先输出
+         */
         List<FileOutConfig> focList = new ArrayList<>();
-        // 自定义配置会被优先输出
         focList.add(new FileOutConfig(templatePath) {
             @Override
             public String outputFile(TableInfo tableInfo) {
@@ -173,29 +196,43 @@ public class CodeGeneratorMain {
          */
         TemplateConfig templateConfig = new TemplateConfig();
 
-        // 配置自定义输出模板
-        //指定自定义模板路径，注意不要带上.ftl/.vm, 会根据使用的模板引擎自动识别
-        // templateConfig.setEntity("templates/entity2.java");
-        // templateConfig.setService();
-        // templateConfig.setController();
+        /**
+         *  配置自定义输出模板
+         * 指定自定义模板路径,注意不要带上.ftl/.vm, 会根据使用的模板引擎自动识别
+         */
+        templateConfig.setEntity("template/Entity.java");
+        templateConfig.setService("/template/Service.java");
+        templateConfig.setController("/template/Controller.java");
 
-        templateConfig.setXml(null);
+        templateConfig.setXml("/template/Mapper.xml");
         mpg.setTemplate(templateConfig);
 
-        // 策略配置
+        /**
+         * 策略配置
+         */
         StrategyConfig strategy = new StrategyConfig();
         strategy.setNaming(NamingStrategy.underline_to_camel);
         strategy.setColumnNaming(NamingStrategy.underline_to_camel);
-        //strategy.setSuperEntityClass(SUPER_ENTITY_CLASS);
+        /**
+         * baseEntity
+         */
+        strategy.setSuperEntityClass(SUPER_ENTITY_CLASS);
         strategy.setEntityLombokModel(true);
         strategy.setRestControllerStyle(true);
-        //strategy.setSuperControllerClass(SUPER_CONTROLLER_CLASS);
+        /**
+         * BaseController
+         */
+        strategy.setSuperControllerClass(SUPER_CONTROLLER_CLASS);
         strategy.setInclude(scanner("表名，多个英文逗号分割").split(","));
         strategy.setSuperEntityColumns("id");
         strategy.setControllerMappingHyphenStyle(true);
         strategy.setTablePrefix(pc.getModuleName() + "_");
         mpg.setStrategy(strategy);
-        mpg.setTemplateEngine(new FreemarkerTemplateEngine());
+        /**
+         * 选择模板引擎
+         */
+        mpg.setTemplateEngine(new VelocityTemplateEngine());
+        //mpg.setTemplateEngine(new FreemarkerTemplateEngine());
         mpg.execute();
     }
 

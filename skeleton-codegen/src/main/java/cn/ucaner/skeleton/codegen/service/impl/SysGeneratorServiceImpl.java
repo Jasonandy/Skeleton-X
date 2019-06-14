@@ -25,6 +25,7 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.io.ByteArrayOutputStream;
 import java.util.List;
 import java.util.Map;
@@ -41,11 +42,12 @@ import java.util.zip.ZipOutputStream;
  * @Modify marker：
  * @version V1.0
 */
-@Service
+@Service("sysGeneratorService")
 @AllArgsConstructor
 public class SysGeneratorServiceImpl implements SysGeneratorService {
 
-    private final SysGeneratorMapper sysGeneratorMapper;
+    @Resource
+    private  SysGeneratorMapper sysGeneratorMapper;
 
     /**
      * 分页查询表

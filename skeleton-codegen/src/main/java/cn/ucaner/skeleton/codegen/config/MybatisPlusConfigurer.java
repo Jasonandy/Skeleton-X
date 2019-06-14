@@ -22,7 +22,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * @ClassName：MybatisPlusConfigurer
- * @Description： <p> MybatisPlus配置类 </p>
+ * @Description： <p> MybatisPlus配置类 - 扫描mapper dao地址 </p>
  * @Author： - Jason
  * @CreatTime：2019/6/14 - 14:11
  * @Modify By：

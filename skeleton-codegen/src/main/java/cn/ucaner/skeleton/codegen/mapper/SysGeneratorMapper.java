@@ -33,7 +33,6 @@ import java.util.Map;
 */
 public interface SysGeneratorMapper {
 
-
     /**
      * 分页查询表格
      * @param params
