@@ -1,0 +1,86 @@
+/*******************************************************************************
+ * ~ Copyright (c) 2018 [jasonandy@hotmail.com | https://github.com/Jasonandy] *
+ * ~                                                                           *
+ * ~ Licensed under the Apache License, Version 2.0 (the "License”);           *
+ * ~ you may not use this file except in compliance with the License.          *
+ * ~ You may obtain a copy of the License at                                   *
+ * ~                                                                           *
+ * ~    http://www.apache.org/licenses/LICENSE-2.0                             *
+ * ~                                                                           *
+ * ~ Unless required by applicable law or agreed to in writing, software       *
+ * ~ distributed under the License is distributed on an "AS IS" BASIS,         *
+ * ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  *
+ * ~ See the License for the specific language governing permissions and       *
+ * ~ limitations under the License.                                            *
+ ******************************************************************************/
+package ${package}.${moduleName}.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import cn.ucaner.skeleton.codegen.common.vo.RespBody
+import ${package}.${moduleName}.entity.${className};
+import ${package}.${moduleName}.service.I${className}Service;
+
+
+/**
+ * @ClassName：${className}
+ * @Description： <p> ${comments} </p>
+ * @Author： - ${author}
+ * @CreatTime：${datetime}
+ * @Modify By：
+ * @ModifyTime： ${datetime}
+ * @Modify marker：
+ * @version V1.0
+*/
+@RestController
+@RequestMapping("/${pathName}")
+public class ${className}Controller {
+
+
+    @Autowired
+    private I${className}Service ${classname}Service;
+
+
+    /**
+     * 信息
+     * @param ${pk.lowerAttrName}
+     * @return RespBody
+     */
+    @GetMapping("/{${pk.lowerAttrName}}")
+    public RespBody info(@PathVariable("${pk.lowerAttrName}") ${pk.attrType} ${pk.lowerAttrName}){
+			${className} ${classname} = ${classname}Service.getById(${pk.lowerAttrName});
+			return new RespBody(${classname});
+    }
+
+    /**
+     * 保存
+     * @param ${classname}
+     * @return RespBody
+     */
+    @PostMapping
+    public RespBody save(@RequestBody ${className} ${classname}){
+			return new RespBody(${classname}Service.save(${classname}));
+    }
+
+    /**
+     * 修改
+     * @param ${classname}
+     * @return RespBody
+     */
+    @PutMapping
+    public RespBody update(@RequestBody ${className} ${classname}){
+			${classname}Service.updateById(${classname});
+      return new RespBody(Boolean.TRUE);
+    }
+
+    /**
+     * 删除
+     * @param ${pk.lowerAttrName}
+     * @return R
+     */
+    @DeleteMapping("/{${pk.lowerAttrName}}")
+    public RespBody delete(@PathVariable ${pk.attrType} ${pk.lowerAttrName}){
+      return new RespBody(${classname}Service.removeById(${pk.lowerAttrName}));
+    }
+
+}

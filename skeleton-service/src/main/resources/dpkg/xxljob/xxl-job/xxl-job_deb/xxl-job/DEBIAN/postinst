@@ -6,9 +6,11 @@ set -e
 
 ############### 设置开机自启动服务 #################################
 if [ "$1" = "configure" ] || [ "$1" = "abort-upgrade" ]; then
+### 如果etc/init.d里面有可以执行的文件 就用update-rc.d添加到自启动 启动优先级为defaults
         if [ -x "/etc/init.d/skeleton-xxljob" ]; then
                 update-rc.d skeleton-xxljob defaults >/dev/null
         fi
+##### 开始启动 ###################################################################
         if [ -x "/etc/init.d/skeleton-xxljob" ]; then
                 invoke-rc.d skeleton-xxljob start || true
         fi

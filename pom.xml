@@ -17,6 +17,7 @@
         <module>skeleton-webapp</module>
         <module>skeleton-gateway</module>
         <module>skeleton-crawler</module>
+        <module>skeleton-codegen</module>
     </modules>
 
     <!-- 项目 -->

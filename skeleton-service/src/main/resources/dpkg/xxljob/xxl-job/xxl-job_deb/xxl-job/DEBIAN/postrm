@@ -15,10 +15,12 @@ if [ "$1" = "purge" ] ; then
         update-rc.d skeleton-xxljob remove >/dev/null
 fi
 
+################# system 重启刷新 启动服务####################
 if [ -d /run/systemd/system ] ; then
         systemctl --system daemon-reload >/dev/null || true
 fi
 
+#在shell脚本中设置. /usr/share/debconf/confmodule来导入debconf的大量函数
 # Automatically added by dh_installdebconf
 if [ "$1" = purge ] && [ -e /usr/share/debconf/confmodule ]; then
         . /usr/share/debconf/confmodule
