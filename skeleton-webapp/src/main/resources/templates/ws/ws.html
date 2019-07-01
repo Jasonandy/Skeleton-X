@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{/webjars/echarts/echarts.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+</head>
+<body>
+    <div>
+        <!-- http://localhost:9009/ws/socket/push/1?message=2 -->
+        <form action="http://localhost:9009/ws/socket/push" method="get">
+            <p>Sid: <input type="text" name="sid" /></p>
+            <p>Msg: <input type="text" name="message" /></p>
+            <input type="submit" value="Send" />
+        </form>
+    </div>
+
+    <div id="chartmain" style="width:1000px;height:800px;" align="center">
+        <h1> WebSocket 测试页面</h1>
+    </div>
+</body>
+
+
+<script>
+    var socket;
+    if(typeof(WebSocket) == "undefined") {
+        console.log("您的浏览器不支持WebSocket");
+    }else{
+        console.log("您的浏览器支持WebSocket");
+        //实现化WebSocket对象，指定要连接的服务器地址与端口  建立连接
+        //
+        //等同于socket = new WebSocket("ws://localhost:9009/websocket/websocket/20");
+        socketUrl = (getCtxPath()+"websocket/[[${cid}]]").replace("http","ws");
+        console.log(socketUrl)
+        socket = new WebSocket(socketUrl);
+        //打开事件
+        socket.onopen = function() {
+            console.log("Socket 已打开");
+            //socket.send("这是来自客户端的消息" + location.href + new Date());
+        };
+        //获得消息事件
+        socket.onmessage = function(msg) {
+            alert(msg)
+            console.log(msg.data);
+            //发现消息进入    开始处理前端触发逻辑
+        };
+        //关闭事件
+        socket.onclose = function() {
+            console.log("Socket已关闭");
+        };
+        //发生了错误事件
+        socket.onerror = function() {
+            alert("Socket发生了错误");
+            //此时可以尝试刷新页面
+        }
+    }
+
+    /**
+     * 获取上下文
+     * @returns {string}
+     */
+    function getCtxPath() {
+        return window.location.protocol + '//' + window.location.host + '/';
+    }
+</script>
