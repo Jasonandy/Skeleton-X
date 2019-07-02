@@ -2,4 +2,6 @@ FROM daocloud.io/java:8
 VOLUME /tmp
 ADD *.jar app.jar
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+# Ubuntu 时间同步
+RUN cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 EXPOSE 8008
