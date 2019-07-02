@@ -45,7 +45,6 @@ public class WebSocketController {
 
     private static Logger logger = LoggerFactory.getLogger(WebSocketController.class);
 
-
     /**
      * 页面请求
      * @param cid
@@ -56,6 +55,14 @@ public class WebSocketController {
     public ModelAndView socket(@PathVariable String cid) {
         ModelAndView mv = new ModelAndView("/ws/ws");
         mv.addObject("cid", cid);
+        return mv;
+    }
+
+
+    @ApiOperation(value = "handler请求")
+    @GetMapping("/socket/handler")
+    public ModelAndView handlerSocket() {
+        ModelAndView mv = new ModelAndView("/ws/handler");
         return mv;
     }
 
