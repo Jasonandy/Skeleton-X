@@ -165,7 +165,7 @@
     </developers>
 
 
-    <!-- 构建
+    <!-- 构建 -->
     <build>
         <plugins>
             <plugin>
@@ -175,7 +175,34 @@
                     <fork>true</fork>
                 </configuration>
             </plugin>
+
+            <!-- maven 将vue打包好的数据 cp过去 -->
+            <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy Vue.js frontend content</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>src/main/resources/static</outputDirectory>
+                            <overwrite>true</overwrite>
+                            <resources>
+                                <resource>
+                                    <directory>${basedir}/skeleton-vue/dist</directory>
+                                    <includes>
+                                        <include>static/</include>
+                                        <include>index.html</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
-    </build> -->
+    </build>
 
 </project>
