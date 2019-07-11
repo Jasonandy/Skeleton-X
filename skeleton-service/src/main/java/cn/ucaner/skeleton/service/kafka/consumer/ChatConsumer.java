@@ -34,7 +34,7 @@ import java.util.Optional;
  * @ModifyTime： 2019/4/28
  * @Modify marker：
  */
-@Component
+//@Component
 public class ChatConsumer {
 
     private static Logger logger = LoggerFactory.getLogger(ChatConsumer.class);

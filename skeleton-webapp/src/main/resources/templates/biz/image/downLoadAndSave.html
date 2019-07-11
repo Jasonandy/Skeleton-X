@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat</title>
+    <link rel="stylesheet" th:href="@{/lib/element-ui/lib/theme-chalk/index.css}">
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+</head>
+<body style="background: #f5f5f5 no-repeat center;background-size: cover">
+<div id="app">
+    <input type="text" v-model="downLoadUrl" th:placeholder="请输入下载地址">
+    <p>下载地址: {{ downLoadUrl }}</p>
+    <input type="text" v-model="storePath" th:placeholder="请输入保存路径">
+    <p>保存路径: : {{ storePath }}</p>
+    <button type="button" @click="downLoad()" > download </button>
+</div>
+<script th:src="@{/lib/vue.min.js}"></script>
+<script th:src="@{/lib/vue-resources.min.js}"></script>
+<script th:src="@{/js/biz/image/image-down-load.js}"></script>
+<script th:src="@{/js/biz/image/image-down-load-api.js}"></script>
+</body>
+</html>

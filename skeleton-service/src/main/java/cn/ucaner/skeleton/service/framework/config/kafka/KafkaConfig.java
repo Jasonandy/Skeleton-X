@@ -48,9 +48,9 @@ import java.util.Map;
  * @ModifyTime： 2019/4/30
  * @Modify marker：
  */
-@Configuration
-@ConditionalOnProperty(name = "enabled", havingValue = "true",prefix="kafka")
-@PropertySources(value = {@PropertySource("classpath:/config/kafka/kafka.properties")})
+//@Configuration
+//@ConditionalOnProperty(name = "enabled", havingValue = "true",prefix="kafka")
+//@PropertySources(value = {@PropertySource("classpath:/config/kafka/kafka.properties")})
 public class KafkaConfig {
 
     private Logger logger = LoggerFactory.getLogger(KafkaConfig.class);

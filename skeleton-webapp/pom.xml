@@ -96,6 +96,13 @@
             <version>3.0.0.5</version>
         </dependency>
 
+        <!-- 操作图片 -->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>4.5.16</version>
+        </dependency>
+
 
     </dependencies>
 

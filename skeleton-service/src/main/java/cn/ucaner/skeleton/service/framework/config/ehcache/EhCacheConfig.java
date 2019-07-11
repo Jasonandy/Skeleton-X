@@ -21,6 +21,7 @@ import org.springframework.cache.ehcache.EhCacheManagerFactoryBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.stereotype.Component;
 
 
 /**
@@ -33,7 +34,7 @@ import org.springframework.core.io.ClassPathResource;
  * @Modify marker：
  * @version V1.0
 */
-@Configuration
+//@Component
 @ConditionalOnProperty(name = "enabled", havingValue = "true",prefix="ehcache")
 public class EhCacheConfig {
 
