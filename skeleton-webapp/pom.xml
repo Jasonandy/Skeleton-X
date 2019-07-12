@@ -38,6 +38,12 @@
             <version>tuna-1.0</version>
         </dependency>
 
+        <!-- 加入权限 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
         <!-- mybatis-spring-boot-starter  -->
         <dependency>
             <groupId>org.mybatis.spring.boot</groupId>

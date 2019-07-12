@@ -13,7 +13,7 @@
  * ~ See the License for the specific language governing permissions and       *
  * ~ limitations under the License.                                            *
  ******************************************************************************/
-package cn.ucaner.skeleton.webapp.controller;
+package cn.ucaner.skeleton.webapp.controller.chat;
 
 import cn.ucaner.skeleton.webapp.constant.CommonConstant;
 import cn.ucaner.skeleton.webapp.entity.User;
@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Set;
@@ -45,6 +46,7 @@ import java.util.Set;
  * @Modify marker：
  */
 @Controller
+@RequestMapping("/chat")
 public class RouterController {
 
     private static Logger logger = LoggerFactory.getLogger(RouterController.class);
@@ -62,7 +64,7 @@ public class RouterController {
      */
     @GetMapping("/")
     public String index() {
-        return "login";
+        return "chat/login";
     }
 
     /**
@@ -101,6 +103,6 @@ public class RouterController {
         if (user == null) {
             return "redirect:/";
         }
-        return "index";
+        return "chat/index";
     }
 }

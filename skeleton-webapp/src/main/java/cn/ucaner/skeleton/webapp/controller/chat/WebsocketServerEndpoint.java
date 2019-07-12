@@ -13,7 +13,7 @@
  * ~ See the License for the specific language governing permissions and       *
  * ~ limitations under the License.                                            *
  ******************************************************************************/
-package cn.ucaner.skeleton.webapp.controller;
+package cn.ucaner.skeleton.webapp.controller.chat;
 
 import cn.ucaner.skeleton.webapp.entity.Message;
 import cn.ucaner.skeleton.webapp.entity.User;
