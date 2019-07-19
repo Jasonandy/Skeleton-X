@@ -15,13 +15,6 @@ CREATE TABLE `sys_user` (
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1562651818748 DEFAULT CHARSET=utf8 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC COMMENT='用户表';
 
-CREATE TABLE `sys_role_permission` (
-  `role_permission_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '表id',
-  `role_id` bigint(20) unsigned DEFAULT NULL COMMENT '角色id',
-  `permission_id` bigint(20) unsigned DEFAULT NULL COMMENT '权限id',
-  PRIMARY KEY (`role_permission_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=677457522 DEFAULT CHARSET=utf8 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC COMMENT='角色与权限关联表';
-
 
 CREATE TABLE `sys_role` (
   `role_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '角色id',
@@ -34,6 +27,15 @@ CREATE TABLE `sys_role` (
   `role_sign` varchar(128) DEFAULT NULL COMMENT '角色标识,程序中判断使用,如"admin"',
   PRIMARY KEY (`role_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC COMMENT='角色表';
+
+
+CREATE TABLE `sys_user_role` (
+  `user_role_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '表id',
+  `user_id` bigint(20) unsigned DEFAULT NULL COMMENT '用户id',
+  `role_id` bigint(20) unsigned DEFAULT NULL COMMENT '角色id',
+  PRIMARY KEY (`user_role_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=24958429 DEFAULT CHARSET=utf8 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC COMMENT='用户与角色关联表';
+
 
 
 CREATE TABLE `sys_permission` (
@@ -49,6 +51,13 @@ CREATE TABLE `sys_permission` (
   `description` varchar(256) DEFAULT NULL COMMENT '权限描述,UI界面显示使用',
   PRIMARY KEY (`permission_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1494399268501 DEFAULT CHARSET=utf8 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC COMMENT='权限表';
+
+CREATE TABLE `sys_role_permission` (
+  `role_permission_id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '表id',
+  `role_id` bigint(20) unsigned DEFAULT NULL COMMENT '角色id',
+  `permission_id` bigint(20) unsigned DEFAULT NULL COMMENT '权限id',
+  PRIMARY KEY (`role_permission_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=677457522 DEFAULT CHARSET=utf8 CHECKSUM=1 DELAY_KEY_WRITE=1 ROW_FORMAT=DYNAMIC COMMENT='角色与权限关联表';
 
 
 CREATE TABLE `sys_module` (
