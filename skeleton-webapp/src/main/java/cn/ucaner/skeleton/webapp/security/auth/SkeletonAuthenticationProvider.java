@@ -16,10 +16,14 @@
 package cn.ucaner.skeleton.webapp.security.auth;
 
 import cn.ucaner.skeleton.webapp.security.detail.SkeletonUserDetailService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 /**
@@ -35,14 +39,21 @@ import org.springframework.stereotype.Service;
 @Service("skeletonAuthenticationProvider")
 public class SkeletonAuthenticationProvider implements AuthenticationProvider {
 
+    private final static Logger logger = LoggerFactory.getLogger(SkeletonAuthenticationProvider.class);
+
     @Autowired
     private SkeletonUserDetailService skeletonUserDetailService;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        String username = authentication.getName();
+        String username = (String) authentication.getPrincipal();
         String password = (String) authentication.getCredentials();
-        skeletonUserDetailService.loadUserByUsername(username);
+        UserDetails userDetails = skeletonUserDetailService.loadUserByUsername(username);
+        logger.info("=== password:{} ===",password);
+        if (userDetails != null) {
+            return new UsernamePasswordAuthenticationToken(userDetails, null,userDetails.getAuthorities());
+        }
+        /*验证不通过*/
         return null;
     }
 

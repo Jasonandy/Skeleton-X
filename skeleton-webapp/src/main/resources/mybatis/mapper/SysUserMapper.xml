@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ucaner.skeleton.webapp.security.dao.SysUserMapper">
+  <resultMap id="BaseResultMap" type="cn.ucaner.skeleton.webapp.security.entity.SysUser">
+    <id column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="CHAR" property="password" />
+    <result column="real_name" jdbcType="VARCHAR" property="realName" />
+    <result column="tel" jdbcType="VARCHAR" property="tel" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="dept_id" jdbcType="VARCHAR" property="deptId" />
+    <result column="has_valid" jdbcType="VARCHAR" property="hasValid" />
+    <result column="has_dept_admin" jdbcType="VARCHAR" property="hasDeptAdmin" />
+    <result column="themes" jdbcType="VARCHAR" property="themes" />
+    <result column="create_user_id" jdbcType="BIGINT" property="createUserId" />
+    <result column="create_user_name" jdbcType="VARCHAR" property="createUserName" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    user_id, username, password, real_name, tel, remark, dept_id, has_valid, has_dept_admin, 
+    themes, create_user_id, create_user_name, create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_user
+    where user_id = #{userId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from sys_user
+    where user_id = #{userId,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.ucaner.skeleton.webapp.security.entity.SysUser">
+    insert into sys_user (user_id, username, password, 
+      real_name, tel, remark, 
+      dept_id, has_valid, has_dept_admin, 
+      themes, create_user_id, create_user_name, 
+      create_time)
+    values (#{userId,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=CHAR}, 
+      #{realName,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{deptId,jdbcType=VARCHAR}, #{hasValid,jdbcType=VARCHAR}, #{hasDeptAdmin,jdbcType=VARCHAR}, 
+      #{themes,jdbcType=VARCHAR}, #{createUserId,jdbcType=BIGINT}, #{createUserName,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.ucaner.skeleton.webapp.security.entity.SysUser">
+    insert into sys_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="realName != null">
+        real_name,
+      </if>
+      <if test="tel != null">
+        tel,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="deptId != null">
+        dept_id,
+      </if>
+      <if test="hasValid != null">
+        has_valid,
+      </if>
+      <if test="hasDeptAdmin != null">
+        has_dept_admin,
+      </if>
+      <if test="themes != null">
+        themes,
+      </if>
+      <if test="createUserId != null">
+        create_user_id,
+      </if>
+      <if test="createUserName != null">
+        create_user_name,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=CHAR},
+      </if>
+      <if test="realName != null">
+        #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null">
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="deptId != null">
+        #{deptId,jdbcType=VARCHAR},
+      </if>
+      <if test="hasValid != null">
+        #{hasValid,jdbcType=VARCHAR},
+      </if>
+      <if test="hasDeptAdmin != null">
+        #{hasDeptAdmin,jdbcType=VARCHAR},
+      </if>
+      <if test="themes != null">
+        #{themes,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null">
+        #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="createUserName != null">
+        #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.ucaner.skeleton.webapp.security.entity.SysUser">
+    update sys_user
+    <set>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=CHAR},
+      </if>
+      <if test="realName != null">
+        real_name = #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null">
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="deptId != null">
+        dept_id = #{deptId,jdbcType=VARCHAR},
+      </if>
+      <if test="hasValid != null">
+        has_valid = #{hasValid,jdbcType=VARCHAR},
+      </if>
+      <if test="hasDeptAdmin != null">
+        has_dept_admin = #{hasDeptAdmin,jdbcType=VARCHAR},
+      </if>
+      <if test="themes != null">
+        themes = #{themes,jdbcType=VARCHAR},
+      </if>
+      <if test="createUserId != null">
+        create_user_id = #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="createUserName != null">
+        create_user_name = #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.ucaner.skeleton.webapp.security.entity.SysUser">
+    update sys_user
+    set username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=CHAR},
+      real_name = #{realName,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      dept_id = #{deptId,jdbcType=VARCHAR},
+      has_valid = #{hasValid,jdbcType=VARCHAR},
+      has_dept_admin = #{hasDeptAdmin,jdbcType=VARCHAR},
+      themes = #{themes,jdbcType=VARCHAR},
+      create_user_id = #{createUserId,jdbcType=BIGINT},
+      create_user_name = #{createUserName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where user_id = #{userId,jdbcType=BIGINT}
+  </update>
+</mapper>

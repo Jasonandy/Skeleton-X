@@ -27,6 +27,15 @@
 
         <!-- docker -->
         <docker.image.prefix>skeleton-webapp</docker.image.prefix>
+
+        <!-- generator -->
+        <mybatis-generator-core.version>1.3.6</mybatis-generator-core.version>
+        <!-- mybatis -->
+        <mybatis.version>3.4.6</mybatis.version>
+        <!-- mysql-connector -->
+        <mysql-connector-java.version>5.1.46</mysql-connector-java.version>
+        <!-- mybatis-generator-maven -->
+        <mybatis-generator-maven-plugin.version>1.3.5</mybatis-generator-maven-plugin.version>
     </properties>
 
     <!--PROJECT DEPENDENCIES-->
@@ -123,12 +132,17 @@
 
     <!-- maven 构建 -->
     <build>
+        <!--<finalName>${project.name}</finalName>-->
         <finalName>${project.name}</finalName>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
+                <excludes>
+                    <exclude>generator/**</exclude>
+                    <exclude>lib/**</exclude>
+                    <exclude>sql/**</exclude>
+                </excludes>
             </resource>
-            <!-- xml properties 文件打包进去 -->
             <resource>
                 <directory>src/main/java</directory>
                 <includes>
@@ -136,9 +150,6 @@
                     <include>**/*.xml</include>
                 </includes>
                 <filtering>false</filtering>
-            </resource>
-            <resource>
-                <directory>src/main/webapp</directory>
             </resource>
         </resources>
 
@@ -162,7 +173,46 @@
                     </execution>
                 </executions>
             </plugin>
-
+            <!--mybatis自动生成代码插件-->
+            <plugin>
+                <groupId>org.mybatis.generator</groupId>
+                <artifactId>mybatis-generator-maven-plugin</artifactId>
+                <version>1.3.6</version>
+                <configuration>
+                    <!-- 是否覆盖 -->
+                    <overwrite>true</overwrite>
+                    <!--允许移动生成的文件 -->
+                    <verbose>true</verbose>
+                    <!-- 自动生成的配置,${basedir}表示项目根目录 ,configurationFile默认在resource目录下-->
+                    <configurationFile>${basedir}/src/main/resources/mybatis-generator/generatorConfig.xml</configurationFile>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>Generate MyBatis Artifacts</id>
+                        <phase>deploy</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.mybatis.generator</groupId>
+                        <artifactId>mybatis-generator-core</artifactId>
+                        <version>${mybatis-generator-core.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                        <version>${mysql-connector-java.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.mybatis</groupId>
+                        <artifactId>mybatis</artifactId>
+                        <version>${mybatis.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
             <plugin>
                 <groupId>com.spotify</groupId>
                 <artifactId>docker-maven-plugin</artifactId>

@@ -48,7 +48,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SkeletonSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private static Logger logger = LoggerFactory.getLogger(SkeletonSecurityConfig.class);
+    private final static Logger logger = LoggerFactory.getLogger(SkeletonSecurityConfig.class);
 
     private static final String COOKIE_NAME_REMEMBER_ME = "remember-me";
 
