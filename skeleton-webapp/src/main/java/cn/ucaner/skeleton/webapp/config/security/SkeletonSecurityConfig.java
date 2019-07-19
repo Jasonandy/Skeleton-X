@@ -37,7 +37,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 /**
  * @projectName：Skeleton-X
  * @Package：cn.ucaner.skeleton.webapp.config.security
- * @Description： <p> SkeletonSecurityConfig </p>
+ * @Description： <p> SkeletonSecurityConfig  EnableGlobalMethodSecurity:{@code SkeletonPermissionEvaluator} 开启才有效 </p>
  * @Author： - Jason
  * @CreatTime：2019/7/12 - 15:04
  * @Modify By：
@@ -49,6 +49,20 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SkeletonSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    /**
+     * Spring-Security
+     * 参考:https://springcloud.cc/spring-security-zhcn.html
+     *   "认证"和"授权"
+     *   1.HTTP BASIC 认证头 (基于 IETF RFC-based 标准)
+     *   2.HTTP Digest 认证头 ( IETF RFC-based 标准)
+     *   3.HTTP X.509 客户端证书交换 ( IETF RFC-based 标准)
+     *   4.LDAP (一个非常常见的方法来跨平台认证需要, 尤其是在大型环境)
+     *   5.Form-based authentication (用于简单的用户界面)
+     *   6.OpenID 认证
+     *   7.Authentication based on pre-established request headers (such as Computer Associates ) 预先建立
+     *   8.JA-SIG Central Authentication Service (CAS，一个开源的SSO系统 )
+     *
+     */
     private final static Logger logger = LoggerFactory.getLogger(SkeletonSecurityConfig.class);
 
     private static final String COOKIE_NAME_REMEMBER_ME = "remember-me";
@@ -71,6 +85,14 @@ public class SkeletonSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private SkeletonAccessDecisionManagerService skeletonAccessDecisionManagerService;
 
+
+
+    /**
+     * 重写 {@link WebSecurityConfigurerAdapter} configure -[核心]
+     * 重写了其中的configure() 方法设置了不同url的不同访问权限
+     * @param http
+     * @throws Exception
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         logger.info("=== 拦截需要处理的页面 ===");
@@ -87,6 +109,8 @@ public class SkeletonSecurityConfig extends WebSecurityConfigurerAdapter {
                 .disable();
 
         logger.info("== 登录:{},defaultSuccessUrl:{},successHandler:{} ==","formLogin","index","skeletonLoginSuccessHandler");
+
+        http.authorizeRequests();
 
         //登录
         http.formLogin()
@@ -167,10 +191,16 @@ public class SkeletonSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
-
+    /**
+     * 配置自定义的校验器 目前支持的有
+     *      1.inMemoryAuthentication
+     *      2.jdbcAuthentication
+     *      3.ldapAuthentication
+     *  等校验方式
+     * @param auth
+     */
     @Autowired
-    protected void configureGlobal(AuthenticationManagerBuilder auth){
-        auth.authenticationProvider(skeletonAuthenticationProvider);
+    protected void configureGlobal(AuthenticationManagerBuilder auth)throws Exception{
+        auth.authenticationProvider(skeletonAuthenticationProvider).userDetailsService(skeletonUserDetailService);
     }
-
 }

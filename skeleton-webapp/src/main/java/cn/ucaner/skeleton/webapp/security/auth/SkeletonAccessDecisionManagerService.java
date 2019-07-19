@@ -43,9 +43,13 @@ public class SkeletonAccessDecisionManagerService implements AccessDecisionManag
     private final static Logger logger = LoggerFactory.getLogger(SkeletonAccessDecisionManagerService.class);
 
     /**
-     * @param authentication UserService中循环添加到GrantedAuthority中的权限信息集合
+     *  decide 方法是判定是否拥有权限的决策方法
+     * @param authentication SkeletonUserDetailService 中循环添加到GrantedAuthority中的权限信息集合
+     *                       可转换为 HttpServletRequest request = ((FilterInvocation) object).getHttpRequest()
      * @param o          包含客户端发起的请求的request信息，可以转换为HTTPRequest
-     * @param collection url所需的权限集合
+     * @param collection url所需的权限集合 为InvocationSecurityMetadataSource的getAttributes(Object object)这个方法返回的结果
+     *                   此方法是为了判定用户请求的url 是否在权限表中,如果在权限表中,则返回给 decide 方法,用来判定用户是否有此权限,
+     *                   如果不在权限表中则放行.
      * @throws AccessDeniedException
      * @throws InsufficientAuthenticationException
      */
@@ -61,6 +65,7 @@ public class SkeletonAccessDecisionManagerService implements AccessDecisionManag
             //获得所需的权限
             needPermission = c.getAttribute();
             //遍历用户拥有的权限与URL所需的权限进行对比
+            //authentication 为在注释1 中循环添加到 GrantedAuthority 对象中的权限信息集合
             for (GrantedAuthority ga : authentication.getAuthorities()) {
                 if (needPermission.trim().equals(ga.getAuthority())){
                     return;

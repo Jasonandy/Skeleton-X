@@ -20,6 +20,8 @@ import cn.ucaner.skeleton.webapp.security.entity.SysRole;
 import cn.ucaner.skeleton.webapp.security.entity.SysUser;
 import cn.ucaner.skeleton.webapp.security.service.SysRoleService;
 import cn.ucaner.skeleton.webapp.security.service.SysUserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -45,6 +47,8 @@ import java.util.List;
 @Service("skeletonUserDetailService")
 public class SkeletonUserDetailService implements UserDetailsService {
 
+    private final static Logger logger = LoggerFactory.getLogger(SkeletonUserDetailService.class);
+
     @Resource
     private SysUserService sysUserService;
 
@@ -53,6 +57,7 @@ public class SkeletonUserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        logger.info("=== [用户名查找用户信息]loadUserByUsername:{} === ",username);
         SysUser user = sysUserService.findByUserName(username);
         if (user != null) {
             List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
