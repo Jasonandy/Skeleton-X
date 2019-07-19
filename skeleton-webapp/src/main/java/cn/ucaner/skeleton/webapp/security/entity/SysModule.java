@@ -29,48 +29,114 @@ import java.util.Date;
 */
 public class SysModule {
 
+    /**
+     * moduleId
+     */
     private Long moduleId;
 
+    /**
+     * parentId
+     */
     private Long parentId;
 
+    /**
+     * moduleUrl
+     */
     private String moduleUrl;
 
+    /**
+     * moduleState
+     */
     private String moduleState;
 
+    /**
+     * hasVisible
+     */
     private String hasVisible;
 
+    /**
+     * actions
+     */
     private String actions;
 
+    /**
+     * remark
+     */
     private String remark;
 
+    /**
+     * moduleLevel
+     */
     private Long moduleLevel;
 
+    /**
+     * displayName
+     */
     private String displayName;
 
+    /**
+     * moduleLeaf
+     */
     private Long moduleLeaf;
 
+    /**
+     * moduleSeq
+     */
     private Long moduleSeq;
 
+    /**
+     * moduleName
+     */
     private String moduleName;
 
+    /**
+     * moduleNumber
+     */
     private String moduleNumber;
 
+    /**
+     * moduleDescription
+     */
     private String moduleDescription;
 
+    /**
+     * creatorId
+     */
     private Long creatorId;
 
+    /**
+     * createTime
+     */
     private Date createTime;
 
+    /**
+     * lastUpdateUserId
+     */
     private Long lastUpdateUserId;
 
+    /**
+     * lastUpdatedTime
+     */
     private Date lastUpdatedTime;
 
+    /**
+     * departmentId
+     */
     private String departmentId;
 
+    /**
+     * moduleIcon
+     */
     private String moduleIcon;
 
+    /**
+     * hasDisplay
+     */
     private String hasDisplay;
 
+    /**
+     * displayOrder
+     */
     private Long displayOrder;
 
     public Long getModuleId() {

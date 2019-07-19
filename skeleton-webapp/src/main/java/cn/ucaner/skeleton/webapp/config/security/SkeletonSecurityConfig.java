@@ -15,6 +15,7 @@
  ******************************************************************************/
 package cn.ucaner.skeleton.webapp.config.security;
 
+import cn.ucaner.skeleton.webapp.security.auth.SkeletonAccessDecisionManagerService;
 import cn.ucaner.skeleton.webapp.security.auth.SkeletonAuthenticationProvider;
 import cn.ucaner.skeleton.webapp.security.detail.SkeletonUserDetailService;
 import cn.ucaner.skeleton.webapp.security.handler.login.SkeletonLoginSuccessHandler;
@@ -67,15 +68,19 @@ public class SkeletonSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private SkeletonAuthenticationProvider skeletonAuthenticationProvider;
 
+    @Autowired
+    private SkeletonAccessDecisionManagerService skeletonAccessDecisionManagerService;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         logger.info("=== 拦截需要处理的页面 ===");
 
         //拦截页面
         http.authorizeRequests()
-                //全部页面都要验证
-                .anyRequest().authenticated()
-        ;//.accessDecisionManager(accessDecisionManagerService());//使用自定义拦截
+            //全部页面都要验证
+            .anyRequest().authenticated()
+            //使用自定义拦截
+            .accessDecisionManager(skeletonAccessDecisionManagerService);
 
         //禁用csrf [跨站请求伪造]- 使用自定义登录页面
         http.csrf()
@@ -85,11 +90,12 @@ public class SkeletonSecurityConfig extends WebSecurityConfigurerAdapter {
 
         //登录
         http.formLogin()
-                .loginPage("/index")
+                //访问接口
+                .loginPage("/account/login.do")
                 .usernameParameter("username")
                 .passwordParameter("password")
                 //先defaultSuccessUrl后successHandler,不然successHandler不会执行
-                .defaultSuccessUrl("/index")
+                .defaultSuccessUrl("/index.do")
                 .successHandler(skeletonLoginSuccessHandler)
 
                 //高级设置-拦截器
@@ -105,8 +111,8 @@ public class SkeletonSecurityConfig extends WebSecurityConfigurerAdapter {
         logger.info("== 登出:{},logoutSuccessUrl:{},logoutSuccessUrl:{},logoutSuccessHandler:skeletonLogoutSuccessHandler ==","logout","login","skeletonLoginSuccessHandler");
         //登出
         http.logout()
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/login")
+                .logoutUrl("/account/logout.do")
+                .logoutSuccessUrl("/account/login.do")
                 .logoutSuccessHandler(skeletonLogoutSuccessHandler)
                 .deleteCookies(COOKIE_NAME_REMEMBER_ME)
                 .permitAll();
@@ -121,19 +127,19 @@ public class SkeletonSecurityConfig extends WebSecurityConfigurerAdapter {
         //Session管理器
         http.sessionManagement()
                 .sessionFixation().changeSessionId()
-                .sessionAuthenticationErrorUrl("/login")
+                .sessionAuthenticationErrorUrl("/account/login.do")
                 //Session失效
-                .invalidSessionUrl("/login")
+                .invalidSessionUrl("/account/login.do")
                 //只能同时一个人在线
                 .maximumSessions(1)
                 //启用这个让maximumSessions生效
                 .sessionRegistry(skeletonSessionRegistry)
-                .expiredUrl("/login");
+                .expiredUrl("/account/login.do");
 
 
         //权限验证失败进入的页面（只对使用自定义拦截有效）
         http.exceptionHandling()
-                .accessDeniedPage("/access_denied");
+                .accessDeniedPage("/access_denied.do");
 
 
         //允许同源iframe访问
@@ -150,10 +156,14 @@ public class SkeletonSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web){
         web.ignoring()
-            .antMatchers("**/favicon.ico")
+                //需要开放的资源
+                .antMatchers("/account/login.do")
+                .antMatchers("/login")
+                //静态资源
+                .antMatchers("**/favicon.ico")
                 .antMatchers("/static/**")
-            .antMatchers("/assets/**")
-            .antMatchers("/captcha.jpg");
+                .antMatchers("/assets/**")
+                .antMatchers("/captcha.jpg");
     }
 
 

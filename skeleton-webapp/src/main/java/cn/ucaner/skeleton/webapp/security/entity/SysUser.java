@@ -31,32 +31,74 @@ import java.util.List;
 */
 public class SysUser {
 
+    /**
+     * userId
+     */
     private Long userId;
 
+    /**
+     * username
+     */
     private String username;
 
+    /**
+     * password
+     */
     private String password;
 
+    /**
+     * realName
+     */
     private String realName;
 
+    /**
+     * tel
+     */
     private String tel;
 
+    /**
+     * remark
+     */
     private String remark;
 
+    /**
+     * deptId
+     */
     private String deptId;
 
+    /**
+     * hasValid
+     */
     private String hasValid;
 
+    /**
+     * hasDeptAdmin
+     */
     private String hasDeptAdmin;
 
+    /**
+     * themes
+     */
     private String themes;
 
+    /**
+     * createUserId
+     */
     private Long createUserId;
 
+    /**
+     * createUserName
+     */
     private String createUserName;
 
+    /**
+     * createTime
+     */
     private Date createTime;
 
+    /**
+     * 当前用户 拥有哪些角色
+     */
     private List<SysRole> roles = new ArrayList<>();
 
     public Long getUserId() {

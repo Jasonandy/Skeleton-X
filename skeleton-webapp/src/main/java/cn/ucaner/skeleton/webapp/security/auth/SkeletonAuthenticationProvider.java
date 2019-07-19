@@ -20,6 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -44,6 +45,12 @@ public class SkeletonAuthenticationProvider implements AuthenticationProvider {
     @Autowired
     private SkeletonUserDetailService skeletonUserDetailService;
 
+    /**
+     * 对密码进行校验匹配
+     * @param authentication
+     * @return
+     * @throws AuthenticationException
+     */
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String username = (String) authentication.getPrincipal();
@@ -51,7 +58,16 @@ public class SkeletonAuthenticationProvider implements AuthenticationProvider {
         UserDetails userDetails = skeletonUserDetailService.loadUserByUsername(username);
         logger.info("=== password:{} ===",password);
         if (userDetails != null) {
-            return new UsernamePasswordAuthenticationToken(userDetails, null,userDetails.getAuthorities());
+            //数据库里面的密码
+            String realPassword = userDetails.getPassword();
+            //登录的密码 [数据库存的MD5后的数据 - 传入的为明文]
+            String loginPassword = password;
+            logger.info("=== 真实密码为:{},提交的密码为:{} ===",realPassword,loginPassword);
+            if (!realPassword.equals(loginPassword)){
+                logger.info("Sorry please check your password or account.");
+                throw new BadCredentialsException("Sorry please check your password or account.");
+            }
+            return new UsernamePasswordAuthenticationToken(userDetails, password,userDetails.getAuthorities());
         }
         return null;
     }

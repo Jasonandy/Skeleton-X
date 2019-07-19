@@ -44,8 +44,8 @@ public class SkeletonAccessDecisionManagerService implements AccessDecisionManag
 
     /**
      * @param authentication UserService中循环添加到GrantedAuthority中的权限信息集合
-     * @param o         包含客户端发起的请求的request信息，可以转换为HTTPRequest
-     * @param collection     url所需的权限集合
+     * @param o          包含客户端发起的请求的request信息，可以转换为HTTPRequest
+     * @param collection url所需的权限集合
      * @throws AccessDeniedException
      * @throws InsufficientAuthenticationException
      */

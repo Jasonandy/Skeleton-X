@@ -31,22 +31,49 @@ import java.util.List;
 */
 public class SysRole {
 
+    /**
+     * roleId
+     */
     private Long roleId;
 
+    /**
+     * roleName
+     */
     private String roleName;
 
+    /**
+     * roleRemark
+     */
     private String roleRemark;
 
+    /**
+     * state
+     */
     private Long state;
 
+    /**
+     * createUserId
+     */
     private Long createUserId;
 
+    /**
+     * createUserName
+     */
     private String createUserName;
 
+    /**
+     * createTime
+     */
     private Date createTime;
 
+    /**
+     * roleSign
+     */
     private String roleSign;
 
+    /**
+     * permissions - 该角色拥有哪些权限  - 权限集合
+     */
     private List<SysPermission> permissions = new ArrayList<>();
 
     public Long getRoleId() {

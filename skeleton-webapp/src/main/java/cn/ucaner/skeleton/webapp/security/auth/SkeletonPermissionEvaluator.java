@@ -17,9 +17,11 @@ package cn.ucaner.skeleton.webapp.security.auth;
 
 import org.springframework.security.access.PermissionEvaluator;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
+import java.util.Collection;
 
 /**
  * @projectName：Skeleton-X
@@ -34,8 +36,14 @@ import java.io.Serializable;
 @Service("skeletonPermissionEvaluator")
 public class SkeletonPermissionEvaluator implements PermissionEvaluator {
 
+    /**
+     * 不检查权限
+     */
     private final static String SKIP = "skip";
 
+    /**
+     * 检查是否有权限
+     */
     private final static String PERMISSION = "permission";
 
     @Override
@@ -61,12 +69,12 @@ public class SkeletonPermissionEvaluator implements PermissionEvaluator {
      * @return
      */
     private boolean hasPermission(Authentication authentication, Object permission) {
-//        Collection<MyGrantedAuthority> authorities = (Collection<MyGrantedAuthority>) authentication.getAuthorities();
-//        for (MyGrantedAuthority authority : authorities) {
-//            if (authority.equals(permission)) {
-//                return true;
-//            }
-//        }
+        Collection<GrantedAuthority> authorities = (Collection<GrantedAuthority>) authentication.getAuthorities();
+        for (GrantedAuthority authority : authorities) {
+            if (authority.equals(permission)) {
+                return true;
+            }
+        }
         return false;
     }
 

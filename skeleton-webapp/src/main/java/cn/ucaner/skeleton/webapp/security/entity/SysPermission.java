@@ -27,24 +27,54 @@ package cn.ucaner.skeleton.webapp.security.entity;
 */
 public class SysPermission {
 
+    /**
+     * permissionId
+     */
     private Long permissionId;
 
+    /**
+     * resourceId
+     */
     private Long resourceId;
 
+    /**
+     * resourceName
+     */
     private String resourceName;
 
+    /**
+     * resourceType
+     */
     private Long resourceType;
 
+    /**
+     * actionId
+     */
     private Long actionId;
 
+    /**
+     * actionName
+     */
     private String actionName;
 
+    /**
+     * functionCode
+     */
     private String functionCode;
 
+    /**
+     * permissionName
+     */
     private String permissionName;
 
+    /**
+     * permissionSign
+     */
     private String permissionSign;
 
+    /**
+     * description
+     */
     private String description;
 
     public Long getPermissionId() {

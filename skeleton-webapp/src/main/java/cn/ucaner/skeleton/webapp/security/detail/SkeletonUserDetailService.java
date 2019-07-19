@@ -62,7 +62,7 @@ public class SkeletonUserDetailService implements UserDetailsService {
             for (SysRole role : roles) {
                 List<SysPermission> permissions = sysRoleService.findByRoleId(role.getRoleId()).getPermissions();
                 for (SysPermission permission : permissions) {
-                    //为每个授权中心对象写入权限名
+                    //为每个授权中心对象写入权限名 source:add etc.
                     grantedAuthorities.add(new SimpleGrantedAuthority(permission.getResourceName()));
                 }
             }

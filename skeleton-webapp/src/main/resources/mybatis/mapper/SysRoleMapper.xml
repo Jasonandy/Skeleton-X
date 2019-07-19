@@ -11,6 +11,19 @@
         <result column="create_user_name" jdbcType="VARCHAR" property="createUserName" />
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
         <result column="role_sign" jdbcType="VARCHAR" property="roleSign" />
+        <!-- 角色拥有的权限 -->
+        <collection property="permissions" ofType="cn.ucaner.skeleton.webapp.security.entity.SysPermission">
+            <id column="permission_id" jdbcType="BIGINT" property="permissionId" />
+            <result column="resource_id" jdbcType="BIGINT" property="resourceId" />
+            <result column="resource_name" jdbcType="VARCHAR" property="resourceName" />
+            <result column="resource_type" jdbcType="BIGINT" property="resourceType" />
+            <result column="action_id" jdbcType="BIGINT" property="actionId" />
+            <result column="action_name" jdbcType="VARCHAR" property="actionName" />
+            <result column="function_code" jdbcType="VARCHAR" property="functionCode" />
+            <result column="permission_name" jdbcType="VARCHAR" property="permissionName" />
+            <result column="permission_sign" jdbcType="VARCHAR" property="permissionSign" />
+            <result column="description" jdbcType="VARCHAR" property="description" />
+        </collection>
     </resultMap>
 
     <!-- Base_Column_List -->

@@ -15,8 +15,16 @@
  ******************************************************************************/
 package cn.ucaner.skeleton.webapp.security.handler.login;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Service;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * @projectName：Skeleton-X
@@ -31,4 +39,11 @@ import org.springframework.stereotype.Service;
 @Service("skeletonLoginSuccessHandler")
 public class SkeletonLoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
+    private final static Logger logger = LoggerFactory.getLogger(SkeletonLoginSuccessHandler.class);
+
+    @Override
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+        logger.info("=== 恭喜登录成功 ===");
+        super.onAuthenticationSuccess(request, response, authentication);
+    }
 }

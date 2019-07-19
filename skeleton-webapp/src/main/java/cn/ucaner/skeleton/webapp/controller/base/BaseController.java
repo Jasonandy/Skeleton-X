@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @Modify marker：
  */
 @Controller
-@RequestMapping(value="/")
+@RequestMapping(value="/base")
 public class BaseController {
 
 
