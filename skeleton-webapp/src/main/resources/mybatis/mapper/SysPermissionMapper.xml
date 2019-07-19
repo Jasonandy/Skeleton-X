@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ucaner.skeleton.webapp.security.dao.SysPermissionMapper">
+    <!-- resultMap -->
+    <resultMap id="BaseResultMap" type="cn.ucaner.skeleton.webapp.security.entity.SysPermission">
+        <id column="permission_id" jdbcType="BIGINT" property="permissionId" />
+        <result column="resource_id" jdbcType="BIGINT" property="resourceId" />
+        <result column="resource_name" jdbcType="VARCHAR" property="resourceName" />
+        <result column="resource_type" jdbcType="BIGINT" property="resourceType" />
+        <result column="action_id" jdbcType="BIGINT" property="actionId" />
+        <result column="action_name" jdbcType="VARCHAR" property="actionName" />
+        <result column="function_code" jdbcType="VARCHAR" property="functionCode" />
+        <result column="permission_name" jdbcType="VARCHAR" property="permissionName" />
+        <result column="permission_sign" jdbcType="VARCHAR" property="permissionSign" />
+        <result column="description" jdbcType="VARCHAR" property="description" />
+    </resultMap>
+
+    <!-- Base_Column_List -->
+    <sql id="Base_Column_List">
+    permission_id, resource_id, resource_name, resource_type, action_id, action_name,
+    function_code, permission_name, permission_sign, description
+    </sql>
+
+    <!-- selectByPrimaryKey -->
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sys_permission
+    where permission_id = #{permissionId,jdbcType=BIGINT}
+    </select>
+
+    <!--deleteByPrimaryKey -->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from sys_permission
+    where permission_id = #{permissionId,jdbcType=BIGINT}
+    </delete>
+
+    <!--insert  -->
+    <insert id="insert" parameterType="cn.ucaner.skeleton.webapp.security.entity.SysPermission">
+    insert into sys_permission (permission_id, resource_id, resource_name,
+      resource_type, action_id, action_name,
+      function_code, permission_name, permission_sign,
+      description)
+    values (#{permissionId,jdbcType=BIGINT}, #{resourceId,jdbcType=BIGINT}, #{resourceName,jdbcType=VARCHAR},
+      #{resourceType,jdbcType=BIGINT}, #{actionId,jdbcType=BIGINT}, #{actionName,jdbcType=VARCHAR},
+      #{functionCode,jdbcType=VARCHAR}, #{permissionName,jdbcType=VARCHAR}, #{permissionSign,jdbcType=VARCHAR},
+      #{description,jdbcType=VARCHAR})
+    </insert>
+
+    <!-- insertSelective -->
+    <insert id="insertSelective" parameterType="cn.ucaner.skeleton.webapp.security.entity.SysPermission">
+    insert into sys_permission
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="permissionId != null">
+        permission_id,
+      </if>
+      <if test="resourceId != null">
+        resource_id,
+      </if>
+      <if test="resourceName != null">
+        resource_name,
+      </if>
+      <if test="resourceType != null">
+        resource_type,
+      </if>
+      <if test="actionId != null">
+        action_id,
+      </if>
+      <if test="actionName != null">
+        action_name,
+      </if>
+      <if test="functionCode != null">
+        function_code,
+      </if>
+      <if test="permissionName != null">
+        permission_name,
+      </if>
+      <if test="permissionSign != null">
+        permission_sign,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="permissionId != null">
+        #{permissionId,jdbcType=BIGINT},
+      </if>
+      <if test="resourceId != null">
+        #{resourceId,jdbcType=BIGINT},
+      </if>
+      <if test="resourceName != null">
+        #{resourceName,jdbcType=VARCHAR},
+      </if>
+      <if test="resourceType != null">
+        #{resourceType,jdbcType=BIGINT},
+      </if>
+      <if test="actionId != null">
+        #{actionId,jdbcType=BIGINT},
+      </if>
+      <if test="actionName != null">
+        #{actionName,jdbcType=VARCHAR},
+      </if>
+      <if test="functionCode != null">
+        #{functionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionName != null">
+        #{permissionName,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionSign != null">
+        #{permissionSign,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    </insert>
+
+    <!-- updateByPrimaryKeySelective -->
+    <update id="updateByPrimaryKeySelective" parameterType="cn.ucaner.skeleton.webapp.security.entity.SysPermission">
+    update sys_permission
+    <set>
+      <if test="resourceId != null">
+        resource_id = #{resourceId,jdbcType=BIGINT},
+      </if>
+      <if test="resourceName != null">
+        resource_name = #{resourceName,jdbcType=VARCHAR},
+      </if>
+      <if test="resourceType != null">
+        resource_type = #{resourceType,jdbcType=BIGINT},
+      </if>
+      <if test="actionId != null">
+        action_id = #{actionId,jdbcType=BIGINT},
+      </if>
+      <if test="actionName != null">
+        action_name = #{actionName,jdbcType=VARCHAR},
+      </if>
+      <if test="functionCode != null">
+        function_code = #{functionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionName != null">
+        permission_name = #{permissionName,jdbcType=VARCHAR},
+      </if>
+      <if test="permissionSign != null">
+        permission_sign = #{permissionSign,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where permission_id = #{permissionId,jdbcType=BIGINT}
+    </update>
+
+    <!-- updateByPrimaryKey  -->
+    <update id="updateByPrimaryKey" parameterType="cn.ucaner.skeleton.webapp.security.entity.SysPermission">
+    update sys_permission
+    set resource_id = #{resourceId,jdbcType=BIGINT},
+      resource_name = #{resourceName,jdbcType=VARCHAR},
+      resource_type = #{resourceType,jdbcType=BIGINT},
+      action_id = #{actionId,jdbcType=BIGINT},
+      action_name = #{actionName,jdbcType=VARCHAR},
+      function_code = #{functionCode,jdbcType=VARCHAR},
+      permission_name = #{permissionName,jdbcType=VARCHAR},
+      permission_sign = #{permissionSign,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR}
+    where permission_id = #{permissionId,jdbcType=BIGINT}
+    </update>
+
+    <!--获取权限列表 -->
+    <select id="selectPermissionList" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from sys_permission
+    </select>
+
+</mapper>

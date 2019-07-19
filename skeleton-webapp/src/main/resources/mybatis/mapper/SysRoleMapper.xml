@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ucaner.skeleton.webapp.security.dao.SysRoleMapper">
+    <!-- BaseResultMap -->
+    <resultMap id="BaseResultMap" type="cn.ucaner.skeleton.webapp.security.entity.SysRole">
+        <id column="role_id" jdbcType="BIGINT" property="roleId" />
+        <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+        <result column="role_remark" jdbcType="VARCHAR" property="roleRemark" />
+        <result column="state" jdbcType="BIGINT" property="state" />
+        <result column="create_user_id" jdbcType="BIGINT" property="createUserId" />
+        <result column="create_user_name" jdbcType="VARCHAR" property="createUserName" />
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="role_sign" jdbcType="VARCHAR" property="roleSign" />
+    </resultMap>
+
+    <!-- Base_Column_List -->
+    <sql id="Base_Column_List">
+        role_id, role_name, role_remark, state, create_user_id, create_user_name, create_time,
+        role_sign
+    </sql>
+
+    <!-- selectByPrimaryKey -->
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sys_role
+    where role_id = #{roleId,jdbcType=BIGINT}
+    </select>
+
+    <!-- findByRoleId -->
+    <select id="findByRoleId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+      select * from   sys_role r
+      INNER JOIN sys_role_permission rp
+      on rp.role_id=r.role_id
+      INNER JOIN sys_permission p
+      on p.permission_id=rp.permission_id
+    where r.role_id = #{roleId,jdbcType=BIGINT}
+    </select>
+
+    <!-- deleteByPrimaryKey-->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from sys_role
+    where role_id = #{roleId,jdbcType=BIGINT}
+    </delete>
+
+    <!-- insert -->
+    <insert id="insert" parameterType="cn.ucaner.skeleton.webapp.security.entity.SysRole">
+    insert into sys_role (role_id, role_name, role_remark,
+      state, create_user_id, create_user_name,
+      create_time, role_sign)
+    values (#{roleId,jdbcType=BIGINT}, #{roleName,jdbcType=VARCHAR}, #{roleRemark,jdbcType=VARCHAR},
+      #{state,jdbcType=BIGINT}, #{createUserId,jdbcType=BIGINT}, #{createUserName,jdbcType=VARCHAR},
+      #{createTime,jdbcType=TIMESTAMP}, #{roleSign,jdbcType=VARCHAR})
+    </insert>
+
+    <!-- insertSelective -->
+    <insert id="insertSelective" parameterType="cn.ucaner.skeleton.webapp.security.entity.SysRole">
+    insert into sys_role
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="roleId != null">
+        role_id,
+      </if>
+      <if test="roleName != null">
+        role_name,
+      </if>
+      <if test="roleRemark != null">
+        role_remark,
+      </if>
+      <if test="state != null">
+        state,
+      </if>
+      <if test="createUserId != null">
+        create_user_id,
+      </if>
+      <if test="createUserName != null">
+        create_user_name,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="roleSign != null">
+        role_sign,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="roleId != null">
+        #{roleId,jdbcType=BIGINT},
+      </if>
+      <if test="roleName != null">
+        #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="roleRemark != null">
+        #{roleRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=BIGINT},
+      </if>
+      <if test="createUserId != null">
+        #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="createUserName != null">
+        #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="roleSign != null">
+        #{roleSign,jdbcType=VARCHAR},
+      </if>
+    </trim>
+    </insert>
+
+    <!-- updateByPrimaryKeySelective -->
+    <update id="updateByPrimaryKeySelective" parameterType="cn.ucaner.skeleton.webapp.security.entity.SysRole">
+    update sys_role
+    <set>
+      <if test="roleName != null">
+        role_name = #{roleName,jdbcType=VARCHAR},
+      </if>
+      <if test="roleRemark != null">
+        role_remark = #{roleRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=BIGINT},
+      </if>
+      <if test="createUserId != null">
+        create_user_id = #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="createUserName != null">
+        create_user_name = #{createUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="roleSign != null">
+        role_sign = #{roleSign,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where role_id = #{roleId,jdbcType=BIGINT}
+    </update>
+
+    <!-- updateByPrimaryKey -->
+    <update id="updateByPrimaryKey" parameterType="cn.ucaner.skeleton.webapp.security.entity.SysRole">
+    update sys_role
+    set role_name = #{roleName,jdbcType=VARCHAR},
+      role_remark = #{roleRemark,jdbcType=VARCHAR},
+      state = #{state,jdbcType=BIGINT},
+      create_user_id = #{createUserId,jdbcType=BIGINT},
+      create_user_name = #{createUserName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      role_sign = #{roleSign,jdbcType=VARCHAR}
+    where role_id = #{roleId,jdbcType=BIGINT}
+    </update>
+</mapper>

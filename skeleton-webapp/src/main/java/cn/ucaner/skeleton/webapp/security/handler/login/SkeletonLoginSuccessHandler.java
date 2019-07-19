@@ -18,7 +18,6 @@ package cn.ucaner.skeleton.webapp.security.handler.login;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Service;
 
-
 /**
  * @projectName：Skeleton-X
  * @Package：cn.ucaner.skeleton.webapp.security.handler.login

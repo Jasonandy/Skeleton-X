@@ -102,6 +102,7 @@ public class SkeletonSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll();
 
 
+        logger.info("== 登出:{},logoutSuccessUrl:{},logoutSuccessUrl:{},logoutSuccessHandler:skeletonLogoutSuccessHandler ==","logout","login","skeletonLoginSuccessHandler");
         //登出
         http.logout()
                 .logoutUrl("/logout")
@@ -120,14 +121,14 @@ public class SkeletonSecurityConfig extends WebSecurityConfigurerAdapter {
         //Session管理器
         http.sessionManagement()
                 .sessionFixation().changeSessionId()
-                .sessionAuthenticationErrorUrl("login")
+                .sessionAuthenticationErrorUrl("/login")
                 //Session失效
-                .invalidSessionUrl("login")
+                .invalidSessionUrl("/login")
                 //只能同时一个人在线
                 .maximumSessions(1)
                 //启用这个让maximumSessions生效
                 .sessionRegistry(skeletonSessionRegistry)
-                .expiredUrl("login");
+                .expiredUrl("/login");
 
 
         //权限验证失败进入的页面（只对使用自定义拦截有效）

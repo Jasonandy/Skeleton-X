@@ -15,68 +15,61 @@
  ******************************************************************************/
 package cn.ucaner.skeleton.webapp.security.dao;
 
-import cn.ucaner.skeleton.webapp.security.entity.SysUser;
+import cn.ucaner.skeleton.webapp.security.entity.SysModule;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
- * @ClassName：SysUserMapper
- * @Description： <p> SysUserMapper  </p>
+ * @ClassName：SysModuleMapper
+ * @Description： <p> SysModuleMapper  </p>
  * @Author： - Jason
- * @CreatTime：2019/7/19 - 12:20
+ * @CreatTime：2019/7/19 - 13:54
  * @Modify By：
  * @ModifyTime： 2019/7/19
  * @Modify marker：
  * @version V1.0
 */
 @Mapper
-public interface SysUserMapper {
+public interface SysModuleMapper {
 
     /**
      * deleteByPrimaryKey
-     * @param userId
+     * @param moduleId
      * @return
      */
-    int deleteByPrimaryKey(Long userId);
+    int deleteByPrimaryKey(Long moduleId);
 
     /**
      * insert
      * @param record
      * @return
      */
-    int insert(SysUser record);
+    int insert(SysModule record);
 
     /**
      * insertSelective
      * @param record
      * @return
      */
-    int insertSelective(SysUser record);
+    int insertSelective(SysModule record);
 
     /**
      * selectByPrimaryKey
-     * @param userId
+     * @param moduleId
      * @return
      */
-    SysUser selectByPrimaryKey(Long userId);
+    SysModule selectByPrimaryKey(Long moduleId);
 
     /**
      * updateByPrimaryKeySelective
      * @param record
      * @return
      */
-    int updateByPrimaryKeySelective(SysUser record);
+    int updateByPrimaryKeySelective(SysModule record);
 
     /**
      * updateByPrimaryKey
      * @param record
      * @return
      */
-    int updateByPrimaryKey(SysUser record);
-
-    /**
-     * 自定义一个根据姓名查找用户的方法
-     * @param userName
-     * @return
-     */
-    SysUser findByUsername(String userName);
+    int updateByPrimaryKey(SysModule record);
 }

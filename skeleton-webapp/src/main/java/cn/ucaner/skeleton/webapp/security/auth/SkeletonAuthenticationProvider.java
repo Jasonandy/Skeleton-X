@@ -29,7 +29,7 @@ import org.springframework.stereotype.Service;
 /**
  * @projectName：Skeleton-X
  * @Package：cn.ucaner.skeleton.webapp.security.auth
- * @Description： <p> SkeletonAuthenticationProvider </p>
+ * @Description： <p> SkeletonAuthenticationProvider 默认实现为 DaoAuthenticationProvider </p>
  * @Author： - Jason
  * @CreatTime：2019/7/19 - 11:09
  * @Modify By：
@@ -53,7 +53,6 @@ public class SkeletonAuthenticationProvider implements AuthenticationProvider {
         if (userDetails != null) {
             return new UsernamePasswordAuthenticationToken(userDetails, null,userDetails.getAuthorities());
         }
-        /*验证不通过*/
         return null;
     }
 

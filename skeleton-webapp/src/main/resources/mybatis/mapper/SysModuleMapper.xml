@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ucaner.skeleton.webapp.security.dao.SysModuleMapper">
+    <!-- BaseResultMap -->
+    <resultMap id="BaseResultMap" type="cn.ucaner.skeleton.webapp.security.entity.SysModule">
+    <id column="module_id" jdbcType="BIGINT" property="moduleId" />
+    <result column="parent_id" jdbcType="BIGINT" property="parentId" />
+    <result column="module_url" jdbcType="VARCHAR" property="moduleUrl" />
+    <result column="module_state" jdbcType="VARCHAR" property="moduleState" />
+    <result column="has_visible" jdbcType="VARCHAR" property="hasVisible" />
+    <result column="actions" jdbcType="VARCHAR" property="actions" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="module_level" jdbcType="BIGINT" property="moduleLevel" />
+    <result column="display_name" jdbcType="VARCHAR" property="displayName" />
+    <result column="module_leaf" jdbcType="BIGINT" property="moduleLeaf" />
+    <result column="module_seq" jdbcType="BIGINT" property="moduleSeq" />
+    <result column="module_name" jdbcType="VARCHAR" property="moduleName" />
+    <result column="module_number" jdbcType="VARCHAR" property="moduleNumber" />
+    <result column="module_description" jdbcType="VARCHAR" property="moduleDescription" />
+    <result column="creator_id" jdbcType="BIGINT" property="creatorId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="last_update_user_id" jdbcType="BIGINT" property="lastUpdateUserId" />
+    <result column="last_updated_time" jdbcType="TIMESTAMP" property="lastUpdatedTime" />
+    <result column="department_id" jdbcType="VARCHAR" property="departmentId" />
+    <result column="module_icon" jdbcType="VARCHAR" property="moduleIcon" />
+    <result column="has_display" jdbcType="VARCHAR" property="hasDisplay" />
+    <result column="display_order" jdbcType="BIGINT" property="displayOrder" />
+    </resultMap>
+
+    <!-- Base_Column_List  -->
+    <sql id="Base_Column_List">
+    module_id, parent_id, module_url, module_state, has_visible, actions, remark, module_level,
+    display_name, module_leaf, module_seq, module_name, module_number, module_description,
+    creator_id, create_time, last_update_user_id, last_updated_time, department_id, module_icon,
+    has_display, display_order
+    </sql>
+
+    <!-- selectByPrimaryKey -->
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sys_module
+    where module_id = #{moduleId,jdbcType=BIGINT}
+    </select>
+
+    <!-- deleteByPrimaryKey -->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from sys_module
+    where module_id = #{moduleId,jdbcType=BIGINT}
+    </delete>
+
+    <!-- insert -->
+    <insert id="insert" parameterType="cn.ucaner.skeleton.webapp.security.entity.SysModule">
+    insert into sys_module (module_id, parent_id, module_url,
+      module_state, has_visible, actions,
+      remark, module_level, display_name,
+      module_leaf, module_seq, module_name,
+      module_number, module_description, creator_id,
+      create_time, last_update_user_id, last_updated_time,
+      department_id, module_icon, has_display,
+      display_order)
+    values (#{moduleId,jdbcType=BIGINT}, #{parentId,jdbcType=BIGINT}, #{moduleUrl,jdbcType=VARCHAR},
+      #{moduleState,jdbcType=VARCHAR}, #{hasVisible,jdbcType=VARCHAR}, #{actions,jdbcType=VARCHAR},
+      #{remark,jdbcType=VARCHAR}, #{moduleLevel,jdbcType=BIGINT}, #{displayName,jdbcType=VARCHAR},
+      #{moduleLeaf,jdbcType=BIGINT}, #{moduleSeq,jdbcType=BIGINT}, #{moduleName,jdbcType=VARCHAR},
+      #{moduleNumber,jdbcType=VARCHAR}, #{moduleDescription,jdbcType=VARCHAR}, #{creatorId,jdbcType=BIGINT},
+      #{createTime,jdbcType=TIMESTAMP}, #{lastUpdateUserId,jdbcType=BIGINT}, #{lastUpdatedTime,jdbcType=TIMESTAMP},
+      #{departmentId,jdbcType=VARCHAR}, #{moduleIcon,jdbcType=VARCHAR}, #{hasDisplay,jdbcType=VARCHAR},
+      #{displayOrder,jdbcType=BIGINT})
+    </insert>
+
+    <!-- insertSelective -->
+    <insert id="insertSelective" parameterType="cn.ucaner.skeleton.webapp.security.entity.SysModule">
+    insert into sys_module
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="moduleId != null">
+        module_id,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="moduleUrl != null">
+        module_url,
+      </if>
+      <if test="moduleState != null">
+        module_state,
+      </if>
+      <if test="hasVisible != null">
+        has_visible,
+      </if>
+      <if test="actions != null">
+        actions,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="moduleLevel != null">
+        module_level,
+      </if>
+      <if test="displayName != null">
+        display_name,
+      </if>
+      <if test="moduleLeaf != null">
+        module_leaf,
+      </if>
+      <if test="moduleSeq != null">
+        module_seq,
+      </if>
+      <if test="moduleName != null">
+        module_name,
+      </if>
+      <if test="moduleNumber != null">
+        module_number,
+      </if>
+      <if test="moduleDescription != null">
+        module_description,
+      </if>
+      <if test="creatorId != null">
+        creator_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="lastUpdateUserId != null">
+        last_update_user_id,
+      </if>
+      <if test="lastUpdatedTime != null">
+        last_updated_time,
+      </if>
+      <if test="departmentId != null">
+        department_id,
+      </if>
+      <if test="moduleIcon != null">
+        module_icon,
+      </if>
+      <if test="hasDisplay != null">
+        has_display,
+      </if>
+      <if test="displayOrder != null">
+        display_order,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="moduleId != null">
+        #{moduleId,jdbcType=BIGINT},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="moduleUrl != null">
+        #{moduleUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="moduleState != null">
+        #{moduleState,jdbcType=VARCHAR},
+      </if>
+      <if test="hasVisible != null">
+        #{hasVisible,jdbcType=VARCHAR},
+      </if>
+      <if test="actions != null">
+        #{actions,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="moduleLevel != null">
+        #{moduleLevel,jdbcType=BIGINT},
+      </if>
+      <if test="displayName != null">
+        #{displayName,jdbcType=VARCHAR},
+      </if>
+      <if test="moduleLeaf != null">
+        #{moduleLeaf,jdbcType=BIGINT},
+      </if>
+      <if test="moduleSeq != null">
+        #{moduleSeq,jdbcType=BIGINT},
+      </if>
+      <if test="moduleName != null">
+        #{moduleName,jdbcType=VARCHAR},
+      </if>
+      <if test="moduleNumber != null">
+        #{moduleNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="moduleDescription != null">
+        #{moduleDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorId != null">
+        #{creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        #{lastUpdateUserId,jdbcType=BIGINT},
+      </if>
+      <if test="lastUpdatedTime != null">
+        #{lastUpdatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="departmentId != null">
+        #{departmentId,jdbcType=VARCHAR},
+      </if>
+      <if test="moduleIcon != null">
+        #{moduleIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="hasDisplay != null">
+        #{hasDisplay,jdbcType=VARCHAR},
+      </if>
+      <if test="displayOrder != null">
+        #{displayOrder,jdbcType=BIGINT},
+      </if>
+    </trim>
+    </insert>
+
+    <!-- updateByPrimaryKeySelective -->
+    <update id="updateByPrimaryKeySelective" parameterType="cn.ucaner.skeleton.webapp.security.entity.SysModule">
+    update sys_module
+    <set>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="moduleUrl != null">
+        module_url = #{moduleUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="moduleState != null">
+        module_state = #{moduleState,jdbcType=VARCHAR},
+      </if>
+      <if test="hasVisible != null">
+        has_visible = #{hasVisible,jdbcType=VARCHAR},
+      </if>
+      <if test="actions != null">
+        actions = #{actions,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="moduleLevel != null">
+        module_level = #{moduleLevel,jdbcType=BIGINT},
+      </if>
+      <if test="displayName != null">
+        display_name = #{displayName,jdbcType=VARCHAR},
+      </if>
+      <if test="moduleLeaf != null">
+        module_leaf = #{moduleLeaf,jdbcType=BIGINT},
+      </if>
+      <if test="moduleSeq != null">
+        module_seq = #{moduleSeq,jdbcType=BIGINT},
+      </if>
+      <if test="moduleName != null">
+        module_name = #{moduleName,jdbcType=VARCHAR},
+      </if>
+      <if test="moduleNumber != null">
+        module_number = #{moduleNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="moduleDescription != null">
+        module_description = #{moduleDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="creatorId != null">
+        creator_id = #{creatorId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateUserId != null">
+        last_update_user_id = #{lastUpdateUserId,jdbcType=BIGINT},
+      </if>
+      <if test="lastUpdatedTime != null">
+        last_updated_time = #{lastUpdatedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="departmentId != null">
+        department_id = #{departmentId,jdbcType=VARCHAR},
+      </if>
+      <if test="moduleIcon != null">
+        module_icon = #{moduleIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="hasDisplay != null">
+        has_display = #{hasDisplay,jdbcType=VARCHAR},
+      </if>
+      <if test="displayOrder != null">
+        display_order = #{displayOrder,jdbcType=BIGINT},
+      </if>
+    </set>
+    where module_id = #{moduleId,jdbcType=BIGINT}
+    </update>
+
+    <!-- updateByPrimaryKey  -->
+    <update id="updateByPrimaryKey" parameterType="cn.ucaner.skeleton.webapp.security.entity.SysModule">
+    update sys_module
+    set parent_id = #{parentId,jdbcType=BIGINT},
+      module_url = #{moduleUrl,jdbcType=VARCHAR},
+      module_state = #{moduleState,jdbcType=VARCHAR},
+      has_visible = #{hasVisible,jdbcType=VARCHAR},
+      actions = #{actions,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      module_level = #{moduleLevel,jdbcType=BIGINT},
+      display_name = #{displayName,jdbcType=VARCHAR},
+      module_leaf = #{moduleLeaf,jdbcType=BIGINT},
+      module_seq = #{moduleSeq,jdbcType=BIGINT},
+      module_name = #{moduleName,jdbcType=VARCHAR},
+      module_number = #{moduleNumber,jdbcType=VARCHAR},
+      module_description = #{moduleDescription,jdbcType=VARCHAR},
+      creator_id = #{creatorId,jdbcType=BIGINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      last_update_user_id = #{lastUpdateUserId,jdbcType=BIGINT},
+      last_updated_time = #{lastUpdatedTime,jdbcType=TIMESTAMP},
+      department_id = #{departmentId,jdbcType=VARCHAR},
+      module_icon = #{moduleIcon,jdbcType=VARCHAR},
+      has_display = #{hasDisplay,jdbcType=VARCHAR},
+      display_order = #{displayOrder,jdbcType=BIGINT}
+    where module_id = #{moduleId,jdbcType=BIGINT}
+    </update>
+</mapper>

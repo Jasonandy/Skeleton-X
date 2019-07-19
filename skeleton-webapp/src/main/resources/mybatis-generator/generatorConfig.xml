@@ -156,11 +156,41 @@
            注意，table里面很多参数都是对javaModelGenerator，context等元素的默认属性的一个复写；
         -->
         <!-- sys_user-->
-        <table tableName="sys_user"  domainObjectName="SysUser"
+        <!--<table tableName="sys_user"  domainObjectName="SysUser"-->
+               <!--enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false" selectByExampleQueryId="false">-->
+            <!--<property name="useActualColumnNames" value="false" />-->
+        <!--</table>-->
+
+        <!-- sys_permission -->
+        <!--<table tableName="sys_permission"  domainObjectName="SysPermission"-->
+               <!--enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false" selectByExampleQueryId="false">-->
+            <!--<property name="useActualColumnNames" value="false" />-->
+        <!--</table>-->
+
+        <!-- sys_role_permission -->
+        <!--<table tableName="sys_role_permission"  domainObjectName="SysRolePermission"-->
+               <!--enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false" selectByExampleQueryId="false">-->
+            <!--<property name="useActualColumnNames" value="false" />-->
+        <!--</table>-->
+
+        <!-- sys_role -->
+        <!--<table tableName="sys_role"  domainObjectName="SysRole"-->
+               <!--enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false" selectByExampleQueryId="false">-->
+            <!--<property name="useActualColumnNames" value="false" />-->
+        <!--</table>-->
+
+        <!-- sys_module -->
+        <table tableName="sys_module"  domainObjectName="SysModule"
                enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" selectByExampleQueryId="false">
             <property name="useActualColumnNames" value="false" />
         </table>
+
+
 
     </context>
 </generatorConfiguration>

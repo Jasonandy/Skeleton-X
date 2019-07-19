@@ -15,68 +15,69 @@
  ******************************************************************************/
 package cn.ucaner.skeleton.webapp.security.dao;
 
-import cn.ucaner.skeleton.webapp.security.entity.SysUser;
+import cn.ucaner.skeleton.webapp.security.entity.SysPermission;
 import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
 /**
- * @ClassName：SysUserMapper
- * @Description： <p> SysUserMapper  </p>
+ * @ClassName：SysPermissionMapper
+ * @Description： <p> SysPermissionMapper  </p>
  * @Author： - Jason
- * @CreatTime：2019/7/19 - 12:20
+ * @CreatTime：2019/7/19 - 13:44
  * @Modify By：
  * @ModifyTime： 2019/7/19
  * @Modify marker：
  * @version V1.0
 */
 @Mapper
-public interface SysUserMapper {
+public interface SysPermissionMapper {
 
     /**
      * deleteByPrimaryKey
-     * @param userId
+     * @param permissionId
      * @return
      */
-    int deleteByPrimaryKey(Long userId);
+    int deleteByPrimaryKey(Long permissionId);
 
     /**
      * insert
      * @param record
      * @return
      */
-    int insert(SysUser record);
+    int insert(SysPermission record);
 
     /**
      * insertSelective
      * @param record
      * @return
      */
-    int insertSelective(SysUser record);
+    int insertSelective(SysPermission record);
 
     /**
      * selectByPrimaryKey
-     * @param userId
+     * @param permissionId
      * @return
      */
-    SysUser selectByPrimaryKey(Long userId);
+    SysPermission selectByPrimaryKey(Long permissionId);
 
     /**
      * updateByPrimaryKeySelective
      * @param record
      * @return
      */
-    int updateByPrimaryKeySelective(SysUser record);
+    int updateByPrimaryKeySelective(SysPermission record);
 
     /**
      * updateByPrimaryKey
      * @param record
      * @return
      */
-    int updateByPrimaryKey(SysUser record);
+    int updateByPrimaryKey(SysPermission record);
 
     /**
-     * 自定义一个根据姓名查找用户的方法
-     * @param userName
+     * selectPermissionList
      * @return
      */
-    SysUser findByUsername(String userName);
+    List<SysPermission> selectPermissionList();
 }

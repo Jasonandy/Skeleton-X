@@ -15,68 +15,68 @@
  ******************************************************************************/
 package cn.ucaner.skeleton.webapp.security.dao;
 
-import cn.ucaner.skeleton.webapp.security.entity.SysUser;
+import cn.ucaner.skeleton.webapp.security.entity.SysRole;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
- * @ClassName：SysUserMapper
- * @Description： <p> SysUserMapper  </p>
+ * @ClassName：SysRoleMapper
+ * @Description： <p> SysRoleMapper  </p>
  * @Author： - Jason
- * @CreatTime：2019/7/19 - 12:20
+ * @CreatTime：2019/7/19 - 13:45
  * @Modify By：
  * @ModifyTime： 2019/7/19
  * @Modify marker：
  * @version V1.0
 */
 @Mapper
-public interface SysUserMapper {
+public interface SysRoleMapper {
 
     /**
      * deleteByPrimaryKey
-     * @param userId
+     * @param roleId
      * @return
      */
-    int deleteByPrimaryKey(Long userId);
+    int deleteByPrimaryKey(Long roleId);
 
     /**
      * insert
      * @param record
      * @return
      */
-    int insert(SysUser record);
+    int insert(SysRole record);
 
     /**
      * insertSelective
      * @param record
      * @return
      */
-    int insertSelective(SysUser record);
+    int insertSelective(SysRole record);
 
     /**
      * selectByPrimaryKey
-     * @param userId
+     * @param roleId
      * @return
      */
-    SysUser selectByPrimaryKey(Long userId);
+    SysRole selectByPrimaryKey(Long roleId);
 
     /**
      * updateByPrimaryKeySelective
      * @param record
      * @return
      */
-    int updateByPrimaryKeySelective(SysUser record);
+    int updateByPrimaryKeySelective(SysRole record);
 
     /**
      * updateByPrimaryKey
      * @param record
      * @return
      */
-    int updateByPrimaryKey(SysUser record);
+    int updateByPrimaryKey(SysRole record);
 
     /**
-     * 自定义一个根据姓名查找用户的方法
-     * @param userName
+     * 自定义一个根据角色id查找用户的權限
+     * @param roleId
      * @return
      */
-    SysUser findByUsername(String userName);
+    SysRole findByRoleId(Long roleId);
 }

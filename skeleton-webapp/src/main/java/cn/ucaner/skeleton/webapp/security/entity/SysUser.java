@@ -15,7 +15,9 @@
  ******************************************************************************/
 package cn.ucaner.skeleton.webapp.security.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @ClassName：SysUser
@@ -54,6 +56,8 @@ public class SysUser {
     private String createUserName;
 
     private Date createTime;
+
+    private List<SysRole> roles = new ArrayList<>();
 
     public Long getUserId() {
         return userId;
@@ -157,5 +161,13 @@ public class SysUser {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public List<SysRole> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<SysRole> roles) {
+        this.roles = roles;
     }
 }
