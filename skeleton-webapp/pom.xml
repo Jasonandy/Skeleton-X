@@ -38,11 +38,7 @@
             <version>tuna-1.0</version>
         </dependency>
 
-        <!-- 加入权限 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-        </dependency>
+
 
         <!-- mybatis-spring-boot-starter  -->
         <dependency>
@@ -50,10 +46,23 @@
             <artifactId>mybatis-spring-boot-starter</artifactId>
         </dependency>
 
+
+        <!-- 加入权限 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
         <!-- thymeleaf -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-springsecurity4</artifactId>
+            <version>3.0.2.RELEASE</version><!--$NO-MVN-MAN-VER$-->
         </dependency>
 
         <!-- spring-boot-starter-websocket  -->

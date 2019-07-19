@@ -20,6 +20,8 @@ import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.annotation.PartitionOffset;
+import org.springframework.kafka.annotation.TopicPartition;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -34,10 +36,23 @@ import java.util.Optional;
  * @ModifyTime： 2019/4/28
  * @Modify marker：
  */
-//@Component
+@Component
 public class ChatConsumer {
 
     private static Logger logger = LoggerFactory.getLogger(ChatConsumer.class);
+
+    /**
+     * @KafkaListener 注解工作流程
+     *  1.解析;解析@KafkaListener注解.
+     *  2.注册;解析后的数据注册到spring-kafka.
+     *  3.监听;开始监听topic变更.
+     *  4.调用;调用注解标识的方法，将监听到的数据作为参数传入.
+     *
+     *
+     *
+     */
+
+
 
     /**
      * listen
@@ -84,11 +99,13 @@ public class ChatConsumer {
      *  选着指定的服务id  消费指定的topic 指定topic指定的partition  指定offset
      * @param record
      */
-//    @KafkaListener(id = "kafkaId",topicPartitions ={
-//            @TopicPartition(topic = KafkaConstant.KAFKA_FACE_TOPIC,partitions = { "0"}),
-//            @TopicPartition(topic = KafkaConstant.KAFKA_CALL_TOPIC, partitions = "0",partitionOffsets =
-//            @PartitionOffset(partition = "1", initialOffset = "5"))})
-//    public void listen(ConsumerRecord<?, ?> record) {
-//        logger.info("=== topic:{} ,key:{} , value:{} ===",record.topic(),record.key(),record.value());
-//    }
+    @KafkaListener(id = "kafkaId",topicPartitions ={
+            @TopicPartition(topic = KafkaConstant.KAFKA_FACE_TOPIC,partitions = { "0","3"}),
+            @TopicPartition(topic = KafkaConstant.KAFKA_CALL_TOPIC,
+                    partitions = "0",
+                    partitionOffsets =
+            @PartitionOffset(partition = "1", initialOffset = "5"))})
+    public void listen(ConsumerRecord<?, ?> record) {
+        logger.info("=== topic:{} ,key:{} , value:{} ===",record.topic(),record.key(),record.value());
+    }
 }

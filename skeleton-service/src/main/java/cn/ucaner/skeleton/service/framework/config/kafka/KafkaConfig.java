@@ -16,6 +16,7 @@
 package cn.ucaner.skeleton.service.framework.config.kafka;
 
 import com.alibaba.fastjson.JSON;
+import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -48,9 +49,9 @@ import java.util.Map;
  * @ModifyTime： 2019/4/30
  * @Modify marker：
  */
-//@Configuration
-//@ConditionalOnProperty(name = "enabled", havingValue = "true",prefix="kafka")
-//@PropertySources(value = {@PropertySource("classpath:/config/kafka/kafka.properties")})
+@Configuration
+@ConditionalOnProperty(name = "enabled", havingValue = "true",prefix="kafka")
+@PropertySources(value = {@PropertySource("classpath:/config/kafka/kafka.properties")})
 public class KafkaConfig {
 
     private Logger logger = LoggerFactory.getLogger(KafkaConfig.class);
@@ -209,4 +210,22 @@ public class KafkaConfig {
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         return props;
     }
+
+
+    /**
+     * 创建一个topic
+     * @return
+     */
+    @Bean
+    public NewTopic skeletonTopic() {
+        /**
+         * name: topic name
+         * numPartitions: 分区个数
+         * replicationFactor: 当只有一台机器的时候 会创建失败
+         * replication factor: 2 larger than available brokers: 1
+         * 也就是需要集群环境
+         */
+        return new NewTopic("skeletonTopic", 10, (short) 2);
+    }
+
 }

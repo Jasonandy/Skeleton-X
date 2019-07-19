@@ -30,7 +30,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  * @ClassName：Swagger2Config
- * @Description： <p> Swagger - @Url{http://localhost:9000/swagger-ui.html} </p>
+ * @Description： <p> Swagger - @Url{http://localhost:9095/swagger-ui.html} </p>
  * @Author： - Jason
  * @CreatTime：2019/4/26 - 14:09
  * @Modify By：

@@ -15,17 +15,23 @@
  ******************************************************************************/
 package cn.ucaner.skeleton.webapp.config.security;
 
+import cn.ucaner.skeleton.webapp.security.auth.SkeletonAuthenticationProvider;
+import cn.ucaner.skeleton.webapp.security.detail.SkeletonUserDetailService;
+import cn.ucaner.skeleton.webapp.security.handler.login.SkeletonLoginSuccessHandler;
+import cn.ucaner.skeleton.webapp.security.handler.logout.SkeletonLogoutSuccessHandler;
+import cn.ucaner.skeleton.webapp.security.session.SkeletonSessionRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Bean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
  * @projectName：Skeleton-X
@@ -39,63 +45,121 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
  */
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SkeletonSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static Logger logger = LoggerFactory.getLogger(SkeletonSecurityConfig.class);
 
+    private static final String COOKIE_NAME_REMEMBER_ME = "remember-me";
+
+    @Autowired
+    private SkeletonLoginSuccessHandler skeletonLoginSuccessHandler;
+
+    @Autowired
+    private SkeletonLogoutSuccessHandler skeletonLogoutSuccessHandler;
+
+    @Autowired
+    private SkeletonUserDetailService skeletonUserDetailService;
+
+    @Autowired
+    private SkeletonSessionRegistry skeletonSessionRegistry;
+
+    @Autowired
+    private SkeletonAuthenticationProvider skeletonAuthenticationProvider;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         logger.info("=== 拦截需要处理的页面 ===");
+
+        //拦截页面
+        http.authorizeRequests()
+                //全部页面都要验证
+                .anyRequest().authenticated()
+        ;//.accessDecisionManager(accessDecisionManagerService());//使用自定义拦截
+
+        //禁用csrf [跨站请求伪造]- 使用自定义登录页面
+        http.csrf()
+                .disable();
+
+        logger.info("== 登录:{},defaultSuccessUrl:{},successHandler:{} ==","formLogin","index","skeletonLoginSuccessHandler");
+
+        //登录
         http.formLogin()
                 .loginPage("/index")
-                .loginProcessingUrl("/login")
-                .successForwardUrl("/index")
-                .and()
-                .authorizeRequests()
-                .antMatchers("/index", "/login", "/error", "/favicon.ico").permitAll()
-                .anyRequest()
-                .authenticated()
-                // csrf 关闭 防止xss攻击的 但是我们不需要 所以我们禁掉
-                .and()
-                .csrf()
-                .disable();
+                .usernameParameter("username")
+                .passwordParameter("password")
+                //先defaultSuccessUrl后successHandler,不然successHandler不会执行
+                .defaultSuccessUrl("/index")
+                .successHandler(skeletonLoginSuccessHandler)
+
+                //高级设置-拦截器
+                .withObjectPostProcessor(new ObjectPostProcessor<UsernamePasswordAuthenticationFilter>() {
+                    @Override
+                    public <O extends UsernamePasswordAuthenticationFilter> O postProcess(O fsi) {
+                        return fsi;
+                    }
+                })
+                .permitAll();
+
+
+        //登出
+        http.logout()
+                .logoutUrl("/logout")
+                .logoutSuccessUrl("/login")
+                .logoutSuccessHandler(skeletonLogoutSuccessHandler)
+                .deleteCookies(COOKIE_NAME_REMEMBER_ME)
+                .permitAll();
+
+
+        //记住我
+        http.rememberMe()
+                .rememberMeCookieName(COOKIE_NAME_REMEMBER_ME)
+                .userDetailsService(skeletonUserDetailService);
+
+
+        //Session管理器
+        http.sessionManagement()
+                .sessionFixation().changeSessionId()
+                .sessionAuthenticationErrorUrl("login")
+                //Session失效
+                .invalidSessionUrl("login")
+                //只能同时一个人在线
+                .maximumSessions(1)
+                //启用这个让maximumSessions生效
+                .sessionRegistry(skeletonSessionRegistry)
+                .expiredUrl("login");
+
+
+        //权限验证失败进入的页面（只对使用自定义拦截有效）
+        http.exceptionHandling()
+                .accessDeniedPage("/access_denied");
+
+
+        //允许同源iframe访问
+        http.headers()
+                .frameOptions()
+                .sameOrigin();
     }
 
+
     /**
-     * 如果我们以这种方式定义密码的时候 要在密码前面加上{noop}这个前缀或者配置一个密码加密器的bean 否则验证会出错。
-     * 另外还有一点就是一定要添加roles或者authorities,否则spring_security不予通过.
-     * @param auth
-     * @throws Exception
+     * Web层面的拦截 用来跳过的资源
+     * @param web
      */
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-
-        /**
-         * 关系维护在内存里面
-         */
-        auth.userDetailsService(new InMemoryUserDetailsManager(
-                User.builder().username("admin").password("{noop}123456").authorities("admin").build(),
-                User.builder().username("root").password("{noop}123456").authorities("user").build()
-        ));
-
-        /**
-         * 校验关系维护在 db 数据库里面
-         */
-        /*auth.userDetailsService(userDetailsService);*/
-        super.configure(auth);
+    public void configure(WebSecurity web){
+        web.ignoring()
+            .antMatchers("**/favicon.ico")
+                .antMatchers("/static/**")
+            .antMatchers("/assets/**")
+            .antMatchers("/captcha.jpg");
     }
 
-    @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
+
+
+    @Autowired
+    protected void configureGlobal(AuthenticationManagerBuilder auth){
+        auth.authenticationProvider(skeletonAuthenticationProvider);
     }
 
-    /**
-     * just for test
-     * @param args
-     */
-    public static void main(String[] args) {
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        System.out.println(bCryptPasswordEncoder.encode("123456"));
-    }
 }
