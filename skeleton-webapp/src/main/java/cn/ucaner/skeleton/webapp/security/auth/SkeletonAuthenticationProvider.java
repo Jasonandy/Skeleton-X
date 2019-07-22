@@ -55,6 +55,7 @@ public class SkeletonAuthenticationProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String username = (String) authentication.getPrincipal();
         String password = (String) authentication.getCredentials();
+        logger.info("== SkeletonAuthenticationProvider:username:{} ==",username);
         UserDetails userDetails = skeletonUserDetailService.loadUserByUsername(username);
         logger.info("=== password:{} ===",password);
         if (userDetails != null) {

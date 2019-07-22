@@ -99,7 +99,7 @@ public class ChatConsumer {
      *  选着指定的服务id  消费指定的topic 指定topic指定的partition  指定offset
      * @param record
      */
-    @KafkaListener(id = "kafkaId",topicPartitions ={
+    @KafkaListener(id = "2",topicPartitions ={
             @TopicPartition(topic = KafkaConstant.KAFKA_FACE_TOPIC,partitions = { "0","3"}),
             @TopicPartition(topic = KafkaConstant.KAFKA_CALL_TOPIC,
                     partitions = "0",

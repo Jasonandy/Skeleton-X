@@ -86,7 +86,6 @@ public class SkeletonSecurityConfig extends WebSecurityConfigurerAdapter {
     private SkeletonAccessDecisionManagerService skeletonAccessDecisionManagerService;
 
 
-
     /**
      * 重写 {@link WebSecurityConfigurerAdapter} configure -[核心]
      * 重写了其中的configure() 方法设置了不同url的不同访问权限
@@ -99,29 +98,26 @@ public class SkeletonSecurityConfig extends WebSecurityConfigurerAdapter {
 
         //拦截页面
         http.authorizeRequests()
-            //全部页面都要验证
-            .anyRequest().authenticated()
-            //使用自定义拦截
-            .accessDecisionManager(skeletonAccessDecisionManagerService);
-
+                .antMatchers("/static/**","/images/**","/assets/**","/login","/account/**","/")
+                //全部页面都要验证
+                .authenticated()
+                //使用自定义拦截
+                .accessDecisionManager(skeletonAccessDecisionManagerService);
         //禁用csrf [跨站请求伪造]- 使用自定义登录页面
-        http.csrf()
-                .disable();
-
+        http.csrf().disable();
         logger.info("== 登录:{},defaultSuccessUrl:{},successHandler:{} ==","formLogin","index","skeletonLoginSuccessHandler");
-
-        http.authorizeRequests();
-
         //登录
         http.formLogin()
-                //访问接口
+                //访问接口 自定义登录页url,默认为/login
                 .loginPage("/account/login.do")
+                //登录请求拦截的url,也就是form表单提交时指定的action
+                .loginProcessingUrl("/login")
                 .usernameParameter("username")
                 .passwordParameter("password")
-                //先defaultSuccessUrl后successHandler,不然successHandler不会执行
-                .defaultSuccessUrl("/index.do")
+                //先defaultSuccessUrl后successHandler,不然successHandler不会执行  默认登录成功后跳转的url
+                .defaultSuccessUrl("/page/index")
                 .successHandler(skeletonLoginSuccessHandler)
-
+                // authentication-failure-url 登录失败后跳转的url
                 //高级设置-拦截器
                 .withObjectPostProcessor(new ObjectPostProcessor<UsernamePasswordAuthenticationFilter>() {
                     @Override
@@ -131,45 +127,40 @@ public class SkeletonSecurityConfig extends WebSecurityConfigurerAdapter {
                 })
                 .permitAll();
 
-
         logger.info("== 登出:{},logoutSuccessUrl:{},logoutSuccessUrl:{},logoutSuccessHandler:skeletonLogoutSuccessHandler ==","logout","login","skeletonLoginSuccessHandler");
+
         //登出
         http.logout()
                 .logoutUrl("/account/logout.do")
-                .logoutSuccessUrl("/account/login.do")
+                .logoutSuccessUrl("/page/logout")
                 .logoutSuccessHandler(skeletonLogoutSuccessHandler)
                 .deleteCookies(COOKIE_NAME_REMEMBER_ME)
                 .permitAll();
-
 
         //记住我
         http.rememberMe()
                 .rememberMeCookieName(COOKIE_NAME_REMEMBER_ME)
                 .userDetailsService(skeletonUserDetailService);
 
-
         //Session管理器
+        logger.info("== Session管理器 ==");
         http.sessionManagement()
                 .sessionFixation().changeSessionId()
-                .sessionAuthenticationErrorUrl("/account/login.do")
+                .sessionAuthenticationErrorUrl("/page/auth/error")
                 //Session失效
-                .invalidSessionUrl("/account/login.do")
+                .invalidSessionUrl("/page/invalid/session")
                 //只能同时一个人在线
                 .maximumSessions(1)
                 //启用这个让maximumSessions生效
                 .sessionRegistry(skeletonSessionRegistry)
-                .expiredUrl("/account/login.do");
+                .expiredUrl("/page/expire");
 
 
         //权限验证失败进入的页面（只对使用自定义拦截有效）
-        http.exceptionHandling()
-                .accessDeniedPage("/access_denied.do");
-
+        http.exceptionHandling().accessDeniedPage("/page/access/denied");
 
         //允许同源iframe访问
-        http.headers()
-                .frameOptions()
-                .sameOrigin();
+        http.headers().frameOptions().sameOrigin();
     }
 
 
@@ -180,14 +171,12 @@ public class SkeletonSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web){
         web.ignoring()
-                //需要开放的资源
-                .antMatchers("/account/login.do")
-                .antMatchers("/login")
+                .antMatchers("/page/**")
+                .antMatchers("/account/**")
                 //静态资源
                 .antMatchers("**/favicon.ico")
                 .antMatchers("/static/**")
-                .antMatchers("/assets/**")
-                .antMatchers("/captcha.jpg");
+                .antMatchers("/assets/**");
     }
 
 

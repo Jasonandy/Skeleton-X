@@ -42,7 +42,7 @@ import java.util.Map;
 /**
  * @projectName：Skeleton-X
  * @Package：cn.ucaner.skeleton.service.framework.config.kafka
- * @Description： <p> KafkaConfig  </p>
+ * @Description： <p> KafkaConfig - https://www.cnblogs.com/sodawoods-blogs/p/8969774.html  </p>
  * @Author： - Jason
  * @CreatTime：2019/4/30 - 16:00
  * @Modify By：
@@ -225,7 +225,7 @@ public class KafkaConfig {
          * replication factor: 2 larger than available brokers: 1
          * 也就是需要集群环境
          */
-        return new NewTopic("skeletonTopic", 10, (short) 2);
+        return new NewTopic("skeletonTopic", 2, (short) 2);
     }
 
 }
