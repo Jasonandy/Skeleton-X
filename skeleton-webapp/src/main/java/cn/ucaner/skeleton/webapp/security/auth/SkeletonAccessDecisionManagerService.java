@@ -67,7 +67,7 @@ public class SkeletonAccessDecisionManagerService implements AccessDecisionManag
             //遍历用户拥有的权限与URL所需的权限进行对比
             //authentication 为在注释1 中循环添加到 GrantedAuthority 对象中的权限信息集合
             for (GrantedAuthority ga : authentication.getAuthorities()) {
-                if (ga.getAuthority().equals(needPermission)){
+                if (null == needPermission || ga.getAuthority().equals(needPermission)){
                     return;
                 }
             }

@@ -44,8 +44,9 @@ public class PageController {
     @RequestMapping("/index")
     public String pageIndex(ModelMap map){
         map.addAttribute(DEFAULT_PAGE_ATTRIBUTE,"首页");
+        map.addAttribute("name","Skeleton-Spring-Security");
         logger.info("== pageIndex ==");
-        return "index";
+        return "index/index";
     }
 
     @RequestMapping("/logout")

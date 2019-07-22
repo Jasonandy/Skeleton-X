@@ -109,6 +109,7 @@ public class SkeletonSecurityConfig extends WebSecurityConfigurerAdapter {
         //登录
         http.formLogin()
                 //访问接口 自定义登录页url,默认为/login
+                .successHandler(skeletonLoginSuccessHandler)
                 .loginPage("/account/login.do")
                 //登录请求拦截的url,也就是form表单提交时指定的action
                 .loginProcessingUrl("/login")
@@ -116,7 +117,6 @@ public class SkeletonSecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordParameter("password")
                 //先defaultSuccessUrl后successHandler,不然successHandler不会执行  默认登录成功后跳转的url
                 .defaultSuccessUrl("/page/index")
-                .successHandler(skeletonLoginSuccessHandler)
                 // authentication-failure-url 登录失败后跳转的url
                 //高级设置-拦截器
                 .withObjectPostProcessor(new ObjectPostProcessor<UsernamePasswordAuthenticationFilter>() {
@@ -174,8 +174,13 @@ public class SkeletonSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/page/**")
                 .antMatchers("/account/**")
                 //静态资源
-                .antMatchers("**/favicon.ico")
+                .antMatchers("/favicon.ico")
+//                .antMatchers("/webjars/**")
                 .antMatchers("/static/**")
+//                .antMatchers("/lib/**")
+//                .antMatchers("/css/")
+//                .antMatchers("/js/**")
+//                .antMatchers("/avatar/**")
                 .antMatchers("/assets/**");
     }
 
