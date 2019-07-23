@@ -15,16 +15,20 @@ public class KafkaConstant {
     /**
      * chat topic
      */
-    public static final String KAFKA_CHAT_TOPIC = "chat-topic";
+    public static final String KAFKA_CHAT_TOPIC = "topic-chat";
 
     /**
      * call topic
      */
-    public static final String KAFKA_CALL_TOPIC = "call-topic";
+    public static final String KAFKA_CALL_TOPIC = "topic-call";
 
     /**
      * face topic
      */
-    public static final String KAFKA_FACE_TOPIC = "face-topic";
+    public static final String KAFKA_FACE_TOPIC = "topic-face";
 
+    /**
+     * skeleton topic
+     */
+    public static final String  KAFKA_SKELETON_TOPIC = "topic-skeleton";
 }

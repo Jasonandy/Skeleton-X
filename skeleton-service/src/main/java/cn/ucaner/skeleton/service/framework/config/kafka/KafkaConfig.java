@@ -225,7 +225,7 @@ public class KafkaConfig {
          * replication factor: 2 larger than available brokers: 1
          * 也就是需要集群环境
          */
-        return new NewTopic("skeletonTopic", 2, (short) 2);
+        return new NewTopic("topic-skeleton", 8, (short) 2);
     }
 
 }

@@ -47,12 +47,7 @@ public class ChatConsumer {
      *  2.注册;解析后的数据注册到spring-kafka.
      *  3.监听;开始监听topic变更.
      *  4.调用;调用注解标识的方法，将监听到的数据作为参数传入.
-     *
-     *
-     *
      */
-
-
 
     /**
      * listen
@@ -97,14 +92,16 @@ public class ChatConsumer {
      *                  KAFKA_FACE_TOPIC KAFKA_CALL_TOPIC 接收分区0和分区1的消息,但是分区1的消费者初始位置为5
      *
      *  选着指定的服务id  消费指定的topic 指定topic指定的partition  指定offset
+     *
+     *  KAFKA_SKELETON_TOPIC 消费分区 2,3 但是分区2的起始位置为5
+     *
      * @param record
      */
     @KafkaListener(id = "2",topicPartitions ={
-            @TopicPartition(topic = KafkaConstant.KAFKA_FACE_TOPIC,partitions = { "0","3"}),
-            @TopicPartition(topic = KafkaConstant.KAFKA_CALL_TOPIC,
-                    partitions = "0",
-                    partitionOffsets =
-            @PartitionOffset(partition = "1", initialOffset = "5"))})
+            @TopicPartition(topic = KafkaConstant.KAFKA_FACE_TOPIC,partitions = {"0"}),
+            @TopicPartition(topic = KafkaConstant.KAFKA_SKELETON_TOPIC,
+                    partitions = {"2","3"},
+                    partitionOffsets = @PartitionOffset(partition = "5", initialOffset = "5"))})
     public void listen(ConsumerRecord<?, ?> record) {
         logger.info("=== topic:{} ,key:{} , value:{} ===",record.topic(),record.key(),record.value());
     }

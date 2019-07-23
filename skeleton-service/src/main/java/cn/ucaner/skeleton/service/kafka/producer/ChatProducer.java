@@ -80,7 +80,6 @@ public class ChatProducer {
     }
 
 
-
     /**
      * send2Topic
      * @param topic 主题
@@ -90,6 +89,21 @@ public class ChatProducer {
     public void send2Topic(String topic, String key, String dataStr){
         try {
             kafkaTemplate.send(topic,key,dataStr);
+        } catch (Exception e) {
+            logger.info("=== ChatProducer:send2Topic:error:{} ===",e.getMessage());
+        }
+    }
+
+    /**
+     * sendPartitionKey
+     * @param topic  主题
+     * @param partition 分区
+     * @param key  key
+     * @param dataStr 数据
+     */
+    public void sendPartitionKey(String topic, Integer partition ,String key, String dataStr){
+        try {
+            kafkaTemplate.send(topic,partition, key,dataStr);
         } catch (Exception e) {
             logger.info("=== ChatProducer:send2Topic:error:{} ===",e.getMessage());
         }

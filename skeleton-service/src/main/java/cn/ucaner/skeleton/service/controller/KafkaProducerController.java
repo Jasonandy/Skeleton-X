@@ -73,6 +73,29 @@ public class KafkaProducerController {
         return respBody;
     }
 
+
+    @ResponseBody
+    @GetMapping("send")
+    @RequestMapping(value="/sendByTopic/{topic}/{count}",method= RequestMethod.GET)
+    public RespBody sendByTopic(@PathVariable String topic, @PathVariable Integer count) {
+        RespBody respBody = new RespBody();
+        long startTime ,endTime;
+        startTime = System.currentTimeMillis();
+        for (int i = 0; i < count; i++) {
+            User user = new User();
+            user.setName(PKGenerator.uuid());
+            user.setId(PKGenerator.uuid32());
+            user.setAge(new Random().nextInt(24));
+            user.setDesc("=== A Good Man ===");
+            user.setErrorMsg(" none ");
+            chatProducer.send2Topic(topic,PKGenerator.uuid32(),JSON.toJSONString(user));
+        }
+        endTime = System.currentTimeMillis();
+        logger.info("=== sendByTopic: count:{} , cost time: {}ms ===",count,((endTime-startTime)/1000));
+        respBody.addOK(count,"发送成功!");
+        return respBody;
+    }
+
     @ResponseBody
     @GetMapping("send2Topic")
     @RequestMapping(value="/send2Topic/{topic}/{key}",method= RequestMethod.GET)
@@ -89,6 +112,32 @@ public class KafkaProducerController {
         chatProducer.send2Topic(topic,key, JSON.toJSONString(user));
         endTime = System.currentTimeMillis();
         logger.info("=== send2Topic: topic:{} key:{} , cost time: {}ms ===",topic,key,((endTime-startTime)/1000));
+        respBody.addOK(topic,"发送成功!");
+        return respBody;
+    }
+
+    /**
+     * sendPartitionKey
+     * @param topic
+     * @param partition
+     * @param key
+     * @return
+     */
+    @ResponseBody
+    @GetMapping("sendPartitionKey")
+    @RequestMapping(value="/sendPartitionKey/{topic}/{partition}/{key}/{count}",method= RequestMethod.GET)
+    public RespBody sendPartitionKey(@PathVariable String topic,@PathVariable Integer partition ,@PathVariable String key,@PathVariable Integer count){
+        RespBody respBody = new RespBody();
+        User user = new User();
+        for (int i = 0; i < count; i++) {
+            user.setName(PKGenerator.uuid32());
+            user.setId(PKGenerator.uuid());
+            user.setAge(new Random().nextInt(25));
+            user.setDesc("=== SendPartitionKey  ===");
+            user.setErrorMsg(" none ");
+            chatProducer.sendPartitionKey(topic,partition,key,JSON.toJSONString(user));
+            logger.info("=== sendPartitionKey: topic:{} key:{} ===",topic,key);
+        }
         respBody.addOK(topic,"发送成功!");
         return respBody;
     }
