@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- 父工程 -->
+    <parent>
+        <artifactId>skeleton</artifactId>
+        <groupId>cn.ucaner</groupId>
+        <version>tuna-1.0</version>
+    </parent>
+
+    <!-- 项目描述-->
+    <artifactId>skeleton-opencv</artifactId>
+    <description>This is a fast developing scaffolding.</description>
+
+    <!-- 归属组织 -->
+    <organization>
+        <name>Skeleton-X</name>
+        <url>http://www.ucaner.com</url>
+    </organization>
+
+    <!--版本维护-->
+    <properties>
+        <global.version>tuna-1.0</global.version>
+        <mybatis-spring-boot-starter.version>2.0.0</mybatis-spring-boot-starter.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <javacv-platform.version>1.5.1</javacv-platform.version>
+    </properties>
+
+
+    <!-- 依赖 -->
+    <dependencies>
+        <!-- javacv -->
+        <dependency>
+            <groupId>org.bytedeco</groupId>
+            <artifactId>javacv-platform</artifactId>
+            <version>${javacv-platform.version}</version>
+        </dependency>
+
+        <!-- junit -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+</project>

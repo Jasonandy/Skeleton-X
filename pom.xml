@@ -18,6 +18,7 @@
         <module>skeleton-gateway</module>
         <module>skeleton-crawler</module>
         <module>skeleton-codegen</module>
+        <module>skeleton-opencv</module>
     </modules>
 
     <!-- 项目 -->
