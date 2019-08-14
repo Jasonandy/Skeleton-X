@@ -1,5 +1,6 @@
 package cn.ucaner.skeleton.opencv.recognition.face;
 
+import cn.ucaner.skeleton.opencv.framework.common.consts.CommonConst;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfRect;
@@ -35,14 +36,14 @@ public class Face {
     /**
      * OpenCV-4.0.0 实时人脸识别
      */
-    public static void videoFace(String fileName) {
+    public static void videoFace() {
         VideoCapture capture=new VideoCapture(0);
         Mat image = new Mat();
         int index=0;
         if (capture.isOpened()) {
             while(true) {
                 capture.read(image);
-                HighGui.imshow("实时人脸识别", getFace(image,fileName));
+                HighGui.imshow("实时人脸识别", getFace(image));
                 index=HighGui.waitKey(1);
                 if (index==27) {
                     break;
@@ -57,9 +58,9 @@ public class Face {
      * @param image image 待处理Mat图片(视频中的某一帧)
      * @return 处理后的图片
      */
-    public static Mat getFace(Mat image,String fileName) {
+    public static Mat getFace(Mat image) {
         // 1 读取OpenCV自带的人脸识别特征XML文件
-        CascadeClassifier facebook = new CascadeClassifier(fileName);
+        CascadeClassifier facebook = new CascadeClassifier(CommonConst.OPEN_CV_CASCADE_CLASSIFIER_FACE_PATH);
         // 2  特征匹配类
         MatOfRect face = new MatOfRect();
         // 3 特征匹配
@@ -83,8 +84,10 @@ public class Face {
      * @param args
      */
     public static void main(String[] args) {
-        String fileName = "D:\\devSpace\\opencv\\sources\\data\\haarcascades\\haarcascade_frontalface_alt.xml";
-        videoFace(fileName);
+        logger.info("=== 开始进行人脸识别 ===");
+        videoFace();
+        logger.info("=== 人脸识别完毕 ===");
+
     }
 
 }
