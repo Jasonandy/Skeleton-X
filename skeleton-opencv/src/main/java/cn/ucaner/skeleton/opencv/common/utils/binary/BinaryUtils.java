@@ -1,9 +1,16 @@
 package cn.ucaner.skeleton.opencv.common.utils.binary;
 
-import cn.ucaner.skeleton.opencv.common.utils.GeneralUtils;
+import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.util.RandomUtil;
+import cn.ucaner.skeleton.opencv.common.utils.general.GeneralUtils;
 import cn.ucaner.skeleton.opencv.common.utils.gray.GrayUtils;
+import cn.ucaner.skeleton.opencv.common.utils.paint.PaintUtils;
+import cn.ucaner.skeleton.opencv.common.utils.rotation.RotationUtils;
 import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
+
+import java.io.File;
+import java.util.List;
 
 /**
  * @projectName：Skeleton-X
@@ -189,10 +196,16 @@ public class BinaryUtils {
      * @param args
      */
     public static void main(String[] args) {
-        Mat mat = GeneralUtils.matFactory("C:\\Users\\Jason's-PC\\Pictures\\avatar\\01.jpeg");
-        Mat grayMat = GrayUtils.grayNative(mat);
-        Mat partMat = binaryzation(grayMat,true);
-        GeneralUtils.saveImg(partMat,"C:\\Users\\Jason's-PC\\Pictures\\avatar\\0002.jpeg");
-
+        String filePathStr = "C:\\Users\\Jason's-PC\\Pictures\\avatar";
+        List<String> filePathList = FileUtil.listFileNames(filePathStr);
+        if (filePathList != null){
+            for (String filePath : filePathList) {
+                Mat mat = GeneralUtils.matFactory(filePathStr.concat("\\").concat(filePath));
+                Mat grayMat = GrayUtils.grayColByMidle(mat);
+                Mat partMat = partBinaryzation(grayMat);
+                String fileName = filePathStr.concat("\\").concat(RandomUtil.randomNumbers(6)).concat(".jpg");
+                GeneralUtils.saveImg(partMat,fileName);
+            }
+        }
     }
 }

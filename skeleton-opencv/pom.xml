@@ -53,6 +53,13 @@
             <version>${javacv-platform.version}</version>
         </dependency>
 
+        <!-- hu_tool-all -->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>4.6.2</version>
+        </dependency>
+
         <!-- junit -->
         <dependency>
             <groupId>junit</groupId>
