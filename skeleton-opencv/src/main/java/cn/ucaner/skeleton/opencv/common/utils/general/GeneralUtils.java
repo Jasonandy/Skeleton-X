@@ -1,4 +1,4 @@
-package cn.ucaner.skeleton.opencv.common.utils;
+package cn.ucaner.skeleton.opencv.common.utils.general;
 
 import org.opencv.core.Core;
 import org.opencv.core.Mat;

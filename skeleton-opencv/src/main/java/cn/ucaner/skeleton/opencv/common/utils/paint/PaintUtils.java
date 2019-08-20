@@ -1,7 +1,7 @@
 package cn.ucaner.skeleton.opencv.common.utils.paint;
 
-import cn.ucaner.skeleton.opencv.common.utils.GeneralUtils;
 import cn.ucaner.skeleton.opencv.common.utils.contours.ContoursUtils;
+import cn.ucaner.skeleton.opencv.common.utils.general.GeneralUtils;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.MatOfPoint2f;

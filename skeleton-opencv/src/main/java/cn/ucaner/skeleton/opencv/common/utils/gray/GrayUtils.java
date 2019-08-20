@@ -1,6 +1,6 @@
 package cn.ucaner.skeleton.opencv.common.utils.gray;
 
-import cn.ucaner.skeleton.opencv.common.utils.GeneralUtils;
+import cn.ucaner.skeleton.opencv.common.utils.general.GeneralUtils;
 import cn.ucaner.skeleton.opencv.common.utils.math.OpenCvMathUtils;
 import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
