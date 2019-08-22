@@ -19,5 +19,4 @@ public class CommonConst {
      */
     public static final String  OPEN_CV_CASCADE_CLASSIFIER_FACE_PATH = "D:\\devSpace\\opencv\\sources\\data\\haarcascades\\haarcascade_frontalface_alt.xml";
 
-
 }

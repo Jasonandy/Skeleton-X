@@ -4,6 +4,7 @@ import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.RandomUtil;
 import cn.ucaner.skeleton.opencv.common.utils.general.GeneralUtils;
 import cn.ucaner.skeleton.opencv.common.utils.gray.GrayUtils;
+import cn.ucaner.skeleton.opencv.common.utils.kit.OcUtils;
 import cn.ucaner.skeleton.opencv.common.utils.paint.PaintUtils;
 import cn.ucaner.skeleton.opencv.common.utils.rotation.RotationUtils;
 import org.opencv.core.Mat;
@@ -201,10 +202,9 @@ public class BinaryUtils {
         if (filePathList != null){
             for (String filePath : filePathList) {
                 Mat mat = GeneralUtils.matFactory(filePathStr.concat("\\").concat(filePath));
-                Mat grayMat = GrayUtils.grayColByMidle(mat);
-                Mat partMat = partBinaryzation(grayMat);
+                Mat oilMat = OcUtils.Filter.edgeDetection(mat);
                 String fileName = filePathStr.concat("\\").concat(RandomUtil.randomNumbers(6)).concat(".jpg");
-                GeneralUtils.saveImg(partMat,fileName);
+                GeneralUtils.saveImg(oilMat,fileName);
             }
         }
     }
