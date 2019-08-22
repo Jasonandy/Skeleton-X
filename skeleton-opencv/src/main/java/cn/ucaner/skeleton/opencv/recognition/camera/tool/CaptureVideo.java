@@ -46,6 +46,8 @@ public class CaptureVideo extends JPanel {
         int width = (int) capture.get(Videoio.CAP_PROP_FRAME_WIDTH);
         if (height == 0 || width == 0) {
             logger.info("=== CaptureVideo:摄像头未找到 ... ");
+            height = 600;
+            width = 600;
         }
         JFrame frame = new JFrame("摄像头");
         frame.setDefaultCloseOperation(2);

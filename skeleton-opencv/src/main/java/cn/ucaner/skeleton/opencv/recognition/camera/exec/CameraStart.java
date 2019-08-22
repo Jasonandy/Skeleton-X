@@ -26,7 +26,7 @@ public class CameraStart {
     private static final Logger logger = LoggerFactory.getLogger(CameraStart.class);
 
     /**
-     * run
+     * run open_cv 识别人脸
      * @param img
      * @return
      */
