@@ -32,7 +32,7 @@
         <!-- mybatis -->
         <mybatis.version>3.4.6</mybatis.version>
         <!-- mysql-connector -->
-        <mysql-connector-java.version>5.1.46</mysql-connector-java.version>
+        <mysql-connector-java.version>8.0.28</mysql-connector-java.version>
         <!-- mybatis-generator-maven -->
         <mybatis-generator-maven-plugin.version>1.3.5</mybatis-generator-maven-plugin.version>
 
